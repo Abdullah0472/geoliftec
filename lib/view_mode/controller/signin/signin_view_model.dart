@@ -93,7 +93,9 @@ class SignInViewModel extends GetxController {
         bearerToken = data['data']['bearer_token'];
         Utils.snackBar('Login Successful', 'Welcome');
         Get.toNamed(RouteName.bottomNavBarView);
-        updateFcmToken(getFCMToken.toString());
+        String? fcmToken = await getFCMToken();
+        updateFcmToken(fcmToken!);
+        print("The FCM TOKEN IS: $fcmToken");
       } else if (response.statusCode == 401) {
         Utils.snackBar('Login Failed', 'Invalid email or password');
       } else {
