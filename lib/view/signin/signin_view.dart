@@ -5,7 +5,7 @@ import 'package:geoliftec/res/components/widgets/formfield/input_email_widget.da
 import 'package:get/get.dart';
 import '../../res/components/widgets/buttons/round_button_widget.dart';
 import '../../res/components/widgets/formfield/input_password_widget.dart';
-import '../../res/routes/routes_name.dart';
+
 import '../../view_mode/controller/signin/signin_view_model.dart';
 
 class SignInView extends StatefulWidget {

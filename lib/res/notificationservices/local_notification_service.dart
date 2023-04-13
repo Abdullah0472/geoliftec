@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationService {
@@ -6,19 +7,17 @@ class LocalNotificationService {
   FlutterLocalNotificationsPlugin();
 
   static Future<String?> initialize() async {
-    // initializationSettings  for Android
+    // Initialization settings for Android
     const InitializationSettings initializationSettings =
     InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
     );
-    _notificationsPlugin.initialize(
+    await _notificationsPlugin.initialize(
       initializationSettings,
       // onSelectNotification: (String? id) async {
       //   // Handle the notification tap action
-      //   print("onSelectNotification");
-      //   if (id!.isNotEmpty) {
+      //   if (id != null && id.isNotEmpty) {
       //     print("Router Value1234 $id");
-      //
       //     // Navigate to the desired screen with the provided ID
       //     // Example:
       //     // Navigator.of(context).push(
@@ -33,11 +32,13 @@ class LocalNotificationService {
     );
     // Retrieve FCM token
     String? fcmToken = await FirebaseMessaging.instance.getToken();
-    print('Firebase Cloud Messaging token: $fcmToken');
+    if (kDebugMode) {
+      print('Firebase Cloud Messaging token: $fcmToken');
+    }
     return fcmToken;
   }
 
-  static void createanddisplaynotification(RemoteMessage message) async {
+  static void createAndDisplayNotification(RemoteMessage message) async {
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(
@@ -56,9 +57,10 @@ class LocalNotificationService {
         notificationDetails,
         payload: message.data['_id'],
       );
-    } on Exception catch (e) {
-      print(e);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to create and display notification: $e');
+      }
     }
   }
-
 }

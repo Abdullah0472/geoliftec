@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.geoliftec">
+    package="geoliftec.com">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="geoliftec"
@@ -23,7 +23,7 @@
               />
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="pushnotificationgeoliftec"/>
+                android:value="taxi2cardiffchat-bc1df"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

@@ -1,17 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/res/components/widgets/card/card_design_due_inspection.dart';
-import 'package:geoliftec/res/routes/routes_name.dart';
-import 'package:geoliftec/view/bottomNavigationBar/bottomNavigationBar_view.dart';
-
 import 'package:geoliftec/view_mode/controller/custom_inspection_detail/custom_inspection_detail_view_model.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../res/colors/colors.dart';
 import '../../res/components/widgets/buttons/round_button_widget.dart';
-
 import '../../view_mode/controller/custom_inspection/custom_inspection_view_model.dart';
-import '../custom_inspection/custom_inspection_view.dart';
+
 
 
 class CustomInspectionDetailView extends StatelessWidget {

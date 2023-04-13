@@ -11,9 +11,9 @@ import 'package:geoliftec/view/splash/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   await Firebase.initializeApp();
   LocalNotificationService.initialize();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   FirebaseMessaging.onMessage.listen(
         (message) {
       if (message.notification != null) {
@@ -23,7 +23,7 @@ void main() async {
         print('Body: $body');
 
         // Show local notification using flutter_local_notifications plugin
-        LocalNotificationService.createanddisplaynotification(message);
+        LocalNotificationService.createAndDisplayNotification(message);
       }
     },
   );

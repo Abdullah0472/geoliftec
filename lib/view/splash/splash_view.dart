@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -7,7 +8,11 @@ import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/notificationservices/local_notification_service.dart';
 import '../../res/routes/routes_name.dart';
+import '../../view_mode/controller/custom_inspection/custom_inspection_view_model.dart';
 import '../../view_mode/controller/signin/signin_view_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../custom_inspection/custom_inspection_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -17,107 +22,137 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //  Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+  final signInVM = Get.put(SignInViewModel());
+  // final CustomInspectionViewModel controller =
+  //     Get.put(CustomInspectionViewModel());
+
+
+  // callApiAndReceiveNotifications(final int id) async {
+  //   try {
+  //     // Make the HTTP request to the API
+  //     final response = await http.get(Uri.parse(
+  //         'http://38.242.154.202/api/get/custom/inspection/details/$id'),
+  //       headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ${signInVM.bearerToken}'
+  //       },
+  //     );
   //
-  //   // 1. This method call when app in terminated state and you get a notification
-  //   // when you click on notification app open from terminated state and you can get notification data in this method
+  //     // Check if the response was successful
+  //     if (response.statusCode == 200) {
+  //       // Parse the response body as JSON
+  //       final responseBody = json.decode(response.body);
   //
-  //   FirebaseMessaging.instance.getInitialMessage().then(
-  //         (message) {
-  //       print("FirebaseMessaging.instance.getInitialMessage");
-  //       if (message != null) {
-  //         print("New Notification");
-  //         // if (message.data['_id'] != null) {
-  //         //   Navigator.of(context).push(
-  //         //     MaterialPageRoute(
-  //         //       builder: (context) => DemoScreen(
-  //         //         id: message.data['_id'],
-  //         //       ),
-  //         //     ),
-  //         //   );
-  //         // }
+  //       // Handle the notification data and navigate to the appropriate screen
+  //       // For example, you can extract the data from the response body and pass it to another screen
+  //      // Get.toNamed(RouteName.customInspectionView);
+  //
+  //       // Or you can handle the notification data directly in this method
+  //       if (kDebugMode) {
+  //         print('New Notification');
+  //         print('Message data: $responseBody');
   //       }
-  //     },
-  //   );
-  //
-  //   // 2. This method only call when App in forground it mean app must be opened
-  //   FirebaseMessaging.onMessage.listen(
-  //         (message) {
-  //       print("FirebaseMessaging.onMessage.listen");
-  //       if (message.notification != null) {
-  //         print(message.notification!.title);
-  //         print(message.notification!.body);
-  //         print("message.data11 ${message.data}");
-  //          LocalNotificationService.createanddisplaynotification(message);
-  //
-  //       }
-  //     },
-  //   );
-  //
-  //   // 3. This method only call when App in background and not terminated(not closed)
-  //   FirebaseMessaging.onMessageOpenedApp.listen(
-  //         (message) {
-  //       print("FirebaseMessaging.onMessageOpenedApp.listen");
-  //       if (message.notification != null) {
-  //         print(message.notification!.title);
-  //         print(message.notification!.body);
-  //         print("message.data22 ${message.data['_id']}");
-  //       }
-  //     },
-  //   );
-  //
-  //
+  //     } else {
+  //       // Handle any errors in the API response
+  //       print('API request failed with status code: ${response.statusCode}');
+  //     }
+  //   } catch (error) {
+  //     // Handle any errors that occur during the HTTP request
+  //     print('Failed to make API request: $error');
+  //   }
   // }
 
-  final signInVM = Get.put(SignInViewModel());
   @override
   void initState() {
     super.initState();
-      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+    Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+    //
+
     FirebaseMessaging.instance.getInitialMessage().then(
-          (message) {
-        // Handle notification when app is launched from terminated state
-        if (message != null) {
-          print("New Notification");
-          // Handle notification data and navigate to appropriate screen
+      (RemoteMessage? message) {
+        if (kDebugMode) {
+          print("FirebaseMessaging.instance.getInitialMessage");
         }
-      },
-    );
-   //  LocalNotificationService.initialize().then((String? fcmToken) {
-   //    // Call your LoginApi() with the obtained fcmToken
-   // signInVM.LoginApi();
-   //  });
-    FirebaseMessaging.onMessage.listen(
-          (message) {
-        // Handle notification when app is in the foreground
-        if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          // Handle notification data and show local notification
-          LocalNotificationService.createanddisplaynotification(message);
+        if (message != null) {
+          if (kDebugMode) {
+            print("New Notification");
+          }
+          // Handle the notification data and navigate to the appropriate screen
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
         }
       },
     );
 
-    FirebaseMessaging.onMessageOpenedApp.listen(
-          (message) {
-        // Handle notification when app is in the background but not terminated
+    // 2. This method only call when App in forground it mean app must be opened
+
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) {
+        if (kDebugMode) {
+          print("FirebaseMessaging.onMessage.listen");
+        }
         if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          // Handle notification data and navigate to appropriate screen
+          if (kDebugMode) {
+            print(message.notification!.title);
+          }
+          if (kDebugMode) {
+            print(message.notification!.body);
+          }
+          if (kDebugMode) {
+            print("message.data11 ${message.data}");
+          }
+          LocalNotificationService.createAndDisplayNotification(message);
         }
       },
     );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (RemoteMessage message) {
+        if (kDebugMode) {
+          print("FirebaseMessaging.onMessageOpenedApp.listen");
+        }
+        if (message.notification != null) {
+          if (kDebugMode) {
+            print(message.notification!.title);
+          }
+          if (kDebugMode) {
+            print(message.notification!.body);
+          }
+          if (kDebugMode) {
+            print("message.data22 ${message.data['_id']}");
+          }
+        }
+      },
+    );
+    // final apiResponse = controller.apiResponse.value;
+    // final data = apiResponse.data;
+    // ListView.builder(
+    //     itemCount: data.length,
+    //     itemBuilder: (context, index) {
+    //       return callApiAndReceiveNotifications(data[index].id);
+    //     });
+    // Call the method to make the API request and handle notifications
   }
+
   Future<void> getDeviceTokenToSendNotification() async {
-    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-    final token = await _fcm.getToken();
+    final FirebaseMessaging fcm = FirebaseMessaging.instance;
+    final token = await fcm.getToken();
     var deviceTokenToSendPushNotification = token.toString();
-    print("Token Value $deviceTokenToSendPushNotification");
+    if (kDebugMode) {
+      print("Token Value $deviceTokenToSendPushNotification");
+    }
   }
 
   @override
@@ -137,7 +172,7 @@ class _SplashViewState extends State<SplashView> {
               ),
             ),
             const Spacer(),
-             Padding(
+            Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -162,9 +197,10 @@ class _SplashViewState extends State<SplashView> {
                   ),
                 ],
               ),
-
             ),
-            const SizedBox(height: 10,)
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),

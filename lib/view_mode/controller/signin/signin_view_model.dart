@@ -1,14 +1,12 @@
-
-
 import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
-import '../../../res/notificationservices/local_notification_service.dart';
+import 'package:http/http.dart' as http;
 import '../../../res/routes/routes_name.dart';
 
 class SignInViewModel extends GetxController {
@@ -47,23 +45,47 @@ class SignInViewModel extends GetxController {
     }
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var bearerToken;
 
-  void LoginApi() async {
-    //String? fcmToken = await FirebaseMessaging.instance.getToken();
+  String? fcmToken; // declare a nullable variable to hold the FCM token
 
+  Future<String?> getFCMToken() async {
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    return fcmToken;
+  }
+
+  // Callback for FCM token refresh
+  void onTokenRefresh(String? token) {
+    print('FCM Token refreshed: $token');
+    fcmToken = token; // update the fcmToken variable with the new token
+  }
+
+  void setupFCMTokenRefresh() {
+    // listen for token refresh
+    FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefresh);
+  }
+
+  // ignore: non_constant_identifier_names
+  void LoginApi() async {
     try {
-     // print("FCM TOKEN IN API $fcmToken");
-      final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
+      // setupFCMTokenRefresh();
+      // String? fcmToken = await getFCMToken();
+      //
+      // if (kDebugMode) {
+      //   print("FCM TOKEN IN API $fcmToken");
+      // }
+
+      final response =
+          await post(Uri.parse('http://$baseUrl/api/login'), body: {
         'email': emailController.value.text,
         'password': passwordController.value.text,
-        //'fcm_token': fcmToken,
-
+        // 'fcm_token': fcmToken??"",
       });
-
+      // print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-       // print('Firebase Cloud Messaging token: $fcmToken');
+
         if (data['data'] == null || data['data']['bearer_token'] == null) {
           throw Exception('Unexpected response from server');
         }
@@ -71,14 +93,55 @@ class SignInViewModel extends GetxController {
         bearerToken = data['data']['bearer_token'];
         Utils.snackBar('Login Successful', 'Welcome');
         Get.toNamed(RouteName.bottomNavBarView);
+        updateFcmToken(getFCMToken.toString());
       } else if (response.statusCode == 401) {
         Utils.snackBar('Login Failed', 'Invalid email or password');
       } else {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
-      print('Error during login request: $e');
+      if (kDebugMode) {
+        print('Error during login request: $e');
+      }
       Utils.snackBar('Login Failed', 'An error occurred while logging in');
+    }
+  }
+
+  void updateFcmToken(String fcmToken) async {
+    String apiUrl = 'http://38.242.154.202/api/update/fcm/token';
+
+    // Create a request body with the fcm_token value
+    var body = {
+      "fcm_token": fcmToken,
+    };
+
+    try {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        body: jsonEncode(body), // Convert body to JSON string
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $bearerToken'
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Success! Do something with the response
+        print('FCM token updated successfully');
+      } else if (response.statusCode == 401) {
+        // Unauthorized error
+        print(
+            'Failed to update FCM token. Status code: ${response.statusCode}');
+        print('Error message: Unauthenticated');
+      } else {
+        // Handle other error responses
+        print(
+            'Failed to update FCM token. Status code: ${response.statusCode}');
+        print('Error message: ${response.body}');
+      }
+    } catch (e) {
+      // Handle network error
+      print('Failed to update FCM token. Exception: $e');
     }
   }
 }

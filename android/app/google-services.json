@@ -1,33 +1,63 @@
 {
   "project_info": {
-    "project_number": "947760502800",
-    "project_id": "pushnotificationgeoliftec",
-    "storage_bucket": "pushnotificationgeoliftec.appspot.com"
+    "project_number": "832497306233",
+    "firebase_url": "https://taxi2cardiffchat-bc1df-default-rtdb.firebaseio.com",
+    "project_id": "taxi2cardiffchat-bc1df",
+    "storage_bucket": "taxi2cardiffchat-bc1df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:947760502800:android:536afb47dd38879824d295",
+        "mobilesdk_app_id": "1:832497306233:android:606cdbc280a612acc5a2a8",
         "android_client_info": {
-          "package_name": "com.example.geoliftec"
+          "package_name": "geoliftec.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "947760502800-6mg9dcucbgb8n2q89bkvqqv13unqq9cr.apps.googleusercontent.com",
+          "client_id": "832497306233-kld5iok984s37s02ft3id4bjf4va9lq4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBcGo-p0Qmct0wIbWLdR1dgl-5opTkzlXc"
+          "current_key": "AIzaSyDWlaOW6bdbiPiR2Py3KaIfbpkErD3kwiY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "947760502800-6mg9dcucbgb8n2q89bkvqqv13unqq9cr.apps.googleusercontent.com",
+              "client_id": "832497306233-kld5iok984s37s02ft3id4bjf4va9lq4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832497306233:android:951160adb50dbe0ac5a2a8",
+        "android_client_info": {
+          "package_name": "taxi2cardiff.test.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832497306233-kld5iok984s37s02ft3id4bjf4va9lq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWlaOW6bdbiPiR2Py3KaIfbpkErD3kwiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832497306233-kld5iok984s37s02ft3id4bjf4va9lq4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

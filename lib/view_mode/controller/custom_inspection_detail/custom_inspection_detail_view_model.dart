@@ -136,9 +136,7 @@ class CustomInspectionDetailViewModel extends GetxController {
 
   ///
   ///
-
   /// Sending Data without Model
-
   Future<void> updateInspectionDetail(
       List<Map<String, dynamic>> inspectionDetails) async {
     try {
@@ -186,8 +184,8 @@ class CustomInspectionDetailViewModel extends GetxController {
         print("Exception occur: ${e.toString()}");
       }
       // Handle the unexpected response format here
-      Utils.snackBar("Error", "Unexpected response format. Please try again later.");
+      Utils.snackBar(
+          "Error", "Unexpected response format. Please try again later.");
     }
   }
-
 }
