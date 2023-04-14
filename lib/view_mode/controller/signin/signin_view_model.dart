@@ -57,7 +57,9 @@ class SignInViewModel extends GetxController {
 
   // Callback for FCM token refresh
   void onTokenRefresh(String? token) {
-    print('FCM Token refreshed: $token');
+    if (kDebugMode) {
+      print('FCM Token refreshed: $token');
+    }
     fcmToken = token; // update the fcmToken variable with the new token
   }
 
@@ -69,12 +71,7 @@ class SignInViewModel extends GetxController {
   // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
-      // setupFCMTokenRefresh();
-      // String? fcmToken = await getFCMToken();
-      //
-      // if (kDebugMode) {
-      //   print("FCM TOKEN IN API $fcmToken");
-      // }
+
 
       final response =
           await post(Uri.parse('http://$baseUrl/api/login'), body: {
@@ -95,7 +92,9 @@ class SignInViewModel extends GetxController {
         Get.toNamed(RouteName.bottomNavBarView);
         String? fcmToken = await getFCMToken();
         updateFcmToken(fcmToken!);
-        print("The FCM TOKEN IS: $fcmToken");
+        if (kDebugMode) {
+          print("The FCM TOKEN IS: $fcmToken");
+        }
       } else if (response.statusCode == 401) {
         Utils.snackBar('Login Failed', 'Invalid email or password');
       } else {
@@ -110,7 +109,7 @@ class SignInViewModel extends GetxController {
   }
 
   void updateFcmToken(String fcmToken) async {
-    String apiUrl = 'http://38.242.154.202/api/update/fcm/token';
+    String apiUrl = 'http://$baseUrl/api/update/fcm/token';
 
     // Create a request body with the fcm_token value
     var body = {
@@ -129,21 +128,33 @@ class SignInViewModel extends GetxController {
 
       if (response.statusCode == 200) {
         // Success! Do something with the response
-        print('FCM token updated successfully');
+        if (kDebugMode) {
+          print('FCM token updated successfully');
+        }
       } else if (response.statusCode == 401) {
         // Unauthorized error
-        print(
+        if (kDebugMode) {
+          print(
             'Failed to update FCM token. Status code: ${response.statusCode}');
-        print('Error message: Unauthenticated');
+        }
+        if (kDebugMode) {
+          print('Error message: Unauthenticated');
+        }
       } else {
         // Handle other error responses
-        print(
+        if (kDebugMode) {
+          print(
             'Failed to update FCM token. Status code: ${response.statusCode}');
-        print('Error message: ${response.body}');
+        }
+        if (kDebugMode) {
+          print('Error message: ${response.body}');
+        }
       }
     } catch (e) {
       // Handle network error
-      print('Failed to update FCM token. Exception: $e');
+      if (kDebugMode) {
+        print('Failed to update FCM token. Exception: $e');
+      }
     }
   }
 }

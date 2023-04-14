@@ -1,4 +1,3 @@
-
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
@@ -11,8 +10,6 @@ import '../../res/colors/colors.dart';
 import '../../res/components/widgets/appBar/appBar_widget.dart';
 import '../../res/components/widgets/card/card_profile_widget.dart';
 
-
-
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
   final profileVM = Get.put(ProfileViewModel());
@@ -20,8 +17,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<List<Data>>(
         future: profileVM.fetchProfileData(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -56,8 +52,7 @@ class ProfileView extends StatelessWidget {
                             info: profiledetail.address,
                             icons: MdiIcons.mapMarker),
                         CardProfileDesign(
-                            info: profiledetail.email,
-                            icons: MdiIcons.email),
+                            info: profiledetail.email, icons: MdiIcons.email),
                         CardProfileDesign(
                             info: profiledetail.phone,
                             icons: MdiIcons.contacts),

@@ -21,13 +21,13 @@ class AppRoutes {
         ),
         GetPage(
           name: RouteName.signInView,
-          page: () => const SignInView(),
+          page: () =>  SignInView(),
           transitionDuration: const Duration(milliseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
         GetPage(
           name: RouteName.reviewView,
-          page: () => const ReviewView(),
+          page: () => ReviewView(),
           transitionDuration: const Duration(milliseconds: 250),
           transition: Transition.rightToLeftWithFade,
         ),

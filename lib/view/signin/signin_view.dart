@@ -8,16 +8,14 @@ import '../../res/components/widgets/formfield/input_password_widget.dart';
 
 import '../../view_mode/controller/signin/signin_view_model.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class SignInView extends StatelessWidget {
+  SignInView({Key? key}) : super(key: key);
 
-  @override
-  State<SignInView> createState() => _SignInViewState();
-}
-
-class _SignInViewState extends State<SignInView> {
   final signInVM = Get.put(SignInViewModel());
+
   GlobalKey<FormState> signinformkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

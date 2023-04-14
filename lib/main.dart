@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
@@ -19,8 +20,12 @@ void main() async {
       if (message.notification != null) {
         String title = message.notification!.title ?? 'Notification';
         String body = message.notification!.body ?? 'You have a new notification';
-        print('Title: $title');
-        print('Body: $body');
+        if (kDebugMode) {
+          print('Title: $title');
+        }
+        if (kDebugMode) {
+          print('Body: $body');
+        }
 
         // Show local notification using flutter_local_notifications plugin
         LocalNotificationService.createAndDisplayNotification(message);
@@ -38,12 +43,18 @@ void main() async {
     badge: true,
     sound: true,
   );
-  print('User granted permission: ${settings.authorizationStatus}');
+  if (kDebugMode) {
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
 }
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.title);
+  if (kDebugMode) {
+    print(message.data.toString());
+  }
+  if (kDebugMode) {
+    print(message.notification!.title);
+  }
 }
 
 String baseUrl = "38.242.154.202";

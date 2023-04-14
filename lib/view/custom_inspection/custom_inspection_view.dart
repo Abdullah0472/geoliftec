@@ -5,14 +5,9 @@ import 'package:geoliftec/view_mode/controller/custom_inspection_detail/custom_i
 import 'package:get/get.dart';
 import '../../res/colors/colors.dart';
 
-class CustomInspectionView extends StatefulWidget {
-  const CustomInspectionView({Key? key}) : super(key: key);
+class CustomInspectionView extends StatelessWidget {
+  CustomInspectionView({Key? key}) : super(key: key);
 
-  @override
-  State<CustomInspectionView> createState() => _CustomInspectionViewState();
-}
-
-class _CustomInspectionViewState extends State<CustomInspectionView> {
   final CustomInspectionViewModel controller =
       Get.put(CustomInspectionViewModel());
 

@@ -6,17 +6,13 @@ import '../../res/components/widgets/card/card_design_widget.dart';
 import '../../res/components/widgets/buttons/round_button_widget.dart';
 import '../../view_mode/controller/review/review_view_model.dart';
 
-class ReviewView extends StatefulWidget {
-  const ReviewView({Key? key}) : super(key: key);
+class ReviewView extends StatelessWidget {
+   ReviewView({Key? key}) : super(key: key);
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _ReviewViewState createState() => _ReviewViewState();
-}
-
-class _ReviewViewState extends State<ReviewView> {
   final _formKey = GlobalKey<FormState>();
+
   final reviewVM = Get.put(ReviewViewModel());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

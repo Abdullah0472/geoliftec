@@ -8,14 +8,12 @@ import '../../res/colors/colors.dart';
 import '../../res/components/widgets/buttons/round_button_widget.dart';
 import '../../view_mode/controller/custom_inspection/custom_inspection_view_model.dart';
 
-
-
 class CustomInspectionDetailView extends StatelessWidget {
   final int id;
   final formKey = GlobalKey<FormState>();
   CustomInspectionDetailView({Key? key, required this.id}) : super(key: key);
   final CustomInspectionViewModel customInspectionController =
-  Get.put(CustomInspectionViewModel());
+      Get.put(CustomInspectionViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +86,8 @@ class CustomInspectionDetailView extends StatelessWidget {
                             inspectionDetails.add(detail);
                           }
                           try {
-                            await controller.updateInspectionDetail(inspectionDetails);
+                            await controller
+                                .updateInspectionDetail(inspectionDetails);
                             for (var controller in dropDownControllers) {
                               controller.clear();
                             } // Clear drop-down controllers
@@ -98,19 +97,17 @@ class CustomInspectionDetailView extends StatelessWidget {
                             await customInspectionController.fetchData();
                             //   Get.back();
                             // Get.off(() => BottomNavigationBarView());
-
                           } catch (e) {
                             // Handle the exception here
                             if (kDebugMode) {
                               print('Error: $e');
                             }
                             // Show an error message or take appropriate action
-                          }// Navigate to CustomInspectionView
+                          } // Navigate to CustomInspectionView
                         }
                       },
                       title: "All Checked",
                     ),
-
                     const SizedBox(
                       height: 30,
                     ),

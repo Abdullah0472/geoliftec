@@ -1,21 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:geoliftec/main.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-
 import '../../../model/custom_inspection_detail/custom_inspection_detail_model.dart';
-
 import '../../../res/routes/routes_name.dart';
 import '../../../utils/utils.dart';
 import '../signin/signin_view_model.dart';
 
 class CustomInspectionDetailViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
-  final String baseUrl = 'http://38.242.154.202/api';
+  final String baseurl = 'http://$baseUrl/api';
   final Rx<CustomInspectionDetailModel> apiResponse =
       CustomInspectionDetailModel(
               statusCode: 0, message: 'Loading', data: [], error: '')
@@ -25,7 +22,7 @@ class CustomInspectionDetailViewModel extends GetxController {
     apiResponse.value = CustomInspectionDetailModel(
         statusCode: 0, message: 'Loading', data: [], error: '');
     final response = await http.get(
-      Uri.parse('$baseUrl/get/custom/inspection/details/$id'),
+      Uri.parse('$baseurl/get/custom/inspection/details/$id'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${signInVM.bearerToken}'
@@ -56,7 +53,7 @@ class CustomInspectionDetailViewModel extends GetxController {
     }
   }
 
-  ///
+  /// =====================  Trying With Model ====================== ///
 //   Future<void> updateInspectionDetail(int id, String condition, String remark) async {
 //     apiResponse.value = CustomInspectionSendingDetailModel(statusCode: 0, message: '', error: '', data: []) as CustomInspectionDetailModel;
 //     try {
@@ -134,15 +131,14 @@ class CustomInspectionDetailViewModel extends GetxController {
 //     }
 //   }
 
-  ///
-  ///
-  /// Sending Data without Model
+  /// =====================  Trying With Model ====================== ///
+
+  ///======================= Sending Data without Model ================== ///
   Future<void> updateInspectionDetail(
       List<Map<String, dynamic>> inspectionDetails) async {
     try {
       final response = await post(
-          Uri.parse(
-              'http://38.242.154.202/api/store/custom/inspection/details'),
+          Uri.parse('http://$baseUrl/api/store/custom/inspection/details'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ${signInVM.bearerToken}'
@@ -166,7 +162,10 @@ class CustomInspectionDetailViewModel extends GetxController {
           middleText: "Successfully Data Uploaded",
           barrierDismissible: false,
           confirm: ElevatedButton(
-            onPressed: () => Get.back(),
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
             child: const Text("OK"),
           ),
         );
@@ -188,4 +187,6 @@ class CustomInspectionDetailViewModel extends GetxController {
           "Error", "Unexpected response format. Please try again later.");
     }
   }
+
+  ///======================= Sending Data without Model ================== ///
 }

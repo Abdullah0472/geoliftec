@@ -8,11 +8,7 @@ import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/notificationservices/local_notification_service.dart';
 import '../../res/routes/routes_name.dart';
-import '../../view_mode/controller/custom_inspection/custom_inspection_view_model.dart';
 import '../../view_mode/controller/signin/signin_view_model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../custom_inspection/custom_inspection_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -23,44 +19,6 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   final signInVM = Get.put(SignInViewModel());
-  // final CustomInspectionViewModel controller =
-  //     Get.put(CustomInspectionViewModel());
-
-
-  // callApiAndReceiveNotifications(final int id) async {
-  //   try {
-  //     // Make the HTTP request to the API
-  //     final response = await http.get(Uri.parse(
-  //         'http://38.242.154.202/api/get/custom/inspection/details/$id'),
-  //       headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ${signInVM.bearerToken}'
-  //       },
-  //     );
-  //
-  //     // Check if the response was successful
-  //     if (response.statusCode == 200) {
-  //       // Parse the response body as JSON
-  //       final responseBody = json.decode(response.body);
-  //
-  //       // Handle the notification data and navigate to the appropriate screen
-  //       // For example, you can extract the data from the response body and pass it to another screen
-  //      // Get.toNamed(RouteName.customInspectionView);
-  //
-  //       // Or you can handle the notification data directly in this method
-  //       if (kDebugMode) {
-  //         print('New Notification');
-  //         print('Message data: $responseBody');
-  //       }
-  //     } else {
-  //       // Handle any errors in the API response
-  //       print('API request failed with status code: ${response.statusCode}');
-  //     }
-  //   } catch (error) {
-  //     // Handle any errors that occur during the HTTP request
-  //     print('Failed to make API request: $error');
-  //   }
-  // }
 
   @override
   void initState() {
@@ -136,24 +94,16 @@ class _SplashViewState extends State<SplashView> {
         }
       },
     );
-    // final apiResponse = controller.apiResponse.value;
-    // final data = apiResponse.data;
-    // ListView.builder(
-    //     itemCount: data.length,
-    //     itemBuilder: (context, index) {
-    //       return callApiAndReceiveNotifications(data[index].id);
-    //     });
-    // Call the method to make the API request and handle notifications
   }
 
-  Future<void> getDeviceTokenToSendNotification() async {
-    final FirebaseMessaging fcm = FirebaseMessaging.instance;
-    final token = await fcm.getToken();
-    var deviceTokenToSendPushNotification = token.toString();
-    if (kDebugMode) {
-      print("Token Value $deviceTokenToSendPushNotification");
-    }
-  }
+  // Future<void> getDeviceTokenToSendNotification() async {
+  //   final FirebaseMessaging fcm = FirebaseMessaging.instance;
+  //   final token = await fcm.getToken();
+  //   var deviceTokenToSendPushNotification = token.toString();
+  //   if (kDebugMode) {
+  //     print("Token Value $deviceTokenToSendPushNotification");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
