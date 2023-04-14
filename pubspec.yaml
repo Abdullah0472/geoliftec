@@ -51,6 +51,7 @@ dependencies:
   http:
   #Shared Preference
   shared_preferences: ^2.1.0
+  flutter_secure_storage: ^8.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

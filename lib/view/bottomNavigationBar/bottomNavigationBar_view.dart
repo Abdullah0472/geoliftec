@@ -57,7 +57,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
     // Close application
     // SystemNavigator.pop();
-    exit(0);
+
   }
 
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class SignInViewModel extends GetxController {
     FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefresh);
   }
 
-  // ignore: non_constant_identifier_names
+ // ignore: non_constant_identifier_names
 void LoginApi() async {
   try {
     final response =
@@ -106,11 +107,62 @@ void LoginApi() async {
     Utils.snackBar('Login Failed', 'An error occurred while logging in');
   }
 }
+/// ========================== Shared Preference =============== ///
+//   void LoginApi() async {
+//     try {
+//       final response =
+//           await post(Uri.parse('http://$baseUrl/api/login'), body: {
+//         'email': emailController.value.text,
+//         'password': passwordController.value.text,
+//       });
+//
+//       if (response.statusCode == 200) {
+//         final data = jsonDecode(response.body);
+//
+//         if (data['data'] == null || data['data']['bearer_token'] == null) {
+//           throw Exception('Unexpected response from server');
+//         }
+//
+//         String bearerToken = data['data']['bearer_token'];
+//
+//         // Store the bearer token and login status in SharedPreferences
+//         SharedPreferences prefs = await SharedPreferences.getInstance();
+//         await prefs.setString('bearerToken', bearerToken);
+//         await prefs.setBool('isLoggedIn', true);
+//
+//         Utils.snackBar('Login Successful', 'Welcome');
+//
+//         // Set the bearer token in the API client for subsequent requests
+//         // ApiClient.instance.setBearerToken(bearerToken);
+//
+//         // Navigate to the bottomNavBarView
+//         Get.toNamed(RouteName.bottomNavBarView);
+//
+//         // Update FCM token
+//         String? fcmToken = await getFCMToken();
+//         updateFcmToken(fcmToken!);
+//         if (kDebugMode) {
+//           print("The FCM TOKEN IS: $fcmToken");
+//         }
+//       } else if (response.statusCode == 401) {
+//         Utils.snackBar('Login Failed', 'Invalid email or password');
+//       } else {
+//         throw Exception('Unexpected response from server');
+//       }
+//     } catch (e) {
+//       if (kDebugMode) {
+//         print('Error during login request: $e');
+//       }
+//       Utils.snackBar('Login Failed', 'An error occurred while logging in');
+//     }
+//   }
 
-  // void LoginApi() async {
+  /// ========================= FlutterSecureStorage =============== ///
+  // final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  //
+  // void loginApi() async {
   //   try {
-  //     final response =
-  //         await post(Uri.parse('http://$baseUrl/api/login'), body: {
+  //     final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
   //       'email': emailController.value.text,
   //       'password': passwordController.value.text,
   //     });
@@ -124,15 +176,13 @@ void LoginApi() async {
   //
   //       String bearerToken = data['data']['bearer_token'];
   //
-  //       // Store the bearer token and login status in SharedPreferences
-  //       SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       await prefs.setString('bearerToken', bearerToken);
-  //       await prefs.setBool('isLoggedIn', true);
+  //       // Store the bearer token and login status in secure storage
+  //       await secureStorage.write(key: 'bearerToken', value: bearerToken);
+  //       await secureStorage.write(key: 'isLoggedIn', value: 'true');
   //
   //       Utils.snackBar('Login Successful', 'Welcome');
   //
-  //       // Set the bearer token in the API client for subsequent requests
-  //       // ApiClient.instance.setBearerToken(bearerToken);
+  //
   //
   //       // Navigate to the bottomNavBarView
   //       Get.toNamed(RouteName.bottomNavBarView);

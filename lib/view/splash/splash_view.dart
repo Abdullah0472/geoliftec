@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/notificationservices/local_notification_service.dart';
@@ -25,7 +26,6 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
      super.initState();
      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
-    // super.initState();
     // checkLoginStatus(); // Check login status when the view is initialized
 
     // 1. This method call when app in terminated state and you get a notification
@@ -98,7 +98,7 @@ class _SplashViewState extends State<SplashView> {
       },
     );
   }
-
+ /// ============== Shared Preference ===============///
   // Future<void> checkLoginStatus() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String? bearerToken = prefs.getString('bearerToken');
@@ -114,6 +114,26 @@ class _SplashViewState extends State<SplashView> {
   //     // You can also clear the bearer token and login status from SharedPreferences here
   //     prefs.remove('bearerToken');
   //     prefs.setBool('isLoggedIn', false);
+  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+  //   }
+  // }
+
+  ///=============== FlutterSecureStorage ================ ///
+  // Future<void> checkLoginStatus() async {
+  //   const storage = FlutterSecureStorage();
+  //   String? bearerToken = await storage.read(key: 'bearerToken');
+  //   bool isLoggedIn = await storage.read(key: 'isLoggedIn') == 'true';
+  //
+  //   if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty) {
+  //     // User is logged in and bearer token is present
+  //     // Navigate to BottomNavigationBarView
+  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
+  //   } else {
+  //     // User is not logged in or bearer token is not valid
+  //     // Navigate to SignInView
+  //     // You can also clear the bearer token and login status from FlutterSecureStorage here
+  //     // await storage.delete(key: 'bearerToken');
+  //     // await storage.write(key: 'isLoggedIn', value: 'false');
   //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
   //   }
   // }

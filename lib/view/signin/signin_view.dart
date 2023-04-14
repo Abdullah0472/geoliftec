@@ -76,7 +76,8 @@ class SignInView extends StatelessWidget {
                         height: Get.height * 0.06,
                         onPress: () {
                           if (signinformkey.currentState!.validate()) {
-                            signInVM.LoginApi();
+                           signInVM.LoginApi();
+                           // signInVM.loginApi();
                             signInVM.emailController.value.clear();
                             signInVM.passwordController.value.clear();
                           }
