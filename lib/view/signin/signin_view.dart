@@ -5,11 +5,13 @@ import 'package:geoliftec/res/components/widgets/formfield/input_email_widget.da
 import 'package:get/get.dart';
 import '../../res/components/widgets/buttons/round_button_widget.dart';
 import '../../res/components/widgets/formfield/input_password_widget.dart';
+import 'package:flutter/services.dart';
 
 import '../../view_mode/controller/signin/signin_view_model.dart';
 
 // ignore: must_be_immutable
 class SignInView extends StatelessWidget {
+
   SignInView({Key? key}) : super(key: key);
 
   final signInVM = Get.put(SignInViewModel());
@@ -87,6 +89,9 @@ class SignInView extends StatelessWidget {
           ),
         ),
       )),
+
     );
+
   }
+
 }

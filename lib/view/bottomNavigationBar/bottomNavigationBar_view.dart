@@ -1,5 +1,8 @@
 // ignore: file_names
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
 import 'package:geoliftec/view/custom_inspection/custom_inspection_view.dart';
 import 'package:geoliftec/view/dashboard/dashboard_view.dart';
@@ -42,11 +45,21 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
   ];
 
+  // _onItemTapped(var index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
   _onItemTapped(var index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Close application
+    // SystemNavigator.pop();
+    exit(0);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +74,13 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
           curve: Curves.easeIn,
           onItemSelected: _onItemTapped,
           type: BottomNavigationBarType.fixed,
+          // onTap: () {
+          //   Get.to(() => _onItemTapped);
+          // },
           onTap: () {
-            Get.to(() => _onItemTapped);
+            _onItemTapped(_selectedIndex);
           },
+
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
               icon: const Icon(

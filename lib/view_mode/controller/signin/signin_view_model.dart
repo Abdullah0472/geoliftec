@@ -7,6 +7,7 @@ import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../res/routes/routes_name.dart';
 
 class SignInViewModel extends GetxController {
@@ -69,44 +70,91 @@ class SignInViewModel extends GetxController {
   }
 
   // ignore: non_constant_identifier_names
-  void LoginApi() async {
-    try {
+void LoginApi() async {
+  try {
+    final response =
+        await post(Uri.parse('http://$baseUrl/api/login'), body: {
+      'email': emailController.value.text,
+      'password': passwordController.value.text,
+      // 'fcm_token': fcmToken??"",
+    });
+    // print(response.body);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
 
-
-      final response =
-          await post(Uri.parse('http://$baseUrl/api/login'), body: {
-        'email': emailController.value.text,
-        'password': passwordController.value.text,
-        // 'fcm_token': fcmToken??"",
-      });
-      // print(response.body);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data['data'] == null || data['data']['bearer_token'] == null) {
-          throw Exception('Unexpected response from server');
-        }
-
-        bearerToken = data['data']['bearer_token'];
-        Utils.snackBar('Login Successful', 'Welcome');
-        Get.toNamed(RouteName.bottomNavBarView);
-        String? fcmToken = await getFCMToken();
-        updateFcmToken(fcmToken!);
-        if (kDebugMode) {
-          print("The FCM TOKEN IS: $fcmToken");
-        }
-      } else if (response.statusCode == 401) {
-        Utils.snackBar('Login Failed', 'Invalid email or password');
-      } else {
+      if (data['data'] == null || data['data']['bearer_token'] == null) {
         throw Exception('Unexpected response from server');
       }
-    } catch (e) {
+
+      bearerToken = data['data']['bearer_token'];
+      Utils.snackBar('Login Successful', 'Welcome');
+      Get.toNamed(RouteName.bottomNavBarView);
+      String? fcmToken = await getFCMToken();
+      updateFcmToken(fcmToken!);
       if (kDebugMode) {
-        print('Error during login request: $e');
+        print("The FCM TOKEN IS: $fcmToken");
       }
-      Utils.snackBar('Login Failed', 'An error occurred while logging in');
+    } else if (response.statusCode == 401) {
+      Utils.snackBar('Login Failed', 'Invalid email or password');
+    } else {
+      throw Exception('Unexpected response from server');
     }
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error during login request: $e');
+    }
+    Utils.snackBar('Login Failed', 'An error occurred while logging in');
   }
+}
+
+  // void LoginApi() async {
+  //   try {
+  //     final response =
+  //         await post(Uri.parse('http://$baseUrl/api/login'), body: {
+  //       'email': emailController.value.text,
+  //       'password': passwordController.value.text,
+  //     });
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //
+  //       if (data['data'] == null || data['data']['bearer_token'] == null) {
+  //         throw Exception('Unexpected response from server');
+  //       }
+  //
+  //       String bearerToken = data['data']['bearer_token'];
+  //
+  //       // Store the bearer token and login status in SharedPreferences
+  //       SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       await prefs.setString('bearerToken', bearerToken);
+  //       await prefs.setBool('isLoggedIn', true);
+  //
+  //       Utils.snackBar('Login Successful', 'Welcome');
+  //
+  //       // Set the bearer token in the API client for subsequent requests
+  //       // ApiClient.instance.setBearerToken(bearerToken);
+  //
+  //       // Navigate to the bottomNavBarView
+  //       Get.toNamed(RouteName.bottomNavBarView);
+  //
+  //       // Update FCM token
+  //       String? fcmToken = await getFCMToken();
+  //       updateFcmToken(fcmToken!);
+  //       if (kDebugMode) {
+  //         print("The FCM TOKEN IS: $fcmToken");
+  //       }
+  //     } else if (response.statusCode == 401) {
+  //       Utils.snackBar('Login Failed', 'Invalid email or password');
+  //     } else {
+  //       throw Exception('Unexpected response from server');
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print('Error during login request: $e');
+  //     }
+  //     Utils.snackBar('Login Failed', 'An error occurred while logging in');
+  //   }
+  // }
 
   void updateFcmToken(String fcmToken) async {
     String apiUrl = 'http://$baseUrl/api/update/fcm/token';
@@ -135,7 +183,7 @@ class SignInViewModel extends GetxController {
         // Unauthorized error
         if (kDebugMode) {
           print(
-            'Failed to update FCM token. Status code: ${response.statusCode}');
+              'Failed to update FCM token. Status code: ${response.statusCode}');
         }
         if (kDebugMode) {
           print('Error message: Unauthenticated');
@@ -144,7 +192,7 @@ class SignInViewModel extends GetxController {
         // Handle other error responses
         if (kDebugMode) {
           print(
-            'Failed to update FCM token. Status code: ${response.statusCode}');
+              'Failed to update FCM token. Status code: ${response.statusCode}');
         }
         if (kDebugMode) {
           print('Error message: ${response.body}');

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/notificationservices/local_notification_service.dart';
@@ -22,8 +23,10 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   void initState() {
-    super.initState();
-    Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+     super.initState();
+     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+    // super.initState();
+    // checkLoginStatus(); // Check login status when the view is initialized
 
     // 1. This method call when app in terminated state and you get a notification
     // when you click on notification app open from terminated state and you can get notification data in this method
@@ -96,12 +99,22 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-  // Future<void> getDeviceTokenToSendNotification() async {
-  //   final FirebaseMessaging fcm = FirebaseMessaging.instance;
-  //   final token = await fcm.getToken();
-  //   var deviceTokenToSendPushNotification = token.toString();
-  //   if (kDebugMode) {
-  //     print("Token Value $deviceTokenToSendPushNotification");
+  // Future<void> checkLoginStatus() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? bearerToken = prefs.getString('bearerToken');
+  //   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  //
+  //   if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty) {
+  //     // User is logged in and bearer token is present
+  //     // Navigate to BottomNavigationBarView
+  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
+  //   } else {
+  //     // User is not logged in or bearer token is not valid
+  //     // Navigate to SignInView
+  //     // You can also clear the bearer token and login status from SharedPreferences here
+  //     prefs.remove('bearerToken');
+  //     prefs.setBool('isLoggedIn', false);
+  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
   //   }
   // }
 
