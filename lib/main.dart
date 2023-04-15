@@ -83,22 +83,26 @@ class MyApp extends StatelessWidget {
           const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
         ],
       ),
-      home: WillPopScope(
-          onWillPop: _onBackButtonPressed,
-          // onWillPop: () async {
-          //   return false;
-          // },
-          // child: const SplashView(),
-          child: SignInView()),
+      defaultTransition: Transition.native, // Enable native transitions
+      popGesture: true,
+      home: const SplashView(),
+      // BottomNavigationBarView(),
+      // WillPopScope(
+      //     onWillPop: _onBackButtonPressed,
+      //     // onWillPop: () async {
+      //     //   return false;
+      //     // },
+      //     // child: const SplashView(),
+      //     child: SignInView()),
       getPages: AppRoutes.appRoutes(),
     );
   }
 
-  Future<bool> _onBackButtonPressed() {
-    // Close application
-    SystemNavigator.pop();
-
-    // Return false to allow back button press event to be propagated
-    return Future.value(true);
-  }
+  // Future<bool> _onBackButtonPressed() {
+  //   // Close application
+  //   SystemNavigator.pop();
+  //
+  //   // Return false to allow back button press event to be propagated
+  //   return Future.value(true);
+  // }
 }

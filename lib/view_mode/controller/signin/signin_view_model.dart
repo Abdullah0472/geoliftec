@@ -70,7 +70,7 @@ class SignInViewModel extends GetxController {
     FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefresh);
   }
 
- // ignore: non_constant_identifier_names
+ //ignore: non_constant_identifier_names
 void LoginApi() async {
   try {
     final response =
@@ -107,7 +107,21 @@ void LoginApi() async {
     Utils.snackBar('Login Failed', 'An error occurred while logging in');
   }
 }
+
+
 /// ========================== Shared Preference =============== ///
+//   Future<void> storeBearerToken(String bearertoken) async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     await prefs.setString('bearerToken', bearertoken);
+//   }
+//
+//   Future<String?> getBearerToken() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     return prefs.getString('bearerToken');
+//   }
+//
+//
+//   // ignore: non_constant_identifier_names
 //   void LoginApi() async {
 //     try {
 //       final response =
@@ -123,12 +137,19 @@ void LoginApi() async {
 //           throw Exception('Unexpected response from server');
 //         }
 //
-//         String bearerToken = data['data']['bearer_token'];
+//        final String bearerToken = data['data']['bearer_token'];
 //
+//      // storeBearerToken(bearerToken);
+//      // String getToken = getBearerToken().toString();
+//      // print("The Bareer Token in Shared Prefence ${getToken}");
+//
+//         String? fcmToken = await getFCMToken();
+//         updateFcmToken(fcmToken!);
 //         // Store the bearer token and login status in SharedPreferences
 //         SharedPreferences prefs = await SharedPreferences.getInstance();
 //         await prefs.setString('bearerToken', bearerToken);
 //         await prefs.setBool('isLoggedIn', true);
+//         await prefs.setString('fcm_token', fcmToken);
 //
 //         Utils.snackBar('Login Successful', 'Welcome');
 //
@@ -139,8 +160,7 @@ void LoginApi() async {
 //         Get.toNamed(RouteName.bottomNavBarView);
 //
 //         // Update FCM token
-//         String? fcmToken = await getFCMToken();
-//         updateFcmToken(fcmToken!);
+//
 //         if (kDebugMode) {
 //           print("The FCM TOKEN IS: $fcmToken");
 //         }
@@ -175,10 +195,12 @@ void LoginApi() async {
   //       }
   //
   //       String bearerToken = data['data']['bearer_token'];
-  //
+  //       String? fcmToken = await getFCMToken();
+  //       updateFcmToken(fcmToken!);
   //       // Store the bearer token and login status in secure storage
   //       await secureStorage.write(key: 'bearerToken', value: bearerToken);
   //       await secureStorage.write(key: 'isLoggedIn', value: 'true');
+  //       await secureStorage.write(key: 'fcm_token', value: fcmToken);
   //
   //       Utils.snackBar('Login Successful', 'Welcome');
   //
@@ -188,8 +210,7 @@ void LoginApi() async {
   //       Get.toNamed(RouteName.bottomNavBarView);
   //
   //       // Update FCM token
-  //       String? fcmToken = await getFCMToken();
-  //       updateFcmToken(fcmToken!);
+  //
   //       if (kDebugMode) {
   //         print("The FCM TOKEN IS: $fcmToken");
   //       }
@@ -206,7 +227,7 @@ void LoginApi() async {
   //   }
   // }
 
-  void updateFcmToken(String fcmToken) async {
+ updateFcmToken(String fcmToken) async {
     String apiUrl = 'http://$baseUrl/api/update/fcm/token';
 
     // Create a request body with the fcm_token value
@@ -255,4 +276,32 @@ void LoginApi() async {
       }
     }
   }
+
+  void logoutApi() async {
+    try {
+      final response = await get(Uri.parse('http://$baseUrl/api/logout'),
+          headers: {
+        'Authorization': 'Bearer $bearerToken', // Include bearer token for authentication
+      });
+      // print(response.body);
+      if (response.statusCode == 200) {
+        // Handle successful logout, e.g., clear user data, navigate to login screen
+        Utils.snackBar('Logout Successful', 'Goodbye');
+        // Clear user data, navigate to login screen
+        // Example: clear email and password controllers and navigate to login screen
+        emailController.value.clear();
+        passwordController.value.clear();
+        bearerToken = null;
+        Get.toNamed(RouteName.signInView);
+      } else {
+        throw Exception('Unexpected response from server');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error during logout request: $e');
+      }
+      Utils.snackBar('Logout Failed', 'An error occurred while logging out');
+    }
+  }
+
 }

@@ -1,9 +1,12 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/model/dashboard/dashboard_model.dart';
+import 'package:geoliftec/view_mode/controller/signin/signin_view_model.dart';
 
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 
 import '../../res/assets/images/images.dart';
@@ -14,6 +17,7 @@ import '../../view_mode/controller/dashboard/dashboard_view_model.dart';
 class DashboardView extends StatelessWidget {
   DashboardView({Key? key}) : super(key: key);
   final dashboardVM = Get.put(DashboardViewModel());
+  final signInVM = Get.put(SignInViewModel());
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<DataDashBoard>>(
@@ -27,10 +31,17 @@ class DashboardView extends StatelessWidget {
           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             List<DataDashBoard> profileList = snapshot.data!;
             DataDashBoard profiledetail = profileList[0];
-            print(profileList);
+            if (kDebugMode) {
+              print("The DashBoard Data ${profileList.toString()}");
+            }
             if (profiledetail != null) {
               return Scaffold(
                 appBar: AppBar(
+                  actions: [
+                    IconButton(onPressed: (){
+                      signInVM.logoutApi();
+                    }, icon: const Icon(MdiIcons.logout,size: 30,color: AppColor.whiteColor,))
+                  ],
                   backgroundColor: AppColor.appBarColor,
                   elevation: 0,
                   centerTitle: true,

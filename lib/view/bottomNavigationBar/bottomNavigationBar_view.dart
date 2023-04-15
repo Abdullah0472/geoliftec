@@ -33,108 +33,101 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
     /// Will Be Moving To Profile Screen
 
-    ProfileView(),
+     ProfileView(),
 
-    ///Will Be Moving To HomeView/Inspection Screen
+     ///Will Be Moving To HomeView/Inspection Screen
 
     ReviewView(),
 
-    ///Will Be Moving To Custom Inspection View Screen
+     ///Will Be Moving To Custom Inspection View Screen
 
-   CustomInspectionView(),
-
+    CustomInspectionView(),
   ];
 
-  // _onItemTapped(var index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
   _onItemTapped(var index) {
     setState(() {
       _selectedIndex = index;
     });
-
-    // Close application
-    // SystemNavigator.pop();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: CustomAnimatedBottomBar(
-          containerHeight: 75,
-          backgroundColor: AppColor.offWhite,
-          selectedIndex: _selectedIndex,
-          showElevation: true,
-          itemCornerRadius: 24,
-          curve: Curves.easeIn,
-          onItemSelected: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          // onTap: () {
-          //   Get.to(() => _onItemTapped);
-          // },
-          onTap: () {
-            _onItemTapped(_selectedIndex);
-          },
-
-          items: <BottomNavyBarItem>[
-            BottomNavyBarItem(
-              icon: const Icon(
-                MdiIcons.viewDashboard,
-                size: 34,
+    return WillPopScope(
+      // Close the app when the back button is pressed
+      onWillPop: () async {
+        // Close the app when the back button is pressed
+        SystemNavigator.pop();
+        return Future.value(false); // Return false to allow the app to close
+      },
+      child: Scaffold(
+          body: _widgetOptions.elementAt(_selectedIndex),
+          bottomNavigationBar: CustomAnimatedBottomBar(
+            containerHeight: 75,
+            backgroundColor: AppColor.offWhite,
+            selectedIndex: _selectedIndex,
+            showElevation: true,
+            itemCornerRadius: 24,
+            curve: Curves.easeIn,
+            onItemSelected: _onItemTapped,
+            type: BottomNavigationBarType.fixed,
+            onTap: () {
+              _onItemTapped(_selectedIndex);
+            },
+            items: <BottomNavyBarItem>[
+              BottomNavyBarItem(
+                icon: const Icon(
+                  MdiIcons.viewDashboard,
+                  size: 34,
+                ),
+                title: const Text(
+                  'Dashboard',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                ),
+                activeColor: const Color(0xff368fc6),
+                inactiveColor: AppColor.iconBottomNavBarColor,
+                textAlign: TextAlign.center,
               ),
-              title: const Text(
-                'Dashboard',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+              BottomNavyBarItem(
+                icon: const Icon(
+                  MdiIcons.accountCircle,
+                  size: 34,
+                ),
+                title: const Text(
+                  'Profile',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                ),
+                activeColor: AppColor.redColor,
+                inactiveColor: AppColor.iconBottomNavBarColor,
+                textAlign: TextAlign.center,
               ),
-              activeColor: const Color(0xff368fc6),
-              inactiveColor: AppColor.iconBottomNavBarColor,
-              textAlign: TextAlign.center,
-            ),
-            BottomNavyBarItem(
-              icon: const Icon(
-                MdiIcons.accountCircle,
-                size: 34,
+              BottomNavyBarItem(
+                icon: const Icon(
+                  MdiIcons.forklift,
+                  size: 34,
+                ),
+                title: const Text(
+                  'Inspection',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                ),
+                activeColor: const Color(0xfff2a23d),
+                inactiveColor: AppColor.iconBottomNavBarColor,
+                textAlign: TextAlign.center,
               ),
-              title: const Text(
-                'Profile',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+              BottomNavyBarItem(
+                icon: const Icon(
+                  MdiIcons.faceAgent,
+                  size: 34,
+                ),
+                title: const Text(
+                  'Custom Inspection',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                ),
+                activeColor: const Color(0xff85bf42),
+                inactiveColor: AppColor.iconBottomNavBarColor,
+                textAlign: TextAlign.center,
               ),
-              activeColor: AppColor.redColor,
-              inactiveColor: AppColor.iconBottomNavBarColor,
-              textAlign: TextAlign.center,
-            ),
-            BottomNavyBarItem(
-              icon: const Icon(
-                MdiIcons.forklift,
-                size: 34,
-              ),
-              title: const Text(
-                'Inspection',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-              ),
-              activeColor: const Color(0xfff2a23d),
-              inactiveColor: AppColor.iconBottomNavBarColor,
-              textAlign: TextAlign.center,
-            ),
-            BottomNavyBarItem(
-              icon: const Icon(
-                MdiIcons.faceAgent,
-                size: 34,
-              ),
-              title: const Text(
-                'Custom Inspection',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-              ),
-              activeColor: const Color(0xff85bf42),
-              inactiveColor: AppColor.iconBottomNavBarColor,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }

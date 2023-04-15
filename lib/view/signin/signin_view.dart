@@ -20,77 +20,85 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Sign In',
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.drakerColor),
-              ),
-              Form(
-                  key: signinformkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 55, horizontal: 60),
-                        child: Image.asset(ImageAssets.appScreen),
-                      ),
-                      const SizedBox(
-                        height: 75,
-                      ),
-                      InputEmailTextField(
-                          validator: signInVM.validateEmail,
-                          controller: signInVM.emailController.value,
-                          icons: const Icon(
-                            Icons.email,
-                            color: AppColor.greyColor,
-                          )),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      InputPasswordTextField(
-                        validator: signInVM.validatePassword,
-                        isPasswordType: true,
-                        controllerpass: signInVM.passwordController.value,
-                        icons:
-                            const Icon(Icons.lock, color: AppColor.greyColor),
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      RoundButton(
-                        width: Get.width,
-                        height: Get.height * 0.06,
-                        onPress: () {
-                          if (signinformkey.currentState!.validate()) {
-                           signInVM.LoginApi();
-                           // signInVM.loginApi();
-                            signInVM.emailController.value.clear();
-                            signInVM.passwordController.value.clear();
-                          }
-                        },
-                        title: 'SIGN IN',
-                      ),
-                    ],
-                  ))
-            ],
+    return WillPopScope(
+      // Close the app when the back button is pressed
+      onWillPop: () async {
+        // Close the app when the back button is pressed
+        SystemNavigator.pop();
+        return Future.value(false); // Return false to allow the app to close
+      },
+      child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Sign In',
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.drakerColor),
+                ),
+                Form(
+                    key: signinformkey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 55, horizontal: 60),
+                          child: Image.asset(ImageAssets.appScreen),
+                        ),
+                        const SizedBox(
+                          height: 75,
+                        ),
+                        InputEmailTextField(
+                            validator: signInVM.validateEmail,
+                            controller: signInVM.emailController.value,
+                            icons: const Icon(
+                              Icons.email,
+                              color: AppColor.greyColor,
+                            )),
+                        const SizedBox(
+                          height: 35,
+                        ),
+                        InputPasswordTextField(
+                          validator: signInVM.validatePassword,
+                          isPasswordType: true,
+                          controllerpass: signInVM.passwordController.value,
+                          icons:
+                              const Icon(Icons.lock, color: AppColor.greyColor),
+                        ),
+                        const SizedBox(
+                          height: 35,
+                        ),
+                        RoundButton(
+                          width: Get.width,
+                          height: Get.height * 0.06,
+                          onPress: () {
+                            if (signinformkey.currentState!.validate()) {
+                            signInVM.LoginApi();
+                            //  signInVM.loginApi();
+                              signInVM.emailController.value.clear();
+                              signInVM.passwordController.value.clear();
+                            }
+                          },
+                          title: 'SIGN IN',
+                        ),
+                      ],
+                    ))
+              ],
+            ),
           ),
-        ),
-      )),
+        )),
 
+      ),
     );
 
   }
