@@ -19,13 +19,14 @@ class CustomInspectionDetailViewModel extends GetxController {
           .obs;
 
   Future<void> fetchInspectionDetails(int id) async {
+    final String? getTooken = await signInVM.getBearerToken();
     apiResponse.value = CustomInspectionDetailModel(
         statusCode: 0, message: 'Loading', data: [], error: '');
     final response = await http.get(
       Uri.parse('$baseurl/get/custom/inspection/details/$id'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.getToken}'
+        'Authorization': 'Bearer ${getTooken}'
       },
     );
     try {
@@ -135,13 +136,16 @@ class CustomInspectionDetailViewModel extends GetxController {
 
   ///======================= Sending Data without Model ================== ///
   Future<void> updateInspectionDetail(
+
       List<Map<String, dynamic>> inspectionDetails) async {
+    final String? getTooken = await signInVM.getBearerToken();
+
     try {
       final response = await post(
           Uri.parse('http://$baseUrl/api/store/custom/inspection/details'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${signInVM.getToken}'
+            'Authorization': 'Bearer ${getTooken}'
           },
           body: json.encode({'data': inspectionDetails}));
 

@@ -81,11 +81,13 @@ class ReviewViewModel extends GetxController {
   final flasherBeaconDropDownFocusNode = FocusNode().obs;
 
   void inspection() async {
+    final String? getTooken = await signInVM.getBearerToken();
+
     try {
       final response = await post(Uri.parse('http://$baseUrl/api/inspection'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${signInVM.getToken}'
+            'Authorization': 'Bearer ${getTooken}'
           },
           body: json.encode({
             /// -----------------Passing Remarks Data ---------------- ///

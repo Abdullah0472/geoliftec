@@ -28,11 +28,12 @@ class CustomInspectionViewModel extends GetxController {
   }
 
   Future<void> fetchData() async {
+    final String? getTooken = await signInVM.getBearerToken();
     final response = await http.get(
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.getToken}'
+        'Authorization': 'Bearer ${getTooken}'
       },
     );
 

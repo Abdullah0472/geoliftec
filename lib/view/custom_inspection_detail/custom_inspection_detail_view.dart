@@ -86,17 +86,14 @@ class CustomInspectionDetailView extends StatelessWidget {
                             inspectionDetails.add(detail);
                           }
                           try {
-                            await controller
-                                .updateInspectionDetail(inspectionDetails);
+                          await controller.updateInspectionDetail(inspectionDetails);
                             for (var controller in dropDownControllers) {
                               controller.clear();
                             } // Clear drop-down controllers
                             for (var controller in textControllers) {
                               controller.clear();
                             }
-                            await customInspectionController.fetchData();
-                            //   Get.back();
-                            // Get.off(() => BottomNavigationBarView());
+                           await customInspectionController.fetchData();
                           } catch (e) {
                             // Handle the exception here
                             if (kDebugMode) {

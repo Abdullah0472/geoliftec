@@ -123,98 +123,98 @@ class CustomInspectionView extends StatelessWidget {
             }),
 
             ///======== StreamBuilder ========= ///
-//     StreamBuilder(
-//         stream: controller
-//             .apiResponse.stream, // Stream to listen to for changes
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (snapshot.hasError) {
-//             return const Center(child: Text('Error fetching data'));
-//           } else {
-//             final apiResponse = snapshot.data;
-//             if (apiResponse?.statusCode == 200) {
-//               final data = apiResponse?.data;
-//               if (data != null) {
-//                 return ListView.builder(
-//                   physics: const BouncingScrollPhysics(),
-//                   scrollDirection: Axis.vertical,
-//                   itemCount: data.length,
-//                   itemBuilder: (context, index) {
-//                     return Card(
-//                       margin:
-//                           const EdgeInsets.symmetric(vertical: 8),
-//                       child: InkWell(
-//                         onTap: () {
-//                           inspectionController
-//                               .fetchInspectionDetails(
-//                                   data[index].id);
-//                           Get.to(() => CustomInspectionDetailView(
-//                               id: data[index].id));
-//                         },
-//                         child: Container(
-//                           decoration: BoxDecoration(
-//                             boxShadow: [
-//                               BoxShadow(
-//                                 color: Colors.grey.shade300,
-//                                 blurRadius: 1.0,
-//                                 spreadRadius: 1.0,
-//                                 offset: const Offset(
-//                                   1.0,
-//                                   1.0,
-//                                 ),
-//                               )
-//                             ],
-//                             borderRadius: const BorderRadius.all(
-//                                 Radius.circular(15)),
-//                             color: AppColor.dashboardContainerColor,
-//                           ),
-//                           padding: const EdgeInsets.all(16),
-//                           child: Row(
-//                             crossAxisAlignment:
-//                                 CrossAxisAlignment.center,
-//                             mainAxisAlignment:
-//                                 MainAxisAlignment.spaceEvenly,
-//                             children: [
-//                               const Text(
-//                                 'Inspection Due:',
-//                                 style: TextStyle(
-//                                   color: AppColor.redShadeColor,
-//                                   fontWeight: FontWeight.bold,
-//                                   fontSize: 25,
-//                                 ),
-//                               ),
-//                               Text(
-//                                 data[index].createdAt,
-//                                 style: const TextStyle(
-//                                     fontSize: 20,
-//                                     fontWeight: FontWeight.w500,
-//                                     decoration:
-//                                         TextDecoration.underline),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 );
-//               } else {
-//                 return const Center(
-//                     child: Text(
-//                   "No Inspection Due",
-//                   style: TextStyle(
-//                     fontSize: 22,
-//                     fontWeight: FontWeight.w600,
-//                   ),
-//                 )); // Show "Data not found" text when data is empty
-//               }
-//             } else {
-//               return const Center(
-//                   child: CircularProgressIndicator());
-//             }
-//           }
-//         }),
+    // StreamBuilder(
+    //     stream: controller
+    //         .apiResponse.stream, // Stream to listen to for changes
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.waiting) {
+    //         return const Center(child: CircularProgressIndicator());
+    //       } else if (snapshot.hasError) {
+    //         return const Center(child: Text('Error fetching data'));
+    //       } else {
+    //         final apiResponse = snapshot.data;
+    //         if (apiResponse?.statusCode == 200) {
+    //           final data = apiResponse?.data;
+    //           if (data != null) {
+    //             return ListView.builder(
+    //               physics: const BouncingScrollPhysics(),
+    //               scrollDirection: Axis.vertical,
+    //               itemCount: data.length,
+    //               itemBuilder: (context, index) {
+    //                 return Card(
+    //                   margin:
+    //                       const EdgeInsets.symmetric(vertical: 8),
+    //                   child: InkWell(
+    //                     onTap: () {
+    //                       inspectionController
+    //                           .fetchInspectionDetails(
+    //                               data[index].id);
+    //                       Get.to(() => CustomInspectionDetailView(
+    //                           id: data[index].id));
+    //                     },
+    //                     child: Container(
+    //                       decoration: BoxDecoration(
+    //                         boxShadow: [
+    //                           BoxShadow(
+    //                             color: Colors.grey.shade300,
+    //                             blurRadius: 1.0,
+    //                             spreadRadius: 1.0,
+    //                             offset: const Offset(
+    //                               1.0,
+    //                               1.0,
+    //                             ),
+    //                           )
+    //                         ],
+    //                         borderRadius: const BorderRadius.all(
+    //                             Radius.circular(15)),
+    //                         color: AppColor.dashboardContainerColor,
+    //                       ),
+    //                       padding: const EdgeInsets.all(16),
+    //                       child: Row(
+    //                         crossAxisAlignment:
+    //                             CrossAxisAlignment.center,
+    //                         mainAxisAlignment:
+    //                             MainAxisAlignment.spaceEvenly,
+    //                         children: [
+    //                           const Text(
+    //                             'Inspection Due:',
+    //                             style: TextStyle(
+    //                               color: AppColor.redShadeColor,
+    //                               fontWeight: FontWeight.bold,
+    //                               fontSize: 25,
+    //                             ),
+    //                           ),
+    //                           Text(
+    //                             data[index].createdAt,
+    //                             style: const TextStyle(
+    //                                 fontSize: 20,
+    //                                 fontWeight: FontWeight.w500,
+    //                                 decoration:
+    //                                     TextDecoration.underline),
+    //                           ),
+    //                         ],
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 );
+    //               },
+    //             );
+    //           } else {
+    //             return const Center(
+    //                 child: Text(
+    //               "No Inspection Due",
+    //               style: TextStyle(
+    //                 fontSize: 22,
+    //                 fontWeight: FontWeight.w600,
+    //               ),
+    //             )); // Show "Data not found" text when data is empty
+    //           }
+    //         } else {
+    //           return const Center(
+    //               child: CircularProgressIndicator());
+    //         }
+    //       }
+    //     }),
 
           ),
         ));

@@ -121,6 +121,7 @@ class SignInViewModel extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('bearerToken');
   }
+
   void LoginApi() async {
     try {
       final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
@@ -142,7 +143,7 @@ class SignInViewModel extends GetxController {
         getToken = await getBearerToken(); // Await for getBearerToken()
          // Use getToken for further actions or set in API client
         //
-        print("The Bearer Token from Shared Prefernce is: $getToken");
+       // print("The Bearer Token from Shared Prefernce is: $getToken");
 
         String? fcmToken = await getFCMToken();
         updateFcmToken(fcmToken!);
@@ -173,57 +174,10 @@ class SignInViewModel extends GetxController {
   }
 
 
-  /// ========================= FlutterSecureStorage =============== ///
-  // final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-  //
-  // void loginApi() async {
-  //   try {
-  //     final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
-  //       'email': emailController.value.text,
-  //       'password': passwordController.value.text,
-  //     });
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //
-  //       if (data['data'] == null || data['data']['bearer_token'] == null) {
-  //         throw Exception('Unexpected response from server');
-  //       }
-  //
-  //       String bearerToken = data['data']['bearer_token'];
-  //       String? fcmToken = await getFCMToken();
-  //       updateFcmToken(fcmToken!);
-  //       // Store the bearer token and login status in secure storage
-  //       await secureStorage.write(key: 'bearerToken', value: bearerToken);
-  //       await secureStorage.write(key: 'isLoggedIn', value: 'true');
-  //       await secureStorage.write(key: 'fcm_token', value: fcmToken);
-  //
-  //       Utils.snackBar('Login Successful', 'Welcome');
-  //
-  //
-  //
-  //       // Navigate to the bottomNavBarView
-  //       Get.toNamed(RouteName.bottomNavBarView);
-  //
-  //       // Update FCM token
-  //
-  //       if (kDebugMode) {
-  //         print("The FCM TOKEN IS: $fcmToken");
-  //       }
-  //     } else if (response.statusCode == 401) {
-  //       Utils.snackBar('Login Failed', 'Invalid email or password');
-  //     } else {
-  //       throw Exception('Unexpected response from server');
-  //     }
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print('Error during login request: $e');
-  //     }
-  //     Utils.snackBar('Login Failed', 'An error occurred while logging in');
-  //   }
-  // }
+
 
  updateFcmToken(String fcmToken) async {
+   final String? getTooken = await getBearerToken();
     String apiUrl = 'http://$baseUrl/api/update/fcm/token';
 
     // Create a request body with the fcm_token value
@@ -237,7 +191,7 @@ class SignInViewModel extends GetxController {
         body: jsonEncode(body), // Convert body to JSON string
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $getToken'
+          'Authorization': 'Bearer $getTooken'
         },
       );
 
@@ -246,6 +200,7 @@ class SignInViewModel extends GetxController {
         if (kDebugMode) {
           print('FCM token updated successfully');
         }
+
       } else if (response.statusCode == 401) {
         // Unauthorized error
         if (kDebugMode) {
@@ -274,15 +229,19 @@ class SignInViewModel extends GetxController {
   }
 
   void logoutApi() async {
+    final String? getTooken = await getBearerToken();
+
     try {
       final response = await get(Uri.parse('http://$baseUrl/api/logout'),
           headers: {
-        'Authorization': 'Bearer $getToken', // Include bearer token for authentication
+        'Authorization': 'Bearer $getTooken', // Include bearer token for authentication
       });
       // print(response.body);
       if (response.statusCode == 200) {
         // Handle successful logout, e.g., clear user data, navigate to login screen
         Utils.snackBar('Logout Successful', 'Goodbye');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', false);
         // Clear user data, navigate to login screen
         // Example: clear email and password controllers and navigate to login screen
         emailController.value.clear();

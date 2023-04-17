@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/notificationservices/local_notification_service.dart';
@@ -26,12 +25,11 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
 
-    //  Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
-    // checkLoginStatus(); // Check login status when the view is initialized
-    splashView();
+    // Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+    checkLoginStatus(); // Check login status when the view is initialized
+
     // 1. This method call when app in terminated state and you get a notification
     // when you click on notification app open from terminated state and you can get notification data in this method
-    //
 
     FirebaseMessaging.instance.getInitialMessage().then(
       (RemoteMessage? message) {
@@ -101,69 +99,36 @@ class _SplashViewState extends State<SplashView> {
   }
 
   /// ============== Shared Preference ===============///
-  //  Future<void> checkLoginStatus() async {
-  //    SharedPreferences prefs = await SharedPreferences.getInstance();
-  //    String? bearerToken = prefs.getString('bearerToken');
-  //    print("Shared Preference Bearer Token = $bearerToken");
-  //    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  //    print("The Shared Prefernce isLogin $isLoggedIn");
-  //    String? fcmToken = prefs.getString('fcm_token');
-  //    print("Shared Preference FCM Token = $fcmToken");
-  //    if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty && fcmToken != null) {
-  //      // User is logged in and bearer token is present
-  //      // Navigate to BottomNavigationBarView
-  //      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
-  //    } else {
-  //      // User is not logged in or bearer token is not valid
-  //      // Navigate to SignInView
-  //      // You can also clear the bearer token and login status from SharedPreferences here
-  //      // prefs.remove('bearerToken');
-  //      await prefs.setBool('isLoggedIn', false); // Wait for the flag to be updated
-  //      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
-  //    }
-  //  }
-
-  void splashView() async {
+  Future<void> checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ??
-        false; // Check if user is already logged in
-
-    if (isLoggedIn) {
-      String? getToken = await signInVM.getBearerToken(); // Get the bearer token from SharedPreferences
-      if (getToken != null) {
-        // Navigate to the logged-in screen
-        Get.toNamed(RouteName.bottomNavBarView);
-      } else {
-        // If bearer token is null, show login screen
-        Get.toNamed(RouteName.signInView);
-      }
+    String? bearerToken = prefs.getString('bearerToken');
+    print("Shared Preference Bearer Token = $bearerToken");
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    print("The Shared Prefernce isLogin $isLoggedIn");
+    String? fcmToken = prefs.getString('fcm_token');
+    print("Shared Preference FCM Token = $fcmToken");
+    if (isLoggedIn == true &&
+        bearerToken != null &&
+        bearerToken.isNotEmpty &&
+        fcmToken != null) {
+      // User is logged in and bearer token is present
+      // Navigate to BottomNavigationBarView
+      Timer(const Duration(seconds: 3),
+          () => Get.toNamed(RouteName.bottomNavBarView));
     } else {
-      // If user is not logged in, show login screen
-      Get.toNamed(RouteName.signInView);
+      // User is not logged in or bearer token is not valid
+      // Navigate to SignInView
+      // You can also clear the bearer token and login status from SharedPreferences here
+      prefs.remove('bearerToken');
+      await prefs.setBool(
+          'isLoggedIn', false); // Wait for the flag to be updated
+      bool login = prefs.getBool('isLoggedIn') ?? false;
+      print("The isLogin Function After Logout $login ");
+      Timer(
+          const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
     }
   }
 
-  ///=============== FlutterSecureStorage ================ ///
-  // Future<void> checkLoginStatus() async {
-  //   const storage = FlutterSecureStorage();
-  //   String? bearerToken = await storage.read(key: 'bearerToken');
-  //   print("Future Secure Bearer Token = $bearerToken");
-  //   bool isLoggedIn = await storage.read(key: 'isLoggedIn') == 'true';
-  //   String? fcmToken = await storage.read(key: 'fcm_token');
-  //   print("Future Secure Bearer Token = $fcmToken");
-  //   if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty && fcmToken != null) {
-  //     // User is logged in and bearer token is present
-  //     // Navigate to BottomNavigationBarView
-  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
-  //   } else {
-  //     // User is not logged in or bearer token is not valid
-  //     // Navigate to SignInView
-  //     // You can also clear the bearer token and login status from FlutterSecureStorage here
-  //     await storage.delete(key: 'bearerToken');
-  //     await storage.write(key: 'isLoggedIn', value: 'false');
-  //     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

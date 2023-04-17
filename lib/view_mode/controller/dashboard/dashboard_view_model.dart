@@ -12,11 +12,13 @@ class DashboardViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
 
   Future<List<DataDashBoard>> fetchDashboardData() async {
+    final String? getTooken = await signInVM.getBearerToken();
+
     final response = await http.get(
       Uri.parse('http://$baseUrl/api/dashboard'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.getToken}'
+        'Authorization': 'Bearer ${getTooken}'
       },
     );
     try {
