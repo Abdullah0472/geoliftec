@@ -32,7 +32,7 @@ class CustomInspectionViewModel extends GetxController {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.bearerToken}'
+        'Authorization': 'Bearer ${signInVM.getToken}'
       },
     );
 

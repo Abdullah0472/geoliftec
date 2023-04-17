@@ -24,11 +24,11 @@ class _SplashViewState extends State<SplashView> {
   final signInVM = Get.put(SignInViewModel());
   @override
   void initState() {
-     super.initState();
+    super.initState();
 
-     Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
-    //checkLoginStatus(); // Check login status when the view is initialized
-
+    //  Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+    // checkLoginStatus(); // Check login status when the view is initialized
+    splashView();
     // 1. This method call when app in terminated state and you get a notification
     // when you click on notification app open from terminated state and you can get notification data in this method
     //
@@ -99,26 +99,47 @@ class _SplashViewState extends State<SplashView> {
       },
     );
   }
- /// ============== Shared Preference ===============///
-  Future<void> checkLoginStatus() async {
+
+  /// ============== Shared Preference ===============///
+  //  Future<void> checkLoginStatus() async {
+  //    SharedPreferences prefs = await SharedPreferences.getInstance();
+  //    String? bearerToken = prefs.getString('bearerToken');
+  //    print("Shared Preference Bearer Token = $bearerToken");
+  //    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  //    print("The Shared Prefernce isLogin $isLoggedIn");
+  //    String? fcmToken = prefs.getString('fcm_token');
+  //    print("Shared Preference FCM Token = $fcmToken");
+  //    if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty && fcmToken != null) {
+  //      // User is logged in and bearer token is present
+  //      // Navigate to BottomNavigationBarView
+  //      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
+  //    } else {
+  //      // User is not logged in or bearer token is not valid
+  //      // Navigate to SignInView
+  //      // You can also clear the bearer token and login status from SharedPreferences here
+  //      // prefs.remove('bearerToken');
+  //      await prefs.setBool('isLoggedIn', false); // Wait for the flag to be updated
+  //      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+  //    }
+  //  }
+
+  void splashView() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? bearerToken = prefs.getString('bearerToken');
-    print("Shared Preference Bearer Token = $bearerToken");
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    print("The Shared Prefernce isLogin $isLoggedIn");
-    String? fcmToken = prefs.getString('fcm_token');
-    print("Shared Preference FCM Token = $fcmToken");
-    if (isLoggedIn && bearerToken != null && bearerToken.isNotEmpty && fcmToken != null) {
-      // User is logged in and bearer token is present
-      // Navigate to BottomNavigationBarView
-      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.bottomNavBarView));
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ??
+        false; // Check if user is already logged in
+
+    if (isLoggedIn) {
+      String? getToken = await signInVM.getBearerToken(); // Get the bearer token from SharedPreferences
+      if (getToken != null) {
+        // Navigate to the logged-in screen
+        Get.toNamed(RouteName.bottomNavBarView);
+      } else {
+        // If bearer token is null, show login screen
+        Get.toNamed(RouteName.signInView);
+      }
     } else {
-      // User is not logged in or bearer token is not valid
-      // Navigate to SignInView
-      // You can also clear the bearer token and login status from SharedPreferences here
-      // prefs.remove('bearerToken');
-      await prefs.setBool('isLoggedIn', false); // Wait for the flag to be updated
-      Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+      // If user is not logged in, show login screen
+      Get.toNamed(RouteName.signInView);
     }
   }
 

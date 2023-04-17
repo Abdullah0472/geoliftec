@@ -25,7 +25,7 @@ class CustomInspectionDetailViewModel extends GetxController {
       Uri.parse('$baseurl/get/custom/inspection/details/$id'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.bearerToken}'
+        'Authorization': 'Bearer ${signInVM.getToken}'
       },
     );
     try {
@@ -141,7 +141,7 @@ class CustomInspectionDetailViewModel extends GetxController {
           Uri.parse('http://$baseUrl/api/store/custom/inspection/details'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${signInVM.bearerToken}'
+            'Authorization': 'Bearer ${signInVM.getToken}'
           },
           body: json.encode({'data': inspectionDetails}));
 

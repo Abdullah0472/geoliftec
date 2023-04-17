@@ -48,7 +48,9 @@ class SignInViewModel extends GetxController {
   }
 
   // ignore: prefer_typing_uninitialized_variables
-  var bearerToken;
+  // var bearerToken;
+  String? getToken;
+
 
   String? fcmToken; // declare a nullable variable to hold the FCM token
 
@@ -71,111 +73,105 @@ class SignInViewModel extends GetxController {
   }
 
  //ignore: non_constant_identifier_names
-void LoginApi() async {
-  try {
-    final response =
-        await post(Uri.parse('http://$baseUrl/api/login'), body: {
-      'email': emailController.value.text,
-      'password': passwordController.value.text,
-      // 'fcm_token': fcmToken??"",
-    });
-    // print(response.body);
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-
-      if (data['data'] == null || data['data']['bearer_token'] == null) {
-        throw Exception('Unexpected response from server');
-      }
-
-      bearerToken = data['data']['bearer_token'];
-      Utils.snackBar('Login Successful', 'Welcome');
-      Get.toNamed(RouteName.bottomNavBarView);
-      String? fcmToken = await getFCMToken();
-      updateFcmToken(fcmToken!);
-      if (kDebugMode) {
-        print("The FCM TOKEN IS: $fcmToken");
-      }
-    } else if (response.statusCode == 401) {
-      Utils.snackBar('Login Failed', 'Invalid email or password');
-    } else {
-      throw Exception('Unexpected response from server');
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error during login request: $e');
-    }
-    Utils.snackBar('Login Failed', 'An error occurred while logging in');
-  }
-}
+// void LoginApi() async {
+//   try {
+//     final response =
+//         await post(Uri.parse('http://$baseUrl/api/login'), body: {
+//       'email': emailController.value.text,
+//       'password': passwordController.value.text,
+//       // 'fcm_token': fcmToken??"",
+//     });
+//     // print(response.body);
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//
+//       if (data['data'] == null || data['data']['bearer_token'] == null) {
+//         throw Exception('Unexpected response from server');
+//       }
+//
+//       bearerToken = data['data']['bearer_token'];
+//       Utils.snackBar('Login Successful', 'Welcome');
+//       Get.toNamed(RouteName.bottomNavBarView);
+//       String? fcmToken = await getFCMToken();
+//       updateFcmToken(fcmToken!);
+//       if (kDebugMode) {
+//         print("The FCM TOKEN IS: $fcmToken");
+//       }
+//     } else if (response.statusCode == 401) {
+//       Utils.snackBar('Login Failed', 'Invalid email or password');
+//     } else {
+//       throw Exception('Unexpected response from server');
+//     }
+//   } catch (e) {
+//     if (kDebugMode) {
+//       print('Error during login request: $e');
+//     }
+//     Utils.snackBar('Login Failed', 'An error occurred while logging in');
+//   }
+// }
 
 
 /// ========================== Shared Preference =============== ///
-//   Future<void> storeBearerToken(String bearertoken) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.setString('bearerToken', bearertoken);
-//   }
-//
-//   Future<String?> getBearerToken() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     return prefs.getString('bearerToken');
-//   }
-//
-//
-//   // ignore: non_constant_identifier_names
-//   void LoginApi() async {
-//     try {
-//       final response =
-//           await post(Uri.parse('http://$baseUrl/api/login'), body: {
-//         'email': emailController.value.text,
-//         'password': passwordController.value.text,
-//       });
-//
-//       if (response.statusCode == 200) {
-//         final data = jsonDecode(response.body);
-//
-//         if (data['data'] == null || data['data']['bearer_token'] == null) {
-//           throw Exception('Unexpected response from server');
-//         }
-//
-//        final String bearerToken = data['data']['bearer_token'];
-//
-//      // storeBearerToken(bearerToken);
-//      // String getToken = getBearerToken().toString();
-//      // print("The Bareer Token in Shared Prefence ${getToken}");
-//
-//         String? fcmToken = await getFCMToken();
-//         updateFcmToken(fcmToken!);
-//         // Store the bearer token and login status in SharedPreferences
-//         SharedPreferences prefs = await SharedPreferences.getInstance();
-//         await prefs.setString('bearerToken', bearerToken);
-//         await prefs.setBool('isLoggedIn', true);
-//         await prefs.setString('fcm_token', fcmToken);
-//
-//         Utils.snackBar('Login Successful', 'Welcome');
-//
-//         // Set the bearer token in the API client for subsequent requests
-//         // ApiClient.instance.setBearerToken(bearerToken);
-//
-//         // Navigate to the bottomNavBarView
-//         Get.toNamed(RouteName.bottomNavBarView);
-//
-//         // Update FCM token
-//
-//         if (kDebugMode) {
-//           print("The FCM TOKEN IS: $fcmToken");
-//         }
-//       } else if (response.statusCode == 401) {
-//         Utils.snackBar('Login Failed', 'Invalid email or password');
-//       } else {
-//         throw Exception('Unexpected response from server');
-//       }
-//     } catch (e) {
-//       if (kDebugMode) {
-//         print('Error during login request: $e');
-//       }
-//       Utils.snackBar('Login Failed', 'An error occurred while logging in');
-//     }
-//   }
+  Future<void> storeBearerToken(String bearertoken) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('bearerToken', bearertoken);
+  }
+
+  Future<String?> getBearerToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('bearerToken');
+  }
+  void LoginApi() async {
+    try {
+      final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
+        'email': emailController.value.text,
+        'password': passwordController.value.text,
+      });
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['data'] == null || data['data']['bearer_token'] == null) {
+          throw Exception('Unexpected response from server');
+        }
+
+        final String bearerToken = data['data']['bearer_token'];
+
+        storeBearerToken(bearerToken);
+
+        getToken = await getBearerToken(); // Await for getBearerToken()
+         // Use getToken for further actions or set in API client
+        //
+        print("The Bearer Token from Shared Prefernce is: $getToken");
+
+        String? fcmToken = await getFCMToken();
+        updateFcmToken(fcmToken!);
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('bearerToken', getToken!);
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('fcm_token', fcmToken);
+
+        Utils.snackBar('Login Successful', 'Welcome');
+
+        Get.toNamed(RouteName.bottomNavBarView);
+
+        if (kDebugMode) {
+          print("The FCM TOKEN IS: $fcmToken");
+        }
+      } else if (response.statusCode == 401) {
+        Utils.snackBar('Login Failed', 'Invalid email or password');
+      } else {
+        throw Exception('Unexpected response from server');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error during login request: $e');
+      }
+      Utils.snackBar('Login Failed', 'An error occurred while logging in');
+    }
+  }
+
 
   /// ========================= FlutterSecureStorage =============== ///
   // final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
@@ -241,7 +237,7 @@ void LoginApi() async {
         body: jsonEncode(body), // Convert body to JSON string
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $bearerToken'
+          'Authorization': 'Bearer $getToken'
         },
       );
 
@@ -281,7 +277,7 @@ void LoginApi() async {
     try {
       final response = await get(Uri.parse('http://$baseUrl/api/logout'),
           headers: {
-        'Authorization': 'Bearer $bearerToken', // Include bearer token for authentication
+        'Authorization': 'Bearer $getToken', // Include bearer token for authentication
       });
       // print(response.body);
       if (response.statusCode == 200) {
@@ -291,7 +287,8 @@ void LoginApi() async {
         // Example: clear email and password controllers and navigate to login screen
         emailController.value.clear();
         passwordController.value.clear();
-        bearerToken = null;
+        //bearerToken = null;
+
         Get.toNamed(RouteName.signInView);
       } else {
         throw Exception('Unexpected response from server');

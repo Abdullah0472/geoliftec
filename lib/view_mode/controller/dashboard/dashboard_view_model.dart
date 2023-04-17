@@ -16,7 +16,7 @@ class DashboardViewModel extends GetxController {
       Uri.parse('http://$baseUrl/api/dashboard'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.bearerToken}'
+        'Authorization': 'Bearer ${signInVM.getToken}'
       },
     );
     try {

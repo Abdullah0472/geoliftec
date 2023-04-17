@@ -16,7 +16,7 @@ class ProfileViewModel extends GetxController {
       Uri.parse('http://$baseUrl/api/profile'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${signInVM.bearerToken}'
+        'Authorization': 'Bearer ${signInVM.getToken}'
       },
     );
     try {

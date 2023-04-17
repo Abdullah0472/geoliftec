@@ -85,7 +85,7 @@ class ReviewViewModel extends GetxController {
       final response = await post(Uri.parse('http://$baseUrl/api/inspection'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${signInVM.bearerToken}'
+            'Authorization': 'Bearer ${signInVM.getToken}'
           },
           body: json.encode({
             /// -----------------Passing Remarks Data ---------------- ///
