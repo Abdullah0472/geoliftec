@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/main.dart';
 import 'package:get/get.dart';
@@ -26,7 +25,7 @@ class CustomInspectionDetailViewModel extends GetxController {
       Uri.parse('$baseurl/get/custom/inspection/details/$id'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${getTooken}'
+        'Authorization': 'Bearer $getTooken'
       },
     );
     try {
@@ -45,9 +44,6 @@ class CustomInspectionDetailViewModel extends GetxController {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
       Utils.snackBar("Exception ", e.toString());
       apiResponse.value = CustomInspectionDetailModel(
           statusCode: 500, message: 'Error: $e', data: [], error: '');
@@ -136,7 +132,6 @@ class CustomInspectionDetailViewModel extends GetxController {
 
   ///======================= Sending Data without Model ================== ///
   Future<void> updateInspectionDetail(
-
       List<Map<String, dynamic>> inspectionDetails) async {
     final String? getTooken = await signInVM.getBearerToken();
 
@@ -145,18 +140,10 @@ class CustomInspectionDetailViewModel extends GetxController {
           Uri.parse('http://$baseUrl/api/store/custom/inspection/details'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${getTooken}'
+            'Authorization': 'Bearer $getTooken'
           },
           body: json.encode({'data': inspectionDetails}));
 
-      var data = jsonDecode(response.body);
-      if (kDebugMode) {
-        print(response.statusCode);
-      }
-      if (kDebugMode) {
-        print(response.body);
-        print(data);
-      }
       if (response.statusCode == 200) {
         Utils.snackBar("Data Uploaded Successfully ", "Congratulations");
         await Future.delayed(const Duration(
@@ -173,9 +160,6 @@ class CustomInspectionDetailViewModel extends GetxController {
             child: const Text("OK"),
           ),
         );
-        if (kDebugMode) {
-          print(response.body);
-        }
       } else if (response.statusCode == 401) {
         Utils.snackBar("UnAuthorized ", "Logout");
         Get.toNamed(RouteName.signInView);
@@ -183,9 +167,6 @@ class CustomInspectionDetailViewModel extends GetxController {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-      if (kDebugMode) {
-        print("Exception occur: ${e.toString()}");
-      }
       // Handle the unexpected response format here
       Utils.snackBar(
           "Error", "Unexpected response format. Please try again later.");

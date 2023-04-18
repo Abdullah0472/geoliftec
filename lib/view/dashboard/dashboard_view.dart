@@ -8,7 +8,6 @@ import 'package:geoliftec/view_mode/controller/signin/signin_view_model.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-
 import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/components/widgets/container/dashboard_container_widget.dart';
@@ -30,17 +29,21 @@ class DashboardView extends StatelessWidget {
             );
           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             List<DataDashBoard> profileList = snapshot.data!;
-            DataDashBoard profiledetail = profileList[0];
-            if (kDebugMode) {
-              print("The DashBoard Data ${profileList.toString()}");
-            }
-            if (profiledetail != null) {
+            DataDashBoard profileDetail = profileList[0];
+
+            if (profileDetail != null) {
               return Scaffold(
                 appBar: AppBar(
                   actions: [
-                    IconButton(onPressed: (){
-                      signInVM.logoutApi();
-                    }, icon: const Icon(MdiIcons.logout,size: 30,color: AppColor.whiteColor,))
+                    IconButton(
+                        onPressed: () {
+                          signInVM.logoutApi();
+                        },
+                        icon: const Icon(
+                          MdiIcons.logout,
+                          size: 30,
+                          color: AppColor.whiteColor,
+                        ))
                   ],
                   backgroundColor: AppColor.appBarColor,
                   elevation: 0,
@@ -82,13 +85,13 @@ class DashboardView extends StatelessWidget {
                                 children: [
                                   DashBoardContainerWidget(
                                     title: 'Make',
-                                    subtitle: profiledetail.make,
+                                    subtitle: profileDetail.make,
                                     imageDisplay: const AssetImage(
                                         ImageAssets.forkLifter_brand),
                                   ),
                                   DashBoardContainerWidget(
                                       title: 'Model',
-                                      subtitle: profiledetail.model,
+                                      subtitle: profileDetail.model,
                                       imageDisplay: const AssetImage(
                                           ImageAssets.forkLifter_model)),
                                 ],
@@ -100,13 +103,13 @@ class DashboardView extends StatelessWidget {
                                 children: [
                                   DashBoardContainerWidget(
                                     title: 'Registration Data',
-                                    subtitle: profiledetail.regDate,
+                                    subtitle: profileDetail.regDate,
                                     imageDisplay: const AssetImage(
                                         ImageAssets.forkLifter_reg_date),
                                   ),
                                   DashBoardContainerWidget(
                                       title: 'Registered Number',
-                                      subtitle: profiledetail.regNo,
+                                      subtitle: profileDetail.regNo,
                                       imageDisplay: const AssetImage(
                                           ImageAssets.forkLifter_reg_num)),
                                 ],
@@ -119,13 +122,15 @@ class DashboardView extends StatelessWidget {
                                   DashBoardContainerWidget(
                                     textPading: 45,
                                     title: 'WareHouse',
-                                    subtitle: profiledetail.warehouse,
+                                    subtitle: profileDetail.warehouse,
                                     imageDisplay:
                                         const AssetImage(ImageAssets.wareHouse),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 25,),
+                              const SizedBox(
+                                height: 25,
+                              ),
                             ],
                           ),
                         ),
@@ -138,7 +143,7 @@ class DashboardView extends StatelessWidget {
               return const Center(child: Text("Data is incorrect"));
             }
           } else if (snapshot.hasError) {
-            return Center(child: Text("${snapshot.error}"));
+            return Center(child: Text("The Error in Dashboard : ${snapshot.error}"));
           } else {
             return const Center(child: Text("Please Wait"));
           }

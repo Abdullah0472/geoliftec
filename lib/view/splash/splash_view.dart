@@ -24,8 +24,6 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-
-    // Timer(const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
     checkLoginStatus(); // Check login status when the view is initialized
 
     // 1. This method call when app in terminated state and you get a notification
@@ -102,11 +100,8 @@ class _SplashViewState extends State<SplashView> {
   Future<void> checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? bearerToken = prefs.getString('bearerToken');
-    print("Shared Preference Bearer Token = $bearerToken");
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    print("The Shared Prefernce isLogin $isLoggedIn");
     String? fcmToken = prefs.getString('fcm_token');
-    print("Shared Preference FCM Token = $fcmToken");
     if (isLoggedIn == true &&
         bearerToken != null &&
         bearerToken.isNotEmpty &&
@@ -122,8 +117,6 @@ class _SplashViewState extends State<SplashView> {
       prefs.remove('bearerToken');
       await prefs.setBool(
           'isLoggedIn', false); // Wait for the flag to be updated
-      bool login = prefs.getBool('isLoggedIn') ?? false;
-      print("The isLogin Function After Logout $login ");
       Timer(
           const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
     }

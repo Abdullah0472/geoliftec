@@ -19,4 +19,6 @@ class AppColor {
   static const Color iconBottomNavBarColor = Color(0xff545454);
   static const Color dashboardContainerTextColor = Colors.black87;
   static const Color dashboardContainerColor = Color(0xffffffff);
+  static const Color cardTextColor = Color(0xff20244b);
+  static const Color testingCardColor = Color(0xffebebeb);
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:geoliftec/main.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -18,7 +18,7 @@ class ProfileViewModel extends GetxController {
       Uri.parse('http://$baseUrl/api/profile'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${getTooken}'
+        'Authorization': 'Bearer $getTooken'
       },
     );
     try {
@@ -45,9 +45,7 @@ class ProfileViewModel extends GetxController {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+
       Utils.snackBar("Exception ", e.toString());
     }
     return [];

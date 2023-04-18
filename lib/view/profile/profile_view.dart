@@ -5,9 +5,8 @@ import 'package:geoliftec/model/profile/profile_model.dart';
 import 'package:geoliftec/view_mode/controller/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../res/colors/colors.dart';
-import '../../res/components/widgets/appBar/appBar_widget.dart';
+import '../../res/components/widgets/appBar/custom_appBar.dart';
 import '../../res/components/widgets/card/card_profile_widget.dart';
 
 class ProfileView extends StatelessWidget {
@@ -24,52 +23,55 @@ class ProfileView extends StatelessWidget {
             );
           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             List<Data> profileList = snapshot.data!;
-            Data profiledetail = profileList[0];
+            Data profileDetail = profileList[0];
 
-            if (profiledetail != null) {
+            if (profileDetail != null) {
               return Scaffold(
                   resizeToAvoidBottomInset: false,
                   backgroundColor: AppColor.whiteColor,
-                  appBar: CustomAppBar(
-                    title: profiledetail.name,
-                    imageUrl: profiledetail.image.startsWith('http')
-                        ? NetworkImage(profiledetail.image)
-                        : profiledetail.image.startsWith('https://')
-                            ? NetworkImage(profiledetail.image)
+                  appBar: CustomAppBarProfile(
+                    title: profileDetail.name,
+                    imageUrl: profileDetail.image.startsWith('http')
+                        ? NetworkImage(profileDetail.image)
+                        : profileDetail.image.startsWith('https://')
+                            ? NetworkImage(profileDetail.image)
                             : const NetworkImage(
                                 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
                   ),
                   body: SafeArea(
                       child: Padding(
                     padding: const EdgeInsets.only(top: 45),
-                    child: Column(
-                      children: [
-                        CardProfileDesign(
-                          info: profiledetail.name,
-                          icons: (MdiIcons.accountCircle),
-                        ),
-                        CardProfileDesign(
-                            info: profiledetail.address,
-                            icons: MdiIcons.mapMarker),
-                        CardProfileDesign(
-                            info: profiledetail.email, icons: MdiIcons.email),
-                        CardProfileDesign(
-                            info: profiledetail.phone,
-                            icons: MdiIcons.contacts),
-                        CardProfileDesign(
-                            info: profiledetail.trainingCertificate,
-                            icons: MdiIcons.certificate),
-                        CardProfileDesign(
-                            info: profiledetail.license,
-                            icons: MdiIcons.license),
-                      ],
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          CardProfileDesign(
+                            info: profileDetail.name,
+                            icons: (MdiIcons.accountCircle),
+                          ),
+                          CardProfileDesign(
+                              info: profileDetail.address,
+                              icons: MdiIcons.mapMarker),
+                          CardProfileDesign(
+                              info: profileDetail.email, icons: MdiIcons.email),
+                          CardProfileDesign(
+                              info: profileDetail.phone,
+                              icons: MdiIcons.contacts),
+                          CardProfileDesign(
+                              info: profileDetail.trainingCertificate,
+                              icons: MdiIcons.certificate),
+                          CardProfileDesign(
+                              info: profileDetail.license,
+                              icons: MdiIcons.license),
+                        ],
+                      ),
                     ),
                   )));
             } else {
               return const Center(child: Text("Data is incorrect"));
             }
           } else if (snapshot.hasError) {
-            return Center(child: Text("${snapshot.error}"));
+            return Center(child: Text("The error in Profile : ${snapshot.error}"));
           } else {
             return const Center(child: Text("Please Wait"));
           }

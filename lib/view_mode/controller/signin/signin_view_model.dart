@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
@@ -51,7 +50,6 @@ class SignInViewModel extends GetxController {
   // var bearerToken;
   String? getToken;
 
-
   String? fcmToken; // declare a nullable variable to hold the FCM token
 
   Future<String?> getFCMToken() async {
@@ -61,9 +59,6 @@ class SignInViewModel extends GetxController {
 
   // Callback for FCM token refresh
   void onTokenRefresh(String? token) {
-    if (kDebugMode) {
-      print('FCM Token refreshed: $token');
-    }
     fcmToken = token; // update the fcmToken variable with the new token
   }
 
@@ -72,7 +67,7 @@ class SignInViewModel extends GetxController {
     FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefresh);
   }
 
- //ignore: non_constant_identifier_names
+  //ignore: non_constant_identifier_names
 // void LoginApi() async {
 //   try {
 //     final response =
@@ -110,8 +105,7 @@ class SignInViewModel extends GetxController {
 //   }
 // }
 
-
-/// ========================== Shared Preference =============== ///
+  /// ========================== Shared Preference =============== ///
   Future<void> storeBearerToken(String bearertoken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('bearerToken', bearertoken);
@@ -122,9 +116,11 @@ class SignInViewModel extends GetxController {
     return prefs.getString('bearerToken');
   }
 
+  // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
-      final response = await post(Uri.parse('http://$baseUrl/api/login'), body: {
+      final response =
+          await post(Uri.parse('http://$baseUrl/api/login'), body: {
         'email': emailController.value.text,
         'password': passwordController.value.text,
       });
@@ -141,9 +137,6 @@ class SignInViewModel extends GetxController {
         storeBearerToken(bearerToken);
 
         getToken = await getBearerToken(); // Await for getBearerToken()
-         // Use getToken for further actions or set in API client
-        //
-       // print("The Bearer Token from Shared Prefernce is: $getToken");
 
         String? fcmToken = await getFCMToken();
         updateFcmToken(fcmToken!);
@@ -156,28 +149,18 @@ class SignInViewModel extends GetxController {
         Utils.snackBar('Login Successful', 'Welcome');
 
         Get.toNamed(RouteName.bottomNavBarView);
-
-        if (kDebugMode) {
-          print("The FCM TOKEN IS: $fcmToken");
-        }
       } else if (response.statusCode == 401) {
         Utils.snackBar('Login Failed', 'Invalid email or password');
       } else {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error during login request: $e');
-      }
       Utils.snackBar('Login Failed', 'An error occurred while logging in');
     }
   }
 
-
-
-
- updateFcmToken(String fcmToken) async {
-   final String? getTooken = await getBearerToken();
+  updateFcmToken(String fcmToken) async {
+    final String? getTooken = await getBearerToken();
     String apiUrl = 'http://$baseUrl/api/update/fcm/token';
 
     // Create a request body with the fcm_token value
@@ -200,7 +183,6 @@ class SignInViewModel extends GetxController {
         if (kDebugMode) {
           print('FCM token updated successfully');
         }
-
       } else if (response.statusCode == 401) {
         // Unauthorized error
         if (kDebugMode) {
@@ -232,9 +214,10 @@ class SignInViewModel extends GetxController {
     final String? getTooken = await getBearerToken();
 
     try {
-      final response = await get(Uri.parse('http://$baseUrl/api/logout'),
-          headers: {
-        'Authorization': 'Bearer $getTooken', // Include bearer token for authentication
+      final response =
+          await get(Uri.parse('http://$baseUrl/api/logout'), headers: {
+        'Authorization':
+            'Bearer $getTooken', // Include bearer token for authentication
       });
       // print(response.body);
       if (response.statusCode == 200) {
@@ -253,11 +236,7 @@ class SignInViewModel extends GetxController {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error during logout request: $e');
-      }
       Utils.snackBar('Logout Failed', 'An error occurred while logging out');
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/model/dashboard/dashboard_model.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class DashboardViewModel extends GetxController {
       Uri.parse('http://$baseUrl/api/dashboard'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${getTooken}'
+        'Authorization': 'Bearer $getTooken'
       },
     );
     try {
@@ -44,9 +44,7 @@ class DashboardViewModel extends GetxController {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+
       Utils.snackBar("Exception ", e.toString());
     }
     return [];

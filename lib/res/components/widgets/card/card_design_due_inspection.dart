@@ -32,7 +32,7 @@ class CardDesignDueInspection extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 5,
       margin: const EdgeInsets.only(top: 20, left: 12, right: 12),
-      color: AppColor.cardColor,
+      color: AppColor.appBarColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
         side: const BorderSide(
@@ -67,7 +67,7 @@ class CardDesignDueInspection extends StatelessWidget {
                             title,
                             style: const TextStyle(
                                 fontSize: 28,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.whiteColor),
                           ),
                         ),

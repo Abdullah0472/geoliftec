@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -87,7 +86,7 @@ class ReviewViewModel extends GetxController {
       final response = await post(Uri.parse('http://$baseUrl/api/inspection'),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${getTooken}'
+            'Authorization': 'Bearer $getTooken'
           },
           body: json.encode({
             /// -----------------Passing Remarks Data ---------------- ///
@@ -130,18 +129,10 @@ class ReviewViewModel extends GetxController {
             'flasher_beacon': flasherBeaconDropDownController.value.text,
           }));
 
-      var data = jsonDecode(response.body);
-      if (kDebugMode) {
-        print(response.statusCode);
-      }
-      if (kDebugMode) {
-        print(data);
-      }
       if (response.statusCode == 200) {
         Utils.snackBar("Data Uploaded Successfully ", "Congratulations");
         await Future.delayed(const Duration(
-            milliseconds:
-            500)); // add a delay before showing the dialog
+            milliseconds: 500)); // add a delay before showing the dialog
         Get.defaultDialog(
           title: "Status",
           middleText: "Successfully Data Uploaded",
@@ -158,9 +149,6 @@ class ReviewViewModel extends GetxController {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
       Utils.snackBar("Exception ", e.toString());
     }
   }

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../res/components/widgets/navigationBar/navigationBar.dart';
+import '../../testing_screen/profile_view_testing.dart';
 import '../profile/profile_view.dart';
 import '../review/review_view.dart';
 
@@ -33,8 +34,8 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
     /// Will Be Moving To Profile Screen
 
-     ProfileView(),
-
+    ProfileView(),
+  //  ProfileViewTesting(),
      ///Will Be Moving To HomeView/Inspection Screen
 
     ReviewView(),

@@ -57,6 +57,7 @@ class CustomInspectionDetailView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return CardDesignDueInspection(
@@ -97,7 +98,7 @@ class CustomInspectionDetailView extends StatelessWidget {
                           } catch (e) {
                             // Handle the exception here
                             if (kDebugMode) {
-                              print('Error: $e');
+                              print('Error Custom Inspection Due Screen : $e');
                             }
                             // Show an error message or take appropriate action
                           } // Navigate to CustomInspectionView

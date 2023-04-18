@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
 import 'package:geoliftec/res/notificationservices/local_notification_service.dart';
-import 'package:geoliftec/view/bottomNavigationBar/bottomNavigationBar_view.dart';
-import 'package:geoliftec/view/signin/signin_view.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:geoliftec/res/routes/routes.dart';
@@ -20,16 +18,6 @@ void main() async {
   FirebaseMessaging.onMessage.listen(
     (message) {
       if (message.notification != null) {
-        String title = message.notification!.title ?? 'Notification';
-        String body =
-            message.notification!.body ?? 'You have a new notification';
-        if (kDebugMode) {
-          print('Title: $title');
-        }
-        if (kDebugMode) {
-          print('Body: $body');
-        }
-
         // Show local notification using flutter_local_notifications plugin
         LocalNotificationService.createAndDisplayNotification(message);
       }
@@ -51,14 +39,7 @@ void main() async {
   }
 }
 
-Future<void> backgroundHandler(RemoteMessage message) async {
-  if (kDebugMode) {
-    print(message.data.toString());
-  }
-  if (kDebugMode) {
-    print(message.notification!.title);
-  }
-}
+Future<void> backgroundHandler(RemoteMessage message) async {}
 
 String baseUrl = "38.242.154.202";
 
@@ -86,23 +67,8 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.native, // Enable native transitions
       popGesture: true,
       home: const SplashView(),
-      // BottomNavigationBarView(),
-      // WillPopScope(
-      //     onWillPop: _onBackButtonPressed,
-      //     // onWillPop: () async {
-      //     //   return false;
-      //     // },
-      //     // child: const SplashView(),
-      //     child: SignInView()),
+
       getPages: AppRoutes.appRoutes(),
     );
   }
-
-  // Future<bool> _onBackButtonPressed() {
-  //   // Close application
-  //   SystemNavigator.pop();
-  //
-  //   // Return false to allow back button press event to be propagated
-  //   return Future.value(true);
-  // }
 }
