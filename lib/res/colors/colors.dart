@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class AppColor {
-  static const Color whiteColor = Color(0xfff7f7f7);
+  static const Color whiteColor = Colors.white;
   static const Color offWhite = Color.fromARGB(255, 242, 242, 242);
   static const Color redColor = Color(0xffb53b38);
   static const Color greyColor = Color(0xff878787);
@@ -15,6 +15,7 @@ class AppColor {
   static const Color blackColor = Color(0xff000000);
   static const Color reviewButtonColor = Color(0xffa8b424);
   static const Color buttonColor = Color.fromARGB(255, 0, 34, 55);
+  static const Color primaryColor = Color.fromARGB(255, 0, 34, 55);
   static const Color appBarColor = Color(0xff005e9b);
   static const Color iconBottomNavBarColor = Color(0xff545454);
   static const Color dashboardContainerTextColor = Colors.black87;

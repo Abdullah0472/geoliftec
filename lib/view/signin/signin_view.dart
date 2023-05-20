@@ -11,7 +11,6 @@ import '../../view_mode/controller/signin/signin_view_model.dart';
 
 // ignore: must_be_immutable
 class SignInView extends StatelessWidget {
-
   SignInView({Key? key}) : super(key: key);
 
   final signInVM = Get.put(SignInViewModel());
@@ -32,18 +31,11 @@ class SignInView extends StatelessWidget {
         body: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Sign In',
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.drakerColor),
-                ),
                 Form(
                     key: signinformkey,
                     child: Column(
@@ -52,11 +44,16 @@ class SignInView extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 55, horizontal: 60),
+                              vertical: 150, horizontal: 60),
                           child: Image.asset(ImageAssets.appScreen),
                         ),
+                        const Text(
+                          'Sign In',
+                          style: TextStyle(
+                              fontSize: 32.5, color: AppColor.drakerColor),
+                        ),
                         const SizedBox(
-                          height: 75,
+                          height: 20,
                         ),
                         InputEmailTextField(
                             validator: signInVM.validateEmail,
@@ -66,7 +63,7 @@ class SignInView extends StatelessWidget {
                               color: AppColor.greyColor,
                             )),
                         const SizedBox(
-                          height: 35,
+                          height: 15,
                         ),
                         InputPasswordTextField(
                           validator: signInVM.validatePassword,
@@ -76,15 +73,14 @@ class SignInView extends StatelessWidget {
                               const Icon(Icons.lock, color: AppColor.greyColor),
                         ),
                         const SizedBox(
-                          height: 35,
+                          height: 40,
                         ),
                         RoundButton(
                           width: Get.width,
                           height: Get.height * 0.06,
                           onPress: () {
                             if (signinformkey.currentState!.validate()) {
-                            signInVM.LoginApi();
-                            //  signInVM.loginApi();
+                              signInVM.LoginApi();
                               signInVM.emailController.value.clear();
                               signInVM.passwordController.value.clear();
                             }
@@ -97,10 +93,7 @@ class SignInView extends StatelessWidget {
             ),
           ),
         )),
-
       ),
     );
-
   }
-
 }

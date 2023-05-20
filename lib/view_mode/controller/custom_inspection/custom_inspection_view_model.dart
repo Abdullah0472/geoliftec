@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../main.dart';
 import '../../../model/custom_inspection/custom_inspection_model.dart';
 import '../../../res/routes/routes_name.dart';
@@ -9,6 +10,7 @@ import '../signin/signin_view_model.dart';
 
 class CustomInspectionViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
+  RefreshController refreshController = RefreshController();
   static String apiUrl = 'http://$baseUrl/api/get/custom/inspections';
   final apiResponse = Rx<CustomInspectionModel>(CustomInspectionModel(
     statusCode: 0,

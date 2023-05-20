@@ -57,13 +57,10 @@ class _InputPasswordTextFieldState extends State<InputPasswordTextField> {
         labelText: 'Password',
         labelStyle: const TextStyle(
           color: AppColor.greyColor,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
         ),
-        hintText: 'Enter your password',
+        hintText: 'Enter Your Password',
         hintStyle: const TextStyle(
           color: AppColor.lightgreyColor,
-          fontSize: 18,
         ),
         prefixIcon: widget.icons,
         filled: true,
@@ -71,23 +68,18 @@ class _InputPasswordTextFieldState extends State<InputPasswordTextField> {
         contentPadding: const EdgeInsets.symmetric(vertical: 18),
         border: InputBorder.none,
         fillColor: const Color.fromARGB(255, 251, 250, 249),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        focusedErrorBorder: OutlineInputBorder(),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: AppColor.greyColor, width: 1.3)),
+            borderSide:
+                const BorderSide(color: AppColor.greyColor, width: 1.3)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              10,
-            ),
-            borderSide: const BorderSide(color: AppColor.greyColor, width: 1.3)),
+            borderSide:
+                const BorderSide(color: AppColor.greyColor, width: 1.3)),
         errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: AppColor.redColor, width: 1.3)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: AppColor.greyColor, width: 1.3)),
+            borderSide:
+                const BorderSide(color: AppColor.greyColor, width: 1.3)),
         suffixIcon: Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
           child: GestureDetector(

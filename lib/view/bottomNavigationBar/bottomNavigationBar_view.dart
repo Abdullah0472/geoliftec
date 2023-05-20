@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../res/components/widgets/navigationBar/navigationBar.dart';
-import '../../testing_screen/profile_view_testing.dart';
 import '../profile/profile_view.dart';
 import '../review/review_view.dart';
 
@@ -34,15 +33,15 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
     /// Will Be Moving To Profile Screen
 
-    ProfileView(),
-  //  ProfileViewTesting(),
-     ///Will Be Moving To HomeView/Inspection Screen
+    //  ProfileViewTesting(),
+    ///Will Be Moving To HomeView/Inspection Screen
 
     ReviewView(),
 
-     ///Will Be Moving To Custom Inspection View Screen
+    ///Will Be Moving To Custom Inspection View Screen
 
     CustomInspectionView(),
+    ProfileView(),
   ];
 
   _onItemTapped(var index) {
@@ -67,7 +66,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
             backgroundColor: AppColor.offWhite,
             selectedIndex: _selectedIndex,
             showElevation: true,
-            itemCornerRadius: 24,
+            itemCornerRadius: 10,
             curve: Curves.easeIn,
             onItemSelected: _onItemTapped,
             type: BottomNavigationBarType.fixed,
@@ -78,26 +77,13 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
               BottomNavyBarItem(
                 icon: const Icon(
                   MdiIcons.viewDashboard,
-                  size: 34,
+                  size: 30,
                 ),
                 title: const Text(
                   'Dashboard',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                 ),
-                activeColor: const Color(0xff368fc6),
-                inactiveColor: AppColor.iconBottomNavBarColor,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: const Icon(
-                  MdiIcons.accountCircle,
-                  size: 34,
-                ),
-                title: const Text(
-                  'Profile',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
-                ),
-                activeColor: AppColor.redColor,
+                activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
                 textAlign: TextAlign.center,
               ),
@@ -110,7 +96,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   'Inspection',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
-                activeColor: const Color(0xfff2a23d),
+                activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
                 textAlign: TextAlign.center,
               ),
@@ -123,7 +109,20 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   'Custom Inspection',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
-                activeColor: const Color(0xff85bf42),
+                activeColor: AppColor.appBarColor,
+                inactiveColor: AppColor.iconBottomNavBarColor,
+                textAlign: TextAlign.center,
+              ),
+              BottomNavyBarItem(
+                icon: const Icon(
+                  MdiIcons.accountCircle,
+                  size: 34,
+                ),
+                title: const Text(
+                  'Profile',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                ),
+                activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
                 textAlign: TextAlign.center,
               ),

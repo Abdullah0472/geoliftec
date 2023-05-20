@@ -7,7 +7,7 @@ import '../../res/components/widgets/buttons/round_button_widget.dart';
 import '../../view_mode/controller/review/review_view_model.dart';
 
 class ReviewView extends StatelessWidget {
-   ReviewView({Key? key}) : super(key: key);
+  ReviewView({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -19,19 +19,15 @@ class ReviewView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
-        backgroundColor: AppColor.appBarColor,
-        elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30))),
         title: const Text(
           "Inspection Report",
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w800, fontSize: 32),
+            color: Colors.white,
+            fontSize: 25,
+          ),
         ),
       ),
       body: SafeArea(
@@ -197,43 +193,46 @@ class ReviewView extends StatelessWidget {
                   buttonColor: AppColor.appBarColor,
                   width: Get.width,
                   height: Get.height * 0.07,
-                  onPress: () {
+                  onPress: () async {
                     if (_formKey.currentState!.validate()) {
-                      reviewVM.inspection();
+                      int code = await reviewVM.inspection();
 
                       /// ----------------- Use to Clear Text Form Field ---------- ///
-                      reviewVM.radiatorDropDownController.value.clear();
-                      reviewVM.radiatorController.value.clear();
-                      reviewVM.engineDropDownController.value.clear();
-                      reviewVM.engineController.value.clear();
-                      reviewVM.hydraulicOilDropDownController.value.clear();
-                      reviewVM.hydraulicOilController.value.clear();
-                      reviewVM.brakeDropDownController.value.clear();
-                      reviewVM.brakeController.value.clear();
-                      reviewVM.batteryElectrolyteDropDownController.value.clear();
-                      reviewVM.batteryElectrolyteController.value.clear();
-                      reviewVM.fuelDropDownController.value.clear();
-                      reviewVM.fuelController.value.clear();
-                      reviewVM.leaksDropDownController.value.clear();
-                      reviewVM.leaksController.value.clear();
-                      reviewVM.mastChainDropDownController.value.clear();
-                      reviewVM.mastChainController.value.clear();
-                      reviewVM.hydraulicDriveDropDownController.value.clear();
-                      reviewVM.hydraulicDriveController.value.clear();
-                      reviewVM.hydraulicHosesDropDownController.value.clear();
-                      reviewVM.hydraulicHosesController.value.clear();
-                      reviewVM.mirrorsDropDownController.value.clear();
-                      reviewVM.mirrorsController.value.clear();
-                      reviewVM.pedalsDropDownController.value.clear();
-                      reviewVM.pedalsController.value.clear();
-                      reviewVM.tiresDropDownController.value.clear();
-                      reviewVM.tiresController.value.clear();
-                      reviewVM.forksDropDownController.value.clear();
-                      reviewVM.forksController.value.clear();
-                      reviewVM.retroHornDropDownController.value.clear();
-                      reviewVM.retroHornController.value.clear();
-                      reviewVM.flasherBeaconDropDownController.value.clear();
-                      reviewVM.flasherBeaconController.value.clear();
+                      if (code == 200) {
+                        reviewVM.radiatorDropDownController.value.clear();
+                        reviewVM.radiatorController.value.clear();
+                        reviewVM.engineDropDownController.value.clear();
+                        reviewVM.engineController.value.clear();
+                        reviewVM.hydraulicOilDropDownController.value.clear();
+                        reviewVM.hydraulicOilController.value.clear();
+                        reviewVM.brakeDropDownController.value.clear();
+                        reviewVM.brakeController.value.clear();
+                        reviewVM.batteryElectrolyteDropDownController.value
+                            .clear();
+                        reviewVM.batteryElectrolyteController.value.clear();
+                        reviewVM.fuelDropDownController.value.clear();
+                        reviewVM.fuelController.value.clear();
+                        reviewVM.leaksDropDownController.value.clear();
+                        reviewVM.leaksController.value.clear();
+                        reviewVM.mastChainDropDownController.value.clear();
+                        reviewVM.mastChainController.value.clear();
+                        reviewVM.hydraulicDriveDropDownController.value.clear();
+                        reviewVM.hydraulicDriveController.value.clear();
+                        reviewVM.hydraulicHosesDropDownController.value.clear();
+                        reviewVM.hydraulicHosesController.value.clear();
+                        reviewVM.mirrorsDropDownController.value.clear();
+                        reviewVM.mirrorsController.value.clear();
+                        reviewVM.pedalsDropDownController.value.clear();
+                        reviewVM.pedalsController.value.clear();
+                        reviewVM.tiresDropDownController.value.clear();
+                        reviewVM.tiresController.value.clear();
+                        reviewVM.forksDropDownController.value.clear();
+                        reviewVM.forksController.value.clear();
+                        reviewVM.retroHornDropDownController.value.clear();
+                        reviewVM.retroHornController.value.clear();
+                        reviewVM.flasherBeaconDropDownController.value.clear();
+                        reviewVM.flasherBeaconController.value.clear();
+                      }
 
                       /// ---------------The End -------------------- ///
                     }

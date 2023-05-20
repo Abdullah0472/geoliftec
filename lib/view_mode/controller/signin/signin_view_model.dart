@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/main.dart';
@@ -119,6 +120,14 @@ class SignInViewModel extends GetxController {
   // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
+      Get.dialog(
+        WillPopScope(
+            child: Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: false,
+      );
       final response =
           await post(Uri.parse('http://$baseUrl/api/login'), body: {
         'email': emailController.value.text,
@@ -156,6 +165,7 @@ class SignInViewModel extends GetxController {
       }
     } catch (e) {
       Utils.snackBar('Login Failed', 'An error occurred while logging in');
+      Get.back();
     }
   }
 

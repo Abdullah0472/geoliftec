@@ -16,22 +16,24 @@ class CardProfileDesign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      semanticContainer: true,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(1, 1),
+              color: Colors.grey.shade300,
+              blurRadius: 3,
+              spreadRadius: 3,
+            )
+          ]),
       clipBehavior: Clip.antiAlias,
-      elevation: 5,
-      margin: const EdgeInsets.only(top: 20, left: 12, right: 12),
-      color: AppColor.appBarColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-        side: const BorderSide(
-          width: 3,
-          color: AppColor.blackColor
-        ),
-      ),
+      margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 18, top: 25, bottom: 20, right: 18),
+            const EdgeInsets.only(left: 18, top: 10, bottom: 10, right: 18),
         child: IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -39,11 +41,10 @@ class CardProfileDesign extends StatelessWidget {
             children: [
               Icon(
                 icons,
-                size: 40,
-                color: AppColor.whiteColor,
+                size: 25,
               ),
               const SizedBox(width: 10),
-              const VerticalDivider(thickness: 1.2,color: AppColor.whiteColor),
+              const VerticalDivider(thickness: 1.2, color: AppColor.whiteColor),
               const SizedBox(width: 5),
               Flexible(
                 child: Text(
@@ -53,9 +54,9 @@ class CardProfileDesign extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.whiteColor),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

@@ -11,7 +11,7 @@ class DashBoardContainerWidget extends StatelessWidget {
       {Key? key,
       //   required this.iconDiplay,
       required this.title,
-        this.textPading = 0,
+      this.textPading = 0,
       required this.subtitle,
       required this.imageDisplay})
       : super(key: key);
@@ -27,8 +27,8 @@ class DashBoardContainerWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade300,
-              blurRadius: 1.0, // soften the shadow
-              spreadRadius: 1.0, //extend the shadow
+              blurRadius: 3.0, // soften the shadow
+              spreadRadius: 3.0, //extend the shadow
               offset: Offset(
                 1.0, // Move to right 5  horizontally
                 1.0, // Move to bottom 5 Vertically
@@ -43,16 +43,7 @@ class DashBoardContainerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image(image: imageDisplay,height: 100),
-            // Text(
-            //   title,
-            //   style: const TextStyle(
-            //     fontStyle: FontStyle.normal,
-            //     fontWeight: FontWeight.w700,
-            //     color: AppColor.dashboardContainerTextColor,
-            //     fontSize: 28,
-            //   ),
-            // ),
+            Image(image: imageDisplay, height: 100),
             const SizedBox(
               height: 20,
             ),

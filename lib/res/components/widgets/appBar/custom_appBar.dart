@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:geoliftec/res/components/widgets/appBar/custom_shape.dart';
 import '../../../colors/colors.dart';
-class CustomAppBarProfile extends StatelessWidget implements PreferredSizeWidget {
+
+class CustomAppBarProfile extends StatelessWidget
+    implements PreferredSizeWidget {
   final double appBarHeight = 200;
   final String title;
   final NetworkImage imageUrl;
@@ -21,40 +22,42 @@ class CustomAppBarProfile extends StatelessWidget implements PreferredSizeWidget
       toolbarHeight: 200,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-      flexibleSpace: ClipPath(
-        clipper: Customshape(),
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              height: 280,
-              width: MediaQuery.of(context).size.width,
-              color: AppColor.appBarColor,
-              child: Center(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    color: AppColor.whiteColor,
-                    fontStyle: FontStyle.normal,
-                    decoration: TextDecoration.none,
-                    fontSize: 35,
-                    fontWeight: FontWeight.w700,
-                  ),
+      flexibleSpace: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            height: 280,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: AppColor.primaryColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: AppColor.whiteColor,
+                  fontStyle: FontStyle.normal,
+                  decoration: TextDecoration.none,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            Positioned(
-              bottom: -60,
-              child: CircleAvatar(
-                radius: 75,
-                backgroundImage: imageUrl,
-              ),
+          ),
+          Positioned(
+            bottom: -60,
+            child: CircleAvatar(
+              radius: 75,
+              backgroundImage: imageUrl,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-
     );
   }
 

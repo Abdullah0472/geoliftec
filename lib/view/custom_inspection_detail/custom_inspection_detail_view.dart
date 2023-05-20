@@ -18,23 +18,14 @@ class CustomInspectionDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appBarColor,
         elevation: 0,
         centerTitle: true,
-        automaticallyImplyLeading: false,
         toolbarHeight: 80,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
-        ),
         title: const Text(
           "Due Inspection Report",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 32,
+            fontSize: 25,
           ),
         ),
       ),
@@ -72,7 +63,7 @@ class CustomInspectionDetailView extends StatelessWidget {
                       ),
                     ),
                     RoundButton(
-                      buttonColor: AppColor.appBarColor,
+                      buttonColor: AppColor.buttonColor,
                       width: Get.width,
                       height: Get.height * 0.07,
                       onPress: () async {
@@ -87,14 +78,15 @@ class CustomInspectionDetailView extends StatelessWidget {
                             inspectionDetails.add(detail);
                           }
                           try {
-                          await controller.updateInspectionDetail(inspectionDetails);
+                            await controller
+                                .updateInspectionDetail(inspectionDetails);
                             for (var controller in dropDownControllers) {
                               controller.clear();
                             } // Clear drop-down controllers
                             for (var controller in textControllers) {
                               controller.clear();
                             }
-                           await customInspectionController.fetchData();
+                            await customInspectionController.fetchData();
                           } catch (e) {
                             // Handle the exception here
                             if (kDebugMode) {

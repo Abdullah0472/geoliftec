@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -79,10 +80,27 @@ class ReviewViewModel extends GetxController {
   final retroHornDropDownFocusNode = FocusNode().obs;
   final flasherBeaconDropDownFocusNode = FocusNode().obs;
 
-  void inspection() async {
-    final String? getTooken = await signInVM.getBearerToken();
-
+  Future<int> inspection() async {
     try {
+      final String? getTooken = await signInVM.getBearerToken();
+      log({
+        'radiator_level': radiatorDropDownController.value.text,
+        'engine_oil': engineDropDownController.value.text,
+        'hydraulic_oil': hydraulicOilDropDownController.value.text,
+        'brake_fluid': brakeDropDownController.value.text,
+        'battery_electrolyte': batteryElectrolyteDropDownController.value.text,
+        'fuel': fuelDropDownController.value.text,
+        'Leaks': leaksDropDownController.value.text,
+        'mast_chains': mastChainDropDownController.value.text,
+        'hydraulic_drive': hydraulicDriveDropDownController.value.text,
+        'hydraulic_hoses': hydraulicHosesDropDownController.value.text,
+        'mirrors': mirrorsDropDownController.value.text,
+        'pedals': pedalsDropDownController.value.text,
+        'tires': tiresDropDownController.value.text,
+        'forks': forksDropDownController.value.text,
+        'retro_horn': retroHornDropDownController.value.text,
+        'flasher_beacon': flasherBeaconDropDownController.value.text,
+      }.toString());
       final response = await post(Uri.parse('http://$baseUrl/api/inspection'),
           headers: {
             'Content-Type': 'application/json',
@@ -148,8 +166,10 @@ class ReviewViewModel extends GetxController {
       } else {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
+      return response.statusCode;
     } catch (e) {
       Utils.snackBar("Exception ", e.toString());
+      rethrow;
     }
   }
 }

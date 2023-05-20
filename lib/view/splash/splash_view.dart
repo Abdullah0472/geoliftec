@@ -122,7 +122,6 @@ class _SplashViewState extends State<SplashView> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -134,8 +133,8 @@ class _SplashViewState extends State<SplashView> {
             const Spacer(),
             Center(
               child: SizedBox(
-                height: Get.height * 0.85,
-                width: Get.width * 0.65,
+                height: Get.height * 0.9,
+                width: Get.width * 0.85,
                 child: Image.asset(ImageAssets.appScreen),
               ),
             ),
@@ -149,8 +148,8 @@ class _SplashViewState extends State<SplashView> {
                   Text(
                     "Powered By : Kusawa ",
                     style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
                       color: AppColor.drakerColor,
                     ),
                   ),
@@ -158,8 +157,8 @@ class _SplashViewState extends State<SplashView> {
                   Text(
                     " 2023",
                     style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
                       color: AppColor.drakerColor,
                     ),
                   ),

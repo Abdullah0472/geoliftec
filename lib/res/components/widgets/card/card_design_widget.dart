@@ -14,33 +14,34 @@ class CardDesign extends StatelessWidget {
   TextEditingController controller;
   TextEditingController dropDownController;
 
-
-  CardDesign(
-      {Key? key,
-      required this.title,
-      required this.title1,
-      required this.icons,
-        this.dropDownSize = 180,
-      required this.controller,
-        this.hintFontSize = 18,
-      required this.dropDownController,
-      })
-      : super(key: key);
+  CardDesign({
+    Key? key,
+    required this.title,
+    required this.title1,
+    required this.icons,
+    this.dropDownSize = 180,
+    required this.controller,
+    this.hintFontSize = 18,
+    required this.dropDownController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      semanticContainer: true,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(1, 1),
+              color: Colors.grey.shade300,
+              blurRadius: 3,
+              spreadRadius: 3,
+            )
+          ]),
       clipBehavior: Clip.antiAlias,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 20, left: 12, right: 12),
-      color: AppColor.appBarColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-        side: const BorderSide(
-          width: 3,
-        ),
-      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -50,38 +51,41 @@ class CardDesign extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 12, bottom: 15),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        icons,
-                        color: AppColor.whiteColor,
-                        size: 35,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 6),
-                        child: Text(
-                          title,
-                          style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.whiteColor),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          icons,
+                          size: 35,
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 6),
+                          child: Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 20,),
-                  SizedBox(
-                    width: dropDownSize,
-                    child: DropDown(
-                      hintSize: hintFontSize,
-                      onSelected: (String? selectedValue) {
-                        title1 = selectedValue!;
-                      }, dropDownController: dropDownController,
+                  Expanded(
+                    child: SizedBox(
+                      child: DropDown(
+                        hintSize: 15,
+                        onSelected: (String? selectedValue) {
+                          title1 = selectedValue!;
+                          dropDownController.text = selectedValue;
+                        },
+                        dropDownController: dropDownController,
+                      ),
                     ),
                   ),
                 ],

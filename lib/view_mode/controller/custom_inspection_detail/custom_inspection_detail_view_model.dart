@@ -4,6 +4,7 @@ import 'package:geoliftec/main.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../model/custom_inspection_detail/custom_inspection_detail_model.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../utils/utils.dart';
@@ -11,6 +12,7 @@ import '../signin/signin_view_model.dart';
 
 class CustomInspectionDetailViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
+
   final String baseurl = 'http://$baseUrl/api';
   final Rx<CustomInspectionDetailModel> apiResponse =
       CustomInspectionDetailModel(

@@ -1,4 +1,3 @@
-
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/model/dashboard/dashboard_model.dart';
 import 'package:get/get.dart';
@@ -12,16 +11,16 @@ class DashboardViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
 
   Future<List<DataDashBoard>> fetchDashboardData() async {
-    final String? getTooken = await signInVM.getBearerToken();
-
-    final response = await http.get(
-      Uri.parse('http://$baseUrl/api/dashboard'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $getTooken'
-      },
-    );
     try {
+      final String? getTooken = await signInVM.getBearerToken();
+
+      final response = await http.get(
+        Uri.parse('http://$baseUrl/api/dashboard'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $getTooken'
+        },
+      );
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         if (jsonResponse['data'] is Map<String, dynamic>) {
@@ -31,20 +30,18 @@ class DashboardViewModel extends GetxController {
         } else if (jsonResponse['data'] is List) {
           final data = jsonResponse['data'] as List;
           final profiles =
-          data.map((json) => DataDashBoard.fromJson(json)).toList();
+              data.map((json) => DataDashBoard.fromJson(json)).toList();
           return profiles;
         } else {
           Utils.snackBar("Data format is incorrect", "Try Again");
         }
-      }
-      else if (response.statusCode == 401) {
+      } else if (response.statusCode == 401) {
         Utils.snackBar("UnAuthorized ", "Logout");
         Get.toNamed(RouteName.signInView);
       } else {
         Utils.snackBar("Data Unauthenticated ", "Try Again");
       }
     } catch (e) {
-
       Utils.snackBar("Exception ", e.toString());
     }
     return [];

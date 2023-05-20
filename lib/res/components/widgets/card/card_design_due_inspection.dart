@@ -27,18 +27,21 @@ class CardDesignDueInspection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      semanticContainer: true,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(1, 1),
+              color: Colors.grey.shade300,
+              blurRadius: 3,
+              spreadRadius: 3,
+            )
+          ]),
       clipBehavior: Clip.antiAlias,
-      elevation: 5,
       margin: const EdgeInsets.only(top: 20, left: 12, right: 12),
-      color: AppColor.appBarColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-        side: const BorderSide(
-          width: 3,
-        ),
-      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -49,40 +52,37 @@ class CardDesignDueInspection extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10, top: 12, bottom: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible( // Use Flexible or Expanded to allow title to cover multiple lines
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Expanded(
+                    // Use Flexible or Expanded to allow title to cover multiple lines
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
                           icons,
-                          color: AppColor.whiteColor,
                           size: 35,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 6),
+                        const SizedBox(width: 10),
+                        Expanded(
                           child: Text(
                             title,
+                            overflow: TextOverflow.clip,
                             style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.whiteColor),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    width: dropDownSize,
+                  Expanded(
                     child: DropDown(
                       hintSize: hintFontSize,
                       onSelected: (String? selectedValue) {
                         title1 = selectedValue!;
+                        dropDownController.text = selectedValue;
                       },
                       dropDownController: dropDownController,
                     ),

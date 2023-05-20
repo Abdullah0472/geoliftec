@@ -49,9 +49,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: AppColor.appBarColor));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: AppColor.primaryColor,
+    ));
     return GetMaterialApp(
+      theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: AppColor.primaryColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: AppColor.primaryColor,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+          )),
       debugShowCheckedModeBanner: false,
       builder: (context, child) => ResponsiveWrapper.builder(
         child,

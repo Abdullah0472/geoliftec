@@ -41,26 +41,19 @@ class DashboardView extends StatelessWidget {
                         },
                         icon: const Icon(
                           MdiIcons.logout,
-                          size: 30,
+                          size: 25,
                           color: AppColor.whiteColor,
                         ))
                   ],
-                  backgroundColor: AppColor.appBarColor,
                   elevation: 0,
                   centerTitle: true,
                   automaticallyImplyLeading: false,
                   toolbarHeight: 80,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30)),
-                  ),
                   title: const Text(
                     "Dashboard",
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 32,
+                      fontSize: 25,
                     ),
                   ),
                 ),
@@ -143,7 +136,8 @@ class DashboardView extends StatelessWidget {
               return const Center(child: Text("Data is incorrect"));
             }
           } else if (snapshot.hasError) {
-            return Center(child: Text("The Error in Dashboard : ${snapshot.error}"));
+            return Center(
+                child: Text("The Error in Dashboard : ${snapshot.error}"));
           } else {
             return const Center(child: Text("Please Wait"));
           }

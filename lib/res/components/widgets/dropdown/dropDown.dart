@@ -100,17 +100,24 @@ class DropDown extends StatefulWidget {
   final TextEditingController dropDownController;
   final double hintSize;
 
-  const DropDown({Key? key, required this.onSelected, required this.dropDownController,  this.hintSize = 18}) : super(key: key);
+  const DropDown(
+      {Key? key,
+      required this.onSelected,
+      required this.dropDownController,
+      this.hintSize = 18})
+      : super(key: key);
 
   @override
   State<DropDown> createState() => _DropDownState();
 }
 
 class _DropDownState extends State<DropDown> {
-
   String? dropdownValue;
 
-  var items = [    'Good',    'Bad',  ];
+  var items = [
+    'Good',
+    'Bad',
+  ];
 
   @override
   void initState() {
@@ -121,13 +128,20 @@ class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      hint:  Text('Select Condition',style: TextStyle(
-        color: AppColor.lightgreyColor,
-        fontSize: widget.hintSize,
-      ),),
+      hint: Text(
+        'Select Condition',
+        style: TextStyle(
+          color: AppColor.lightgreyColor,
+          fontSize: widget.hintSize,
+        ),
+      ),
 
-      validator: (value) => value == null || value.isEmpty ? 'Please select a value' : null,
-      style: const TextStyle(color: AppColor.drakerColor, fontSize: 18, fontWeight: FontWeight.w500), // update text color to black
+      validator: (value) =>
+          value == null || value.isEmpty ? 'Please select a value' : null,
+      style: const TextStyle(
+          color: AppColor.drakerColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w500), // update text color to black
       dropdownColor: AppColor.whiteColor, // update dropdown menu color to white
       iconEnabledColor: AppColor.drakerColor,
       decoration: InputDecoration(
@@ -151,7 +165,6 @@ class _DropDownState extends State<DropDown> {
         ),
         filled: true,
         fillColor: AppColor.whiteColor,
-
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).colorScheme.error,
@@ -185,6 +198,5 @@ class _DropDownState extends State<DropDown> {
         widget.dropDownController.text = value ?? '';
       },
     );
-
   }
 }

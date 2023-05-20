@@ -40,7 +40,7 @@ class ProfileView extends StatelessWidget {
                   ),
                   body: SafeArea(
                       child: Padding(
-                    padding: const EdgeInsets.only(top: 45),
+                    padding: const EdgeInsets.only(top: 60),
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
@@ -71,7 +71,8 @@ class ProfileView extends StatelessWidget {
               return const Center(child: Text("Data is incorrect"));
             }
           } else if (snapshot.hasError) {
-            return Center(child: Text("The error in Profile : ${snapshot.error}"));
+            return Center(
+                child: Text("The error in Profile : ${snapshot.error}"));
           } else {
             return const Center(child: Text("Please Wait"));
           }
