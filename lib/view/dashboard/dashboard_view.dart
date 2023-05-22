@@ -4,10 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/model/dashboard/dashboard_model.dart';
 import 'package:geoliftec/view_mode/controller/signin/signin_view_model.dart';
-
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 import '../../res/components/widgets/container/dashboard_container_widget.dart';
@@ -16,13 +14,15 @@ import '../../view_mode/controller/dashboard/dashboard_view_model.dart';
 class DashboardView extends StatelessWidget {
   DashboardView({Key? key}) : super(key: key);
   final dashboardVM = Get.put(DashboardViewModel());
-  final signInVM = Get.put(SignInViewModel());
+  final signInVM = Get.find<SignInViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<DataDashBoard>>(
         future: dashboardVM.fetchDashboardData(),
         builder: (BuildContext context,
             AsyncSnapshot<List<DataDashBoard>> snapshot) {
+          //  AssetImage makeImage;
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -35,6 +35,32 @@ class DashboardView extends StatelessWidget {
               return Scaffold(
                 appBar: AppBar(
                   actions: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Stack(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                signInVM.buildLanguageDialog(context);
+                              },
+                              icon: const Icon(
+                                MdiIcons.web,
+                                size: 25,
+                                color: AppColor.whiteColor,
+                              )),
+                          Positioned(
+                              right: 15,
+                              top: 35,
+                              child: Text(
+                                'changelang'.tr,
+                                style: const TextStyle(
+                                    color: AppColor.whiteColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              )),
+                        ],
+                      ),
+                    ),
                     IconButton(
                         onPressed: () {
                           signInVM.logoutApi();
@@ -43,18 +69,38 @@ class DashboardView extends StatelessWidget {
                           MdiIcons.logout,
                           size: 25,
                           color: AppColor.whiteColor,
-                        ))
+                        )),
                   ],
                   elevation: 0,
                   centerTitle: true,
                   automaticallyImplyLeading: false,
-                  toolbarHeight: 80,
-                  title: const Text(
-                    "Dashboard",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                    ),
+                  toolbarHeight: 110,
+                  title: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Image.asset(
+                          ImageAssets.geoliftec,
+                          color: AppColor.whiteColor,
+                          height: 90,
+                          width: 150,
+                        ),
+                      ),
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(bottom: 50),
+                    //     child: Text(
+                    //     "AppBarDashboardText".tr,
+                    //     style: const TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 28,
+                    //       fontWeight: FontWeight.w500
+                    //     ),
+                    // ),
+                    //   ),
+
+                  ]
                   ),
                 ),
                 body: SafeArea(
@@ -76,17 +122,40 @@ class DashboardView extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  DashBoardContainerWidget(
-                                    title: 'Make',
-                                    subtitle: profileDetail.make,
-                                    imageDisplay: const AssetImage(
-                                        ImageAssets.forkLifter_brand),
-                                  ),
-                                  DashBoardContainerWidget(
+                                  Obx(() {
+                                    AssetImage makeImageAsset;
+                                    if (signInVM
+                                            .currentLocale.value.languageCode ==
+                                        'es') {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_brand_sp);
+                                    } else {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_brand);
+                                    }
+                                    return DashBoardContainerWidget(
+                                      title: 'Make',
+                                      subtitle: profileDetail.make,
+                                      imageDisplay: makeImageAsset,
+                                    );
+                                  }),
+                                  Obx(() {
+                                    AssetImage makeImageAsset;
+                                    if (signInVM
+                                            .currentLocale.value.languageCode ==
+                                        'es') {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_model_sp);
+                                    } else {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_model);
+                                    }
+                                    return DashBoardContainerWidget(
                                       title: 'Model',
                                       subtitle: profileDetail.model,
-                                      imageDisplay: const AssetImage(
-                                          ImageAssets.forkLifter_model)),
+                                      imageDisplay: makeImageAsset,
+                                    );
+                                  }),
                                 ],
                               ),
                               Row(
@@ -94,17 +163,40 @@ class DashboardView extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  DashBoardContainerWidget(
-                                    title: 'Registration Data',
-                                    subtitle: profileDetail.regDate,
-                                    imageDisplay: const AssetImage(
-                                        ImageAssets.forkLifter_reg_date),
-                                  ),
-                                  DashBoardContainerWidget(
+                                  Obx(() {
+                                    AssetImage makeImageAsset;
+                                    if (signInVM
+                                            .currentLocale.value.languageCode ==
+                                        'es') {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_reg_date_sp);
+                                    } else {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_reg_date);
+                                    }
+                                    return DashBoardContainerWidget(
+                                      title: 'Registration Data',
+                                      subtitle: profileDetail.regDate,
+                                      imageDisplay: makeImageAsset,
+                                    );
+                                  }),
+                                  Obx(() {
+                                    AssetImage makeImageAsset;
+                                    if (signInVM
+                                            .currentLocale.value.languageCode ==
+                                        'es') {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_reg_num_sp);
+                                    } else {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forkLifter_reg_num);
+                                    }
+                                    return DashBoardContainerWidget(
                                       title: 'Registered Number',
                                       subtitle: profileDetail.regNo,
-                                      imageDisplay: const AssetImage(
-                                          ImageAssets.forkLifter_reg_num)),
+                                      imageDisplay: makeImageAsset,
+                                    );
+                                  }),
                                 ],
                               ),
                               Row(

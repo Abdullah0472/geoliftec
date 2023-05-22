@@ -4,13 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
+import 'package:geoliftec/res/language/local_string_language.dart';
 import 'package:geoliftec/res/notificationservices/local_notification_service.dart';
+import 'package:geoliftec/view_mode/controller/signin/signin_view_model.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:geoliftec/res/routes/routes.dart';
 import 'package:geoliftec/view/splash/splash_view.dart';
 
-void main() async {
+void main() async  {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   LocalNotificationService.initialize();
@@ -25,7 +27,7 @@ void main() async {
   );
 
   ///------------------------------///
-
+  Get.put(SignInViewModel());
   runApp(const MyApp());
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -53,12 +55,14 @@ class MyApp extends StatelessWidget {
       statusBarColor: AppColor.primaryColor,
     ));
     return GetMaterialApp(
+      translations: LocaleString(),
+      locale: const Locale('es','SP'),
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           primaryColor: AppColor.primaryColor,
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: AppColor.primaryColor,
-            shape: const RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10)),
@@ -78,6 +82,7 @@ class MyApp extends StatelessWidget {
       ),
       defaultTransition: Transition.native, // Enable native transitions
       popGesture: true,
+
       home: const SplashView(),
 
       getPages: AppRoutes.appRoutes(),

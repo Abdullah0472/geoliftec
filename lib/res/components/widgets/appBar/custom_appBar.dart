@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoliftec/res/components/widgets/appBar/custom_shape.dart';
+import '../../../assets/images/images.dart';
 import '../../../colors/colors.dart';
 
 class CustomAppBarProfile extends StatelessWidget
@@ -29,7 +30,7 @@ class CustomAppBarProfile extends StatelessWidget
           Container(
             height: 280,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColor.primaryColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
@@ -37,15 +38,28 @@ class CustomAppBarProfile extends StatelessWidget
               ),
             ),
             child: Center(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: AppColor.whiteColor,
-                  fontStyle: FontStyle.normal,
-                  decoration: TextDecoration.none,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 35),
+                    child: Image.asset(
+                      ImageAssets.geoliftec,
+                      color: AppColor.whiteColor,
+                      height: 90,
+                      width: 150,
+                    ),
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: AppColor.whiteColor,
+                      fontStyle: FontStyle.normal,
+                      decoration: TextDecoration.none,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

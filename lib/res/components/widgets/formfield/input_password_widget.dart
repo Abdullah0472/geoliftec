@@ -54,11 +54,11 @@ class _InputPasswordTextFieldState extends State<InputPasswordTextField> {
       style: const TextStyle(color: AppColor.blackColor, fontSize: 17),
       minLines: 1,
       decoration: InputDecoration(
-        labelText: 'Password',
+        labelText: 'passwordLabelText'.tr,
         labelStyle: const TextStyle(
           color: AppColor.greyColor,
         ),
-        hintText: 'Enter Your Password',
+        hintText: 'passwordHintText'.tr,
         hintStyle: const TextStyle(
           color: AppColor.lightgreyColor,
         ),
@@ -68,18 +68,18 @@ class _InputPasswordTextFieldState extends State<InputPasswordTextField> {
         contentPadding: const EdgeInsets.symmetric(vertical: 18),
         border: InputBorder.none,
         fillColor: const Color.fromARGB(255, 251, 250, 249),
-        focusedErrorBorder: OutlineInputBorder(),
-        disabledBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(),
+        disabledBorder: const OutlineInputBorder(
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
-        focusedBorder: OutlineInputBorder(
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
+        focusedBorder: const OutlineInputBorder(
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
-        errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColor.redColor, width: 1.3)),
-        enabledBorder: OutlineInputBorder(
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
+        errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: AppColor.redColor, width: 1.3)),
+        enabledBorder: const OutlineInputBorder(
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
         suffixIcon: Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
           child: GestureDetector(

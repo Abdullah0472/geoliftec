@@ -32,11 +32,11 @@ class InputEmailTextField extends StatelessWidget {
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'Email',
+        labelText: 'emailLabelText'.tr,
         labelStyle: const TextStyle(
           color: AppColor.greyColor,
         ),
-        hintText: 'Enter Your Email',
+        hintText: 'emailHintText'.tr,
         hintStyle: const TextStyle(
           color: AppColor.lightgreyColor,
         ),
@@ -46,26 +46,26 @@ class InputEmailTextField extends StatelessWidget {
         fillColor: const Color.fromARGB(255, 251, 250, 249),
         filled: true,
         suffixIconColor: Colors.grey,
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
             // borderRadius: BorderRadius.circular(10),
             ),
-        disabledBorder: OutlineInputBorder(
+        disabledBorder: const OutlineInputBorder(
             // borderRadius: BorderRadius.circular(10),
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
-        focusedBorder: OutlineInputBorder(
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
+        focusedBorder: const OutlineInputBorder(
             // borderRadius: BorderRadius.circular(
             //   10,
             // ),
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
-        errorBorder: OutlineInputBorder(
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
+        errorBorder: const OutlineInputBorder(
             // borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: AppColor.redColor, width: 1.3)),
-        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColor.redColor, width: 1.3)),
+        enabledBorder: const OutlineInputBorder(
             // borderRadius: BorderRadius.circular(10),
             borderSide:
-                const BorderSide(color: AppColor.greyColor, width: 1.3)),
+                BorderSide(color: AppColor.greyColor, width: 1.3)),
       ),
     );
   }

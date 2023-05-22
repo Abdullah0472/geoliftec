@@ -4,6 +4,7 @@ import 'package:geoliftec/view_mode/controller/custom_inspection/custom_inspecti
 import 'package:geoliftec/view_mode/controller/custom_inspection_detail/custom_inspection_detail_view_model.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../res/assets/images/images.dart';
 import '../../res/colors/colors.dart';
 
 class CustomInspectionView extends StatelessWidget {
@@ -16,13 +17,33 @@ class CustomInspectionView extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: false,
-          toolbarHeight: 80,
-          title: const Text(
-            "Custom Inspection",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-            ),
+          toolbarHeight: 110,
+          title:  Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Image.asset(
+                    ImageAssets.geoliftec,
+                    color: AppColor.whiteColor,
+                    height: 90,
+                    width: 150,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  child: Text(
+                    "AppBarCustomInspectionText".tr,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+
+              ]
           ),
         ),
         body: GetBuilder<CustomInspectionViewModel>(
@@ -89,9 +110,9 @@ class CustomInspectionView extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              const Text(
-                                                'Inspection Due:',
-                                                style: TextStyle(
+                                               Text(
+                                                'inspectionDueText'.tr,
+                                                style: const TextStyle(
                                                   color: AppColor.redShadeColor,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 25,
@@ -112,10 +133,10 @@ class CustomInspectionView extends StatelessWidget {
                                   },
                                 );
                               } else {
-                                return const Center(
+                                return  Center(
                                     child: Text(
-                                  "No Inspection Due",
-                                  style: TextStyle(
+                                  "noInspectionDueText".tr,
+                                  style: const TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w600,
                                   ),

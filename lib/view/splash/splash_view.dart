@@ -22,7 +22,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   final signInVM = Get.put(SignInViewModel());
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     checkLoginStatus(); // Check login status when the view is initialized
 
@@ -102,14 +102,20 @@ class _SplashViewState extends State<SplashView> {
     String? bearerToken = prefs.getString('bearerToken');
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     String? fcmToken = prefs.getString('fcm_token');
+     int? forkLifterId = prefs.getInt('forklift_id');
+     print("The ForkLifterId in Splash Screen $forkLifterId");
     if (isLoggedIn == true &&
         bearerToken != null &&
         bearerToken.isNotEmpty &&
-        fcmToken != null) {
+        fcmToken != null &&
+        forkLifterId != 0
+    ) {
       // User is logged in and bearer token is present
       // Navigate to BottomNavigationBarView
+      // Timer(const Duration(seconds: 3),
+      //     () => Get.toNamed(RouteName.bottomNavBarView));
       Timer(const Duration(seconds: 3),
-          () => Get.toNamed(RouteName.bottomNavBarView));
+              () => Get.offAllNamed(RouteName.bottomNavBarView));
     } else {
       // User is not logged in or bearer token is not valid
       // Navigate to SignInView
@@ -117,8 +123,8 @@ class _SplashViewState extends State<SplashView> {
       prefs.remove('bearerToken');
       await prefs.setBool(
           'isLoggedIn', false); // Wait for the flag to be updated
-      Timer(
-          const Duration(seconds: 3), () => Get.toNamed(RouteName.signInView));
+      Timer(const Duration(seconds: 3), () => Get.offAllNamed(RouteName.signInView));
+
     }
   }
 
@@ -139,12 +145,12 @@ class _SplashViewState extends State<SplashView> {
               ),
             ),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     "Powered By : Kusawa ",
                     style: TextStyle(

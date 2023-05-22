@@ -54,38 +54,35 @@ class CardDesign extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          icons,
-                          size: 35,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 6),
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        icons,
+                        size: 35,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 6),
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      child: DropDown(
-                        hintSize: 15,
-                        onSelected: (String? selectedValue) {
-                          title1 = selectedValue!;
-                          dropDownController.text = selectedValue;
-                        },
-                        dropDownController: dropDownController,
                       ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: dropDownSize,
+                    child: DropDown(
+                      hintSize: hintFontSize,
+                      onSelected: (String? selectedValue) {
+                        title1 = selectedValue!;
+                        dropDownController.text = selectedValue;
+                      },
+                      dropDownController: dropDownController,
                     ),
                   ),
                 ],

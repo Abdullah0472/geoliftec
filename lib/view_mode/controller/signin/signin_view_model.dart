@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
@@ -20,10 +22,10 @@ class SignInViewModel extends GetxController {
   ////////////////////////Validation for Email///////////////////////////
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return "Enter Your Email";
+      return 'validEmailText'.tr;
     }
     if (!GetUtils.isEmail(value)) {
-      return "Enter Valid Email";
+      return 'validEmailText1'.tr;
     }
     return null;
   }
@@ -33,13 +35,13 @@ class SignInViewModel extends GetxController {
     // RegExp regex =
     //     RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (value!.isEmpty) {
-      return 'Please enter password';
+      return 'validPasswordText'.tr;
     } else {
       // if (!regex.hasMatch(value)) {
       //   return 'Enter valid password';
       // } else
       if (value != passwordController.value.text) {
-        "Not Match";
+        'validPasswordText1'.tr;
         return null;
       } else {
         return null;
@@ -50,6 +52,7 @@ class SignInViewModel extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   // var bearerToken;
   String? getToken;
+  int? forkLiftId;
 
   String? fcmToken; // declare a nullable variable to hold the FCM token
 
@@ -68,45 +71,6 @@ class SignInViewModel extends GetxController {
     FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefresh);
   }
 
-  //ignore: non_constant_identifier_names
-// void LoginApi() async {
-//   try {
-//     final response =
-//         await post(Uri.parse('http://$baseUrl/api/login'), body: {
-//       'email': emailController.value.text,
-//       'password': passwordController.value.text,
-//       // 'fcm_token': fcmToken??"",
-//     });
-//     // print(response.body);
-//     if (response.statusCode == 200) {
-//       final data = jsonDecode(response.body);
-//
-//       if (data['data'] == null || data['data']['bearer_token'] == null) {
-//         throw Exception('Unexpected response from server');
-//       }
-//
-//       bearerToken = data['data']['bearer_token'];
-//       Utils.snackBar('Login Successful', 'Welcome');
-//       Get.toNamed(RouteName.bottomNavBarView);
-//       String? fcmToken = await getFCMToken();
-//       updateFcmToken(fcmToken!);
-//       if (kDebugMode) {
-//         print("The FCM TOKEN IS: $fcmToken");
-//       }
-//     } else if (response.statusCode == 401) {
-//       Utils.snackBar('Login Failed', 'Invalid email or password');
-//     } else {
-//       throw Exception('Unexpected response from server');
-//     }
-//   } catch (e) {
-//     if (kDebugMode) {
-//       print('Error during login request: $e');
-//     }
-//     Utils.snackBar('Login Failed', 'An error occurred while logging in');
-//   }
-// }
-
-  /// ========================== Shared Preference =============== ///
   Future<void> storeBearerToken(String bearertoken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('bearerToken', bearertoken);
@@ -117,12 +81,24 @@ class SignInViewModel extends GetxController {
     return prefs.getString('bearerToken');
   }
 
+  /// Forklifter Id
+
+  Future<void> storeForkLiftId(int forklift_id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('forklift_id', forklift_id);
+  }
+
+  Future<int?> getForkLiftId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('forklift_id');
+  }
+
   // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
       Get.dialog(
         WillPopScope(
-            child: Center(child: CupertinoActivityIndicator()),
+            child: const Center(child: CupertinoActivityIndicator()),
             onWillPop: () async {
               return false;
             }),
@@ -136,16 +112,17 @@ class SignInViewModel extends GetxController {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-
         if (data['data'] == null || data['data']['bearer_token'] == null) {
           throw Exception('Unexpected response from server');
         }
-
+        final int forklift_id = data['data']['forklift_id'];
         final String bearerToken = data['data']['bearer_token'];
 
         storeBearerToken(bearerToken);
+        storeForkLiftId(forklift_id);
 
         getToken = await getBearerToken(); // Await for getBearerToken()
+        forkLiftId = await getForkLiftId();
 
         String? fcmToken = await getFCMToken();
         updateFcmToken(fcmToken!);
@@ -154,17 +131,24 @@ class SignInViewModel extends GetxController {
         await prefs.setString('bearerToken', getToken!);
         await prefs.setBool('isLoggedIn', true);
         await prefs.setString('fcm_token', fcmToken);
+        await prefs.setInt('forklift_id', forkLiftId!);
 
-        Utils.snackBar('Login Successful', 'Welcome');
+        if (data['data']['forklift_id'] == 0) {
+          Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
+          return;
+        }
 
+        Utils.snackBar(
+            'loginSuccessSnackBarText'.tr, 'loginSuccessSnackBarText2'.tr);
         Get.toNamed(RouteName.bottomNavBarView);
       } else if (response.statusCode == 401) {
-        Utils.snackBar('Login Failed', 'Invalid email or password');
+        Utils.snackBar('loginFailSnackBarText'.tr, 'loginFailSnackBarText2'.tr);
       } else {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
-      Utils.snackBar('Login Failed', 'An error occurred while logging in');
+      Utils.snackBar(
+          'loginFailSnackBarText'.tr, 'An error occurred while logging in');
       Get.back();
     }
   }
@@ -232,7 +216,8 @@ class SignInViewModel extends GetxController {
       // print(response.body);
       if (response.statusCode == 200) {
         // Handle successful logout, e.g., clear user data, navigate to login screen
-        Utils.snackBar('Logout Successful', 'Goodbye');
+        Utils.snackBar(
+            'logoutSuccessSnackBarText'.tr, 'logoutSuccessSnackBarText2'.tr);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', false);
         // Clear user data, navigate to login screen
@@ -246,7 +231,55 @@ class SignInViewModel extends GetxController {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
-      Utils.snackBar('Logout Failed', 'An error occurred while logging out');
+      Utils.snackBar(
+          'logoutFailSnackBarText'.tr, 'logoutExceptionSnackBarText2'.tr);
     }
+  }
+
+  final List locale = [
+    {'name': 'English', 'locale': const Locale('en', 'US')},
+    {'name': 'Española', 'locale': const Locale('es', 'SP')},
+  ];
+
+  final Rx<Locale> currentLocale =
+      Rx<Locale>(const Locale('en', 'US')); // initial locale
+
+  updateLanguage(Locale locale) {
+    Get.back();
+    Get.updateLocale(locale);
+    currentLocale.value = locale;
+  }
+
+  buildLanguageDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: const Text('Choose Your Language'),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        child: Text(locale[index]['name']),
+                        onTap: () {
+                          print(locale[index]['name']);
+                          updateLanguage(locale[index]['locale']);
+                        },
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      color: Colors.blue,
+                    );
+                  },
+                  itemCount: locale.length),
+            ),
+          );
+        });
   }
 }

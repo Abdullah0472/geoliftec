@@ -11,6 +11,7 @@ import '../../../utils/utils.dart';
 import '../signin/signin_view_model.dart';
 
 class CustomInspectionDetailViewModel extends GetxController {
+
   final signInVM = Get.put(SignInViewModel());
 
   final String baseurl = 'http://$baseUrl/api';
@@ -40,10 +41,10 @@ class CustomInspectionDetailViewModel extends GetxController {
         apiResponse.value = CustomInspectionDetailModel(
             statusCode: 200, message: 'Success', data: questions, error: '');
       } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
     } catch (e) {
       Utils.snackBar("Exception ", e.toString());
@@ -147,12 +148,12 @@ class CustomInspectionDetailViewModel extends GetxController {
           body: json.encode({'data': inspectionDetails}));
 
       if (response.statusCode == 200) {
-        Utils.snackBar("Data Uploaded Successfully ", "Congratulations");
+        Utils.snackBar("dataUploadSuccess".tr, "congoText".tr);
         await Future.delayed(const Duration(
             milliseconds: 500)); // add a delay before showing the dialog
         Get.defaultDialog(
-          title: "Status",
-          middleText: "Successfully Data Uploaded",
+          title: "statusText".tr,
+          middleText: "dataUploadSuccess".tr,
           barrierDismissible: false,
           confirm: ElevatedButton(
             onPressed: () {
@@ -163,10 +164,10 @@ class CustomInspectionDetailViewModel extends GetxController {
           ),
         );
       } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
     } catch (e) {
       // Handle the unexpected response format here

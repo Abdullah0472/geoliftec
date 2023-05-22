@@ -148,26 +148,29 @@ class ReviewViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
-        Utils.snackBar("Data Uploaded Successfully ", "Congratulations");
+        Utils.snackBar("dataUploadSuccess ".tr, "congoText".tr);
         await Future.delayed(const Duration(
             milliseconds: 500)); // add a delay before showing the dialog
         Get.defaultDialog(
-          title: "Status",
-          middleText: "Successfully Data Uploaded",
+          title: "statusText".tr,
+          middleText: "dataUploadSuccess".tr,
           barrierDismissible: false,
           confirm: ElevatedButton(
             onPressed: () => Get.back(),
-            child: const Text("OK"),
+            child:  Text("okText".tr),
           ),
         );
       } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        print("The Status Code before sending data: ${response.statusCode}");
+        print("The Response Body before sending data: ${response.body}");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
       return response.statusCode;
     } catch (e) {
+      print("The Exception During Sending Inspection Report ${e.toString()}");
       Utils.snackBar("Exception ", e.toString());
       rethrow;
     }

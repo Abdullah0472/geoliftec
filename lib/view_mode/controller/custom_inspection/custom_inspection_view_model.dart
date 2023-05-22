@@ -37,14 +37,12 @@ class CustomInspectionViewModel extends GetxController {
 
     try {
       if (response.statusCode == 200) {
-        apiResponse.value =
-            CustomInspectionModel.fromJson(json.decode(response.body));
+        apiResponse.value = CustomInspectionModel.fromJson(json.decode(response.body));
       } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
-
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
     } catch (e) {
       Utils.snackBar("Exception ", e.toString());

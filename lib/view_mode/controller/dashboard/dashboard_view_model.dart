@@ -33,13 +33,13 @@ class DashboardViewModel extends GetxController {
               data.map((json) => DataDashBoard.fromJson(json)).toList();
           return profiles;
         } else {
-          Utils.snackBar("Data format is incorrect", "Try Again");
+          Utils.snackBar("DataFormatIncorrectText".tr, "tryAgainText".tr);
         }
       } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
     } catch (e) {
       Utils.snackBar("Exception ", e.toString());

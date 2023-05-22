@@ -45,7 +45,7 @@ class InputReviewTextField extends StatelessWidget {
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        hintText: 'Review',
+        hintText: 'reviewText'.tr,
         hintStyle: const TextStyle(
           color: AppColor.lightgreyColor,
           fontSize: 18,

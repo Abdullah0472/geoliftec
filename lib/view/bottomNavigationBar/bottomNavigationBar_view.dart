@@ -1,6 +1,5 @@
 // ignore: file_names
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
@@ -37,9 +36,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
     ///Will Be Moving To HomeView/Inspection Screen
 
     ReviewView(),
-
     ///Will Be Moving To Custom Inspection View Screen
-
     CustomInspectionView(),
     ProfileView(),
   ];
@@ -79,9 +76,9 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   MdiIcons.viewDashboard,
                   size: 30,
                 ),
-                title: const Text(
-                  'Dashboard',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                title:  Text(
+                  "AppBarDashboardText".tr,
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                 ),
                 activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
@@ -92,9 +89,9 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   MdiIcons.forklift,
                   size: 34,
                 ),
-                title: const Text(
-                  'Inspection',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                title:  Text(
+                  'AppBarInspectionText'.tr,
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
                 activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
@@ -105,9 +102,9 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   MdiIcons.faceAgent,
                   size: 34,
                 ),
-                title: const Text(
-                  'Custom Inspection',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                title:  Text(
+                  'AppBarCustomInspectionText'.tr,
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
                 activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
@@ -118,9 +115,9 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                   MdiIcons.accountCircle,
                   size: 34,
                 ),
-                title: const Text(
-                  'Profile',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                title:  Text(
+                  'AppBarProfileText'.tr,
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                 ),
                 activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,

@@ -94,6 +94,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:geoliftec/res/colors/colors.dart';
+import 'package:get/get.dart';
 
 class DropDown extends StatefulWidget {
   final Function(String?) onSelected;
@@ -116,7 +117,7 @@ class _DropDownState extends State<DropDown> {
 
   var items = [
     'Good',
-    'Bad',
+    'Bad'
   ];
 
   @override
@@ -129,7 +130,7 @@ class _DropDownState extends State<DropDown> {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       hint: Text(
-        'Select Condition',
+        'selectConditionText'.tr,
         style: TextStyle(
           color: AppColor.lightgreyColor,
           fontSize: widget.hintSize,

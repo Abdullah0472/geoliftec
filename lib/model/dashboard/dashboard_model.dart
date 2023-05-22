@@ -34,12 +34,14 @@ class DataDashBoard {
     required this.regDate,
     required this.regNo,
     required this.warehouse,
+    required this.electric,
   });
   late final String make;
   late final String model;
   late final String regDate;
   late final String regNo;
   late final String warehouse;
+  late final int electric;
 
   DataDashBoard.fromJson(Map<String, dynamic> json){
     make = json['make']??"";
@@ -47,6 +49,7 @@ class DataDashBoard {
     regDate = json['reg_date']??"";
     regNo = json['reg_no']??"";
     warehouse = json['warehouse']??"";
+    electric = json['electric'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +59,7 @@ class DataDashBoard {
     _data['reg_date'] = regDate;
     _data['reg_no'] = regNo;
     _data['warehouse'] = warehouse;
+    _data['electric'] = electric;
     return _data;
   }
 }

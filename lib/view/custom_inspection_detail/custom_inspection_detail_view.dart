@@ -12,18 +12,17 @@ class CustomInspectionDetailView extends StatelessWidget {
   final int id;
   final formKey = GlobalKey<FormState>();
   CustomInspectionDetailView({Key? key, required this.id}) : super(key: key);
-  final CustomInspectionViewModel customInspectionController =
-      Get.put(CustomInspectionViewModel());
+  final CustomInspectionViewModel customInspectionController = Get.put(CustomInspectionViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        toolbarHeight: 80,
-        title: const Text(
-          "Due Inspection Report",
-          style: TextStyle(
+        toolbarHeight: 110,
+        title:  Text(
+          "dueInspectionReport".tr,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 25,
           ),
@@ -96,7 +95,7 @@ class CustomInspectionDetailView extends StatelessWidget {
                           } // Navigate to CustomInspectionView
                         }
                       },
-                      title: "All Checked",
+                      title: "reviewButtonText".tr,
                     ),
                     const SizedBox(
                       height: 30,

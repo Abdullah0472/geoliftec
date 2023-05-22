@@ -1,3 +1,4 @@
+
 import 'package:geoliftec/main.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -11,18 +12,16 @@ class ProfileViewModel extends GetxController {
   final signInVM = Get.put(SignInViewModel());
 
   Future<List<Data>> fetchProfileData() async {
-    try {
-      print("response.body");
-      final String? getTooken = await signInVM.getBearerToken();
+    final String? getTooken = await signInVM.getBearerToken();
 
-      final response = await http.get(
-        Uri.parse('http://$baseUrl/api/profile'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $getTooken'
-        },
-      );
-      print(response.body);
+    final response = await http.get(
+      Uri.parse('http://$baseUrl/api/profile'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $getTooken'
+      },
+    );
+    try {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         if (jsonResponse['data'] is Map<String, dynamic>) {
@@ -31,21 +30,21 @@ class ProfileViewModel extends GetxController {
           return [profile];
         } else if (jsonResponse['data'] is List) {
           final data = jsonResponse['data'] as List;
-          final profiles = data.map((json) => Data.fromJson(json)).toList();
+          final profiles =
+              data.map((json) => Data.fromJson(json)).toList();
           return profiles;
         } else {
-          Utils.snackBar(
-              "Data "
-                  "format is incorrect",
-              "Try Again");
+          Utils.snackBar("DataFormatIncorrectText".tr, "tryAgainText".tr);
         }
-      } else if (response.statusCode == 401) {
-        Utils.snackBar("UnAuthorized ", "Logout");
+      }
+      else if (response.statusCode == 401) {
+        Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.toNamed(RouteName.signInView);
       } else {
-        Utils.snackBar("Data Unauthenticated ", "Try Again");
+        Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
       }
     } catch (e) {
+
       Utils.snackBar("Exception ", e.toString());
     }
     return [];
