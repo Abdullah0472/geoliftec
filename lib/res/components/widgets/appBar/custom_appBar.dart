@@ -64,7 +64,7 @@ class CustomAppBarProfile extends StatelessWidget
             ),
           ),
           Positioned(
-            bottom: -60,
+            bottom: -70,
             child: CircleAvatar(
               radius: 75,
               backgroundImage: imageUrl,

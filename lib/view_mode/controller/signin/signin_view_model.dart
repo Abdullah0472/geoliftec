@@ -133,9 +133,10 @@ class SignInViewModel extends GetxController {
         await prefs.setString('fcm_token', fcmToken);
         await prefs.setInt('forklift_id', forkLiftId!);
 
-        if (data['data']['forklift_id'] == 0) {
-          Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
-          return;
+        if (forkLiftId == 0) {
+          //Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
+          // ignore: void_checks
+          return Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
         }
 
         Utils.snackBar(
