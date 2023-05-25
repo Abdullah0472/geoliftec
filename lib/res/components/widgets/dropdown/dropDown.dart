@@ -120,6 +120,11 @@ class _DropDownState extends State<DropDown> {
     'Bad'
   ];
 
+  var spanishItem = [
+    'itemGoodText'.tr,
+    'itemBadText'.tr,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -181,13 +186,22 @@ class _DropDownState extends State<DropDown> {
           borderRadius: BorderRadius.circular(8.0),
         ),
       ),
+      // value: dropdownValue,
+      // items: items.map((item) {
+      //   return DropdownMenuItem(
+      //     value: item,
+      //     child: Text(item),
+      //   );
+      // }).toList(),
+
       value: dropdownValue,
-      items: items.map((item) {
+      items: List<DropdownMenuItem<String>>.generate(items.length, (index) {
         return DropdownMenuItem(
-          value: item,
-          child: Text(item),
+          value: items[index],
+          child: Text(spanishItem[index]),
         );
-      }).toList(),
+      }),
+
       onChanged: (value) {
         setState(() {
           dropdownValue = value!;
