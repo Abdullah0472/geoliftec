@@ -26,7 +26,6 @@ class CustomInspectionView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: Image.asset(
                     ImageAssets.geoliftec,
-                    color: AppColor.whiteColor,
                     height: 90,
                     width: 150,
                   ),
