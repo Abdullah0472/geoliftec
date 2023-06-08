@@ -13,4 +13,7 @@ class ImageAssets {
   static const String forkLifter_reg_num_sp = 'assets/images/forkLifter_registrationNumber_sp.png';
   static const String wareHouse = 'assets/images/wareHouses.png';
   static const String geoliftec = 'assets/images/geoliftec.png';
+  static const String forklift_type = 'assets/images/forkLifter_tpe.png';
+  static const String forklift_type_sp = 'assets/images/forkLifter_type_sp.png';
+
 }

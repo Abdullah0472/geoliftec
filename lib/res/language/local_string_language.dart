@@ -64,6 +64,8 @@ class LocaleString extends Translations {
           'logoutText': 'Logout',
           'tryAgainText': 'Try Again',
           'noForkliftAssignText': 'No Forklift Assigned',
+          'electricText': 'Electric',
+          'nonElectricText': 'Internal Combustion',
 
         },
         'es_SP': {
@@ -128,6 +130,9 @@ class LocaleString extends Translations {
           'DataFormatIncorrectText':'El formato de datos es incorrecto',
           'tryAgainText': 'Intentar otra vez',
           'noForkliftAssignText': 'Sin carretilla elevadora asignada',
+          'electricText': 'Eléctrica',
+          'nonElectricText': 'Combustión interna',
+
         },
       };
 }

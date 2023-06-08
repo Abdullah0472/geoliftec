@@ -204,12 +204,31 @@ class DashboardView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   DashBoardContainerWidget(
-                                    textPading: 45,
+                                   // textPading: 45,
                                     title: 'WareHouse',
                                     subtitle: profileDetail.warehouse,
                                     imageDisplay:
                                         const AssetImage(ImageAssets.wareHouse),
                                   ),
+                                  Obx(() {
+                                    AssetImage makeImageAsset;
+                                    if (signInVM
+                                        .currentLocale.value.languageCode ==
+                                        'es') {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forklift_type_sp);
+                                    } else {
+                                      makeImageAsset = const AssetImage(
+                                          ImageAssets.forklift_type);
+                                    }
+                                    return  DashBoardContainerWidget(
+                                      title: 'Forklift Type',
+                                      subtitle: profileDetail.electric == 0 ? "nonElectricText".tr : "electricText".tr,
+                                      imageDisplay: makeImageAsset,
+                                    );
+                                  }),
+
+
                                 ],
                               ),
                               const SizedBox(

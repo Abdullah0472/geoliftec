@@ -96,14 +96,18 @@ class SignInViewModel extends GetxController {
   // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
-      Get.dialog(
+      // Get.dialog(
         WillPopScope(
             child: const Center(child: CupertinoActivityIndicator()),
             onWillPop: () async {
               return false;
-            }),
-        barrierDismissible: false,
-      );
+            });
+       //  barrierDismissible: true,
+       // );
+      // await Future.delayed(const Duration(seconds: 3)); // Delay for 5 seconds
+      //
+      // Get.back(); // Close the dialog after the delay
+
       final response =
           await post(Uri.parse('http://$baseUrl/api/login'), body: {
         'email': emailController.value.text,
@@ -135,9 +139,32 @@ class SignInViewModel extends GetxController {
 
         if (forkLiftId == 0) {
           //Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
+          Get.dialog(
+            WillPopScope(
+                child: const Center(child: CupertinoActivityIndicator()),
+                onWillPop: () async {
+                  return false;
+                }),
+            barrierDismissible: true,
+          );
+          await Future.delayed(const Duration(seconds: 1)); // Delay for 5 seconds
+          Get.back();
           // ignore: void_checks
           return Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
+
         }
+
+         Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+         barrierDismissible: true,
+        );
+        await Future.delayed(const Duration(seconds: 1)); // Delay for 5 seconds
+
+        Get.back();
 
         Utils.snackBar(
             'loginSuccessSnackBarText'.tr, 'loginSuccessSnackBarText2'.tr);

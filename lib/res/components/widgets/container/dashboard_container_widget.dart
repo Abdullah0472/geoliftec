@@ -29,14 +29,14 @@ class DashBoardContainerWidget extends StatelessWidget {
               color: Colors.grey.shade300,
               blurRadius: 3.0, // soften the shadow
               spreadRadius: 3.0, //extend the shadow
-              offset: Offset(
+              offset: const Offset(
                 1.0, // Move to right 5  horizontally
                 1.0, // Move to bottom 5 Vertically
               ),
             )
           ],
           // border: Border.all(width: 3),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           color: AppColor.dashboardContainerColor,
         ),
         child: Column(
@@ -50,6 +50,7 @@ class DashBoardContainerWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: textPading),
               child: Text(
+                textAlign: TextAlign.center,
                 subtitle,
                 style: const TextStyle(
                   fontStyle: FontStyle.normal,
