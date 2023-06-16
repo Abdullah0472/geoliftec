@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
@@ -32,14 +30,10 @@ class SignInViewModel extends GetxController {
 
   ////////////////////////Validation for Password///////////////////////////
   String? validatePassword(String? value) {
-    // RegExp regex =
-    //     RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (value!.isEmpty) {
       return 'validPasswordText'.tr;
     } else {
-      // if (!regex.hasMatch(value)) {
-      //   return 'Enter valid password';
-      // } else
+
       if (value != passwordController.value.text) {
         'validPasswordText1'.tr;
         return null;
@@ -81,7 +75,7 @@ class SignInViewModel extends GetxController {
     return prefs.getString('bearerToken');
   }
 
-  /// Forklifter Id
+  /// ========================== Forklift Id =============================///
 
   Future<void> storeForkLiftId(int forklift_id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -96,17 +90,14 @@ class SignInViewModel extends GetxController {
   // ignore: non_constant_identifier_names
   void LoginApi() async {
     try {
-      // Get.dialog(
+      Get.dialog(
         WillPopScope(
             child: const Center(child: CupertinoActivityIndicator()),
             onWillPop: () async {
               return false;
-            });
-       //  barrierDismissible: true,
-       // );
-      // await Future.delayed(const Duration(seconds: 3)); // Delay for 5 seconds
-      //
-      // Get.back(); // Close the dialog after the delay
+            }),
+        barrierDismissible: true,
+      );
 
       final response =
           await post(Uri.parse('http://$baseUrl/api/login'), body: {
@@ -138,46 +129,66 @@ class SignInViewModel extends GetxController {
         await prefs.setInt('forklift_id', forkLiftId!);
 
         if (forkLiftId == 0) {
-          //Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
+          Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
           Get.dialog(
             WillPopScope(
                 child: const Center(child: CupertinoActivityIndicator()),
                 onWillPop: () async {
                   return false;
                 }),
-            barrierDismissible: true,
+            barrierDismissible: false,
           );
-          await Future.delayed(const Duration(seconds: 1)); // Delay for 5 seconds
-          Get.back();
-          // ignore: void_checks
-          return Utils.snackBar('noForkliftAssignText'.tr, 'tryAgainText'.tr);
 
+          await Future.delayed(
+              const Duration(seconds: 2)); // Delay for 2 seconds
+
+          Get.back(); // Close the dialog
+          Get.offAllNamed(
+              RouteName.signInView); // Navigate back to login screen
+          return; // End the function
         }
-
-         Get.dialog(
-        WillPopScope(
-            child: const Center(child: CupertinoActivityIndicator()),
-            onWillPop: () async {
-              return false;
-            }),
-         barrierDismissible: true,
-        );
-        await Future.delayed(const Duration(seconds: 1)); // Delay for 5 seconds
-
-        Get.back();
 
         Utils.snackBar(
             'loginSuccessSnackBarText'.tr, 'loginSuccessSnackBarText2'.tr);
         Get.toNamed(RouteName.bottomNavBarView);
       } else if (response.statusCode == 401) {
         Utils.snackBar('loginFailSnackBarText'.tr, 'loginFailSnackBarText2'.tr);
+        // Add logic here to display activity indicator and navigate back after 2 seconds
+        Get.dialog(
+          WillPopScope(
+              child: const Center(child: CupertinoActivityIndicator()),
+              onWillPop: () async {
+                return false;
+              }),
+          barrierDismissible: false,
+        );
+
+        await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds
+
+        Get.back(); // Close the dialog
+        Get.offAllNamed(RouteName.signInView); // Navigate back to login screen
+        return; // End the function
       } else {
         throw Exception('Unexpected response from server');
       }
     } catch (e) {
       Utils.snackBar(
           'loginFailSnackBarText'.tr, 'An error occurred while logging in');
-      Get.back();
+      // Add logic here to display activity indicator and navigate back after 2 seconds
+      Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: false,
+      );
+
+      await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds
+
+      Get.back(); // Close the dialog
+      Get.offAllNamed(RouteName.signInView); // Navigate back to login screen
+      return; // End the function
     }
   }
 
@@ -241,15 +252,11 @@ class SignInViewModel extends GetxController {
         'Authorization':
             'Bearer $getTooken', // Include bearer token for authentication
       });
-      // print(response.body);
       if (response.statusCode == 200) {
-        // Handle successful logout, e.g., clear user data, navigate to login screen
         Utils.snackBar(
             'logoutSuccessSnackBarText'.tr, 'logoutSuccessSnackBarText2'.tr);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', false);
-        // Clear user data, navigate to login screen
-        // Example: clear email and password controllers and navigate to login screen
         emailController.value.clear();
         passwordController.value.clear();
         //bearerToken = null;

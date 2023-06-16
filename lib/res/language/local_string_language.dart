@@ -66,6 +66,13 @@ class LocaleString extends Translations {
           'noForkliftAssignText': 'No Forklift Assigned',
           'electricText': 'Electric',
           'nonElectricText': 'Internal Combustion',
+          'brandText': 'Brand',
+          'modelText': 'Model',
+          'warehouseText': 'Warehouse',
+          'registrationNumberText': 'Registration Number',
+          'registrationDateText': 'Registration Date',
+          'typeText': 'Type',
+          'seriesText': 'Series'
 
         },
         'es_SP': {
@@ -132,6 +139,13 @@ class LocaleString extends Translations {
           'noForkliftAssignText': 'Sin carretilla elevadora asignada',
           'electricText': 'Eléctrica',
           'nonElectricText': 'Combustión interna',
+          'brandText': 'Marca',
+          'modelText': 'Modelo',
+  'warehouseText': 'Depósito',
+          'registrationNumberText': 'Número de registro',
+          'registrationDateText': 'Fecha de Registro',
+          'typeText': 'Tipo',
+          'seriesText': 'Serie'
 
         },
       };

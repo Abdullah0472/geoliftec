@@ -35,6 +35,8 @@ class DataDashBoard {
     required this.regNo,
     required this.warehouse,
     required this.electric,
+    required this.company,
+    required this.serie,
   });
   late final String make;
   late final String model;
@@ -42,6 +44,8 @@ class DataDashBoard {
   late final String regNo;
   late final String warehouse;
   late final int electric;
+  late final String? company;
+  late final String? serie;
 
   DataDashBoard.fromJson(Map<String, dynamic> json){
     make = json['make']??"";
@@ -50,6 +54,8 @@ class DataDashBoard {
     regNo = json['reg_no']??"";
     warehouse = json['warehouse']??"";
     electric = json['electric'] ?? 0;
+    company = json['company'] ?? "";
+    serie = json['serie'] ?? "no data found";
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +66,8 @@ class DataDashBoard {
     _data['reg_no'] = regNo;
     _data['warehouse'] = warehouse;
     _data['electric'] = electric;
+    _data['company'] = company;
+    _data['serie'] = serie;
     return _data;
   }
 }

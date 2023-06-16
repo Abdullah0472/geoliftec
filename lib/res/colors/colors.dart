@@ -11,7 +11,7 @@ class AppColor {
   static const Color drakerColor = Color(0xff3e4249);
   static const Color cardColor = Color(0xff247fa8);
   static const Color greenShadeColor = Color(0xff91f1ac);
-  static const Color redShadeColor = Color(0xffdf4842);
+  static const Color redShadeColor = Color(0xffd80200);
   static const Color blackColor = Color(0xff000000);
   static const Color reviewButtonColor = Color(0xffa8b424);
   static const Color buttonColor = Color.fromARGB(255, 0, 34, 55);
@@ -22,4 +22,8 @@ class AppColor {
   static const Color dashboardContainerColor = Color(0xffffffff);
   static const Color cardTextColor = Color(0xff20244b);
   static const Color testingCardColor = Color(0xffebebeb);
+  static const Color dashboardContainerColr = Color(0xff6a869c);
+  static const Color containerColorTwo = Color(0xff836d74);
+  static const Color containerColorThree  = Color(0xff748293);
+  static const Color containerColorFour  = Color(0xffdcd8d9);
 }
