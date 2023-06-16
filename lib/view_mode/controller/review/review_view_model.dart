@@ -174,6 +174,11 @@ class ReviewViewModel extends GetxController {
             child:  Text("okText".tr),
           ),
         );
+
+        // Clear the groupValue here
+        groupValue = null;
+
+        print("After Sending data successfully the data is ${response.body}");
       }
       else if (response.statusCode == 401) {
         Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
