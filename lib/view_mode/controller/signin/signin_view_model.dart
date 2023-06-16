@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/main.dart';
 import 'package:geoliftec/utils/utils.dart';
+import 'package:geoliftec/view_mode/controller/review/review_view_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -283,6 +284,13 @@ class SignInViewModel extends GetxController {
     Get.back();
     Get.updateLocale(locale);
     currentLocale.value = locale;
+
+    // Update the radio size based on the selected language.
+    if (locale.languageCode == 'es') {
+      Get.find<ReviewViewModel>().radioSize.value = 150;
+    } else {
+      Get.find<ReviewViewModel>().radioSize.value = 180;
+    }
   }
 
   buildLanguageDialog(BuildContext context) {

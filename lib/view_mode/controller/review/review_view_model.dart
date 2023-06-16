@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -80,8 +81,21 @@ class ReviewViewModel extends GetxController {
   final retroHornDropDownFocusNode = FocusNode().obs;
   final flasherBeaconDropDownFocusNode = FocusNode().obs;
 
+  String? groupValue;
+  RxDouble radioSize = 150.0.obs;
   Future<int> inspection() async {
     try {
+
+      Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: true,
+      );
+    // Close the dialog
+
       final String? getTooken = await signInVM.getBearerToken();
       log({
         'radiator_level': radiatorDropDownController.value.text,
@@ -148,7 +162,7 @@ class ReviewViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
-        Utils.snackBar("dataUploadSuccess ".tr, "congoText".tr);
+        Utils.snackBar("dataUploadSuccess".tr, "congoText".tr);
         await Future.delayed(const Duration(
             milliseconds: 500)); // add a delay before showing the dialog
         Get.defaultDialog(
@@ -156,22 +170,70 @@ class ReviewViewModel extends GetxController {
           middleText: "dataUploadSuccess".tr,
           barrierDismissible: false,
           confirm: ElevatedButton(
-            onPressed: () => Get.back(),
+            onPressed: () => Get.close(2),
             child:  Text("okText".tr),
           ),
         );
-      } else if (response.statusCode == 401) {
+      }
+      else if (response.statusCode == 401) {
         Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
-        Get.toNamed(RouteName.signInView);
-      } else {
+        Get.dialog(
+          WillPopScope(
+              child: const Center(child: CupertinoActivityIndicator()),
+              onWillPop: () async {
+                return false;
+              }),
+          barrierDismissible: false,
+        );
+
+        Future.delayed(const Duration(seconds: 5), () {
+          if (Get.isDialogOpen ?? false) { // if dialog is currently open
+            Get.back(); // it will close the dialog
+            signInVM.logoutApi();
+          //  Get.offAllNamed(RouteName.signInView); // navigate after closing the dialog
+          }
+
+        });
+      }
+
+      else {
         print("The Status Code before sending data: ${response.statusCode}");
         print("The Response Body before sending data: ${response.body}");
         Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
+        Get.dialog(
+          WillPopScope(
+              child: const Center(child: CupertinoActivityIndicator()),
+              onWillPop: () async {
+                return false;
+              }),
+          barrierDismissible: false,
+        );
+
+        await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds
+
+        Get.back(); // Close the dialog
+        signInVM.logoutApi();
+         //Get.offAllNamed(RouteName.signInView);
       }
       return response.statusCode;
-    } catch (e) {
+    }
+    catch (e) {
       print("The Exception During Sending Inspection Report ${e.toString()}");
       Utils.snackBar("Exception ", e.toString());
+      Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: false,
+      );
+
+      await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds
+
+      Get.back(); // Close the dialog
+      signInVM.logoutApi();
+     // Get.offAllNamed(RouteName.signInView);
       rethrow;
     }
   }

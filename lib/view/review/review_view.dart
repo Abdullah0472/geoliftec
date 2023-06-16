@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoliftec/res/colors/colors.dart';
+import 'package:geoliftec/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../model/dashboard/dashboard_model.dart';
@@ -72,166 +73,148 @@ class ReviewView extends StatelessWidget {
                         children: <Widget>[
                           profileDetail.electric == 0
                               ? CardDesign(
-                                  hintFontSize: 12,
+
                                   title: 'radiatorLevelText'.tr,
                                   title1: 'radiator_level',
                                   icons: MdiIcons.radiator,
                                   controller: reviewVM.radiatorController.value,
-                                  dropDownController:
+                                  radioController:
                                       reviewVM.radiatorDropDownController.value,
                                 )
                               : Container(),
                           profileDetail.electric == 0
                               ? CardDesign(
-                                  hintFontSize: 17,
-                                  dropDownSize: 232.7,
+
                                   title: 'engineOilText'.tr,
                                   title1: 'engine_oil',
                                   icons: MdiIcons.oil,
                                   controller: reviewVM.engineController.value,
-                                  dropDownController:
+                                  radioController:
                                       reviewVM.engineDropDownController.value,
                                 )
                               : Container(),
                           CardDesign(
-                            hintFontSize: 14,
-                            dropDownSize: 200,
+
                             title: 'hydraulicOilText'.tr,
                             title1: 'hydraulic_Oil',
                             icons: MdiIcons.hydraulicOilLevel,
                             controller: reviewVM.hydraulicDriveController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.hydraulicOilDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 12,
-                            dropDownSize: 180,
+
                             title: 'brakeFluidText'.tr,
                             title1: 'brake_fluid',
                             icons: MdiIcons.carBrakeFluidLevel,
                             controller: reviewVM.brakeController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.brakeDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 12,
-                            dropDownSize: 180,
+
                             title: 'batteryElctroText'.tr,
                             title1: 'battery_electrolyte',
                             icons: MdiIcons.carBattery,
                             controller:
                                 reviewVM.batteryElectrolyteController.value,
-                            dropDownController: reviewVM
+                            radioController: reviewVM
                                 .batteryElectrolyteDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 18,
-                            dropDownSize: 250,
+
                             title: 'fuelText'.tr,
                             title1: 'fuel',
                             icons: MdiIcons.fuel,
                             controller: reviewVM.fuelController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.fuelDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 22,
-                            dropDownSize: 284,
+
                             title: 'leaksText'.tr,
                             title1: 'Leaks',
                             icons: MdiIcons.pipeLeak,
                             controller: reviewVM.leaksController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.leaksDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 14,
-                            dropDownSize: 201,
+
                             title: 'mastChainText'.tr,
                             title1: 'mast_chains',
                             icons: MdiIcons.linkLock,
                             controller: reviewVM.mastChainController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.mastChainDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 8,
-                            dropDownSize: 135,
+                            radioSize: reviewVM.radioSize.value,
+                           // radioSize: 150,
                             title: 'hydraulicDriveText'.tr,
                             title1: 'hydraulic_drive',
                             icons: MdiIcons.hydroPower,
                             controller: reviewVM.hydraulicDriveController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.hydraulicDriveDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 9,
-                            dropDownSize: 153,
-                            title: 'hydraulicHosesText'.tr,
-                            title1: 'hydraulic_hoses',
-                            icons: MdiIcons.pipe,
+                            title: 'fuelText'.tr,
+                            title1: 'fuel',
+                            icons: MdiIcons.fuel,
                             controller: reviewVM.hydraulicHosesController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.hydraulicHosesDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 20,
-                            dropDownSize: 265,
                             title: 'mirrorsText'.tr,
                             title1: 'mirrors',
                             icons: MdiIcons.mirror,
                             controller: reviewVM.mirrorsController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.mirrorsDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 20,
-                            dropDownSize: 271,
                             title: 'pedalsText'.tr,
                             title1: 'pedals',
                             icons: MdiIcons.speedometerSlow,
                             controller: reviewVM.pedalsController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.pedalsDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 22,
-                            dropDownSize: 292,
                             title: 'tiresText'.tr,
                             title1: 'tires',
                             icons: MdiIcons.tire,
                             controller: reviewVM.tiresController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.tiresDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 19,
-                            dropDownSize: 250,
+
                             title: 'forksText'.tr,
                             title1: 'forks',
                             icons: MdiIcons.tools,
                             controller: reviewVM.forksController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.forksDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 17,
-                            dropDownSize: 225,
+
                             title: 'retroHornText'.tr,
                             title1: 'retro_horn',
                             icons: MdiIcons.airHorn,
                             controller: reviewVM.retroHornController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.retroHornDropDownController.value,
                           ),
                           CardDesign(
-                            hintFontSize: 10,
-                            dropDownSize: 163,
+
                             title: 'flasherBeaconText'.tr,
                             title1: 'flasher_beacon',
                             icons: MdiIcons.alarmLight,
                             controller: reviewVM.flasherBeaconController.value,
-                            dropDownController:
+                            radioController:
                                 reviewVM.flasherBeaconDropDownController.value,
                           ),
                           const SizedBox(
@@ -242,7 +225,7 @@ class ReviewView extends StatelessWidget {
                             width: Get.width,
                             height: Get.height * 0.07,
                             onPress: () async {
-                              if (_formKey.currentState!.validate()) {
+                              if (reviewVM.groupValue != null) {
                                 int code = await reviewVM.inspection();
 
                                 /// ----------------- Use to Clear Text Form Field ---------- ///
@@ -305,6 +288,14 @@ class ReviewView extends StatelessWidget {
 
                                 /// ---------------The End -------------------- ///
                               }
+                              else{
+
+                                Utils.snackBar("dataUploadUnSuccess".tr, "tryAgainText".tr);
+                                await Future.delayed(const Duration(
+                                    milliseconds: 500)); // add a delay before showing the dialog
+
+                              }
+
                             },
                             title: "reviewButtonText".tr,
                           ),

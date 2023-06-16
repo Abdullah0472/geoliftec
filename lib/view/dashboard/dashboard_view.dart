@@ -91,363 +91,364 @@ class DashboardView extends StatelessWidget {
                       ]),
                 ),
                 body: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 40),
-                      FutureBuilder<List<Data>>(
-                          future: profileVM.fetchProfileData(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List<Data>> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (snapshot.hasData &&
-                                snapshot.data!.isNotEmpty) {
-                              List<Data> profileList = snapshot.data!;
-                              Data profileDetail = profileList[0];
-
-                              if (profileDetail != null) {
-                                return Text(
-                                  profileDetail.name,
-                                  style: const TextStyle(
-                                    color: AppColor.blackColor,
-                                    fontStyle: FontStyle.normal,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                );
-                              } else {
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 40),
+                        FutureBuilder<List<Data>>(
+                            future: profileVM.fetchProfileData(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Data>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return const Center(
-                                    child: Text("Data is incorrect"));
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasData &&
+                                  snapshot.data!.isNotEmpty) {
+                                List<Data> profileList = snapshot.data!;
+                                Data profileDetail = profileList[0];
+
+                                if (profileDetail != null) {
+                                  return Text(
+                                    profileDetail.name,
+                                    style: const TextStyle(
+                                      color: AppColor.blackColor,
+                                      fontStyle: FontStyle.normal,
+                                      decoration: TextDecoration.none,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                } else {
+                                  return const Center(
+                                      child: Text("Data is incorrect"));
+                                }
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                    child: Text(
+                                        "The error in Profile : ${snapshot.error}"));
+                              } else {
+                                return const Center(child: Text("Please Wait"));
                               }
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                  child: Text(
-                                      "The error in Profile : ${snapshot.error}"));
-                            } else {
-                              return const Center(child: Text("Please Wait"));
-                            }
-                          }),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          ImageAssets.forkLifter,
-                          height: 200,
+                            }),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-
-                      const SizedBox(height: 20,),
-                      Row(children: [
-                        Expanded(
-                          child: Container(
-
-                            height: 10,
-                            decoration: const BoxDecoration(
-                              color: AppColor.redShadeColor,)
+                        Center(
+                          child: Image.asset(
+                            ImageAssets.forkLifter,
+                            height: 200,
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorTwo,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorThree,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorFour,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.blackColor,)
-                          ),
-                        ),
-                      ],),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only( top: 20),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          // height: 280,
-                          decoration: BoxDecoration(
-                            color: AppColor.redShadeColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade300,
-                                blurRadius: 3.0, // soften the shadow
-                                spreadRadius: 3.0, //extend the shadow
-                                offset: const Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
-                          ),
-                          height: 100,
-                          child:  Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                               Text(
-                                profileDetail.company!,
-                                style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.whiteColor,
-                                  fontSize: 26,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                profileDetail.warehouse,
-                                style: const TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.whiteColor,
-                                  fontSize: 24,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20,),
-                      Row(children: [
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.blackColor,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorFour,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorThree,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
-                              height: 10,
-                              decoration: const BoxDecoration(
-                                color: AppColor.containerColorTwo,)
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-
+                        const SizedBox(height: 20,),
+                        Row(children: [
+                          Expanded(
+                            child: Container(
                               height: 10,
                               decoration: const BoxDecoration(
                                 color: AppColor.redShadeColor,)
+                            ),
                           ),
-                        ),
-                      ],),
-                      Padding(padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          // height: 280,
-                          decoration: BoxDecoration(
-                            color: AppColor.dashboardContainerColr,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade300,
-                                blurRadius: 3.0, // soften the shadow
-                                spreadRadius: 3.0, //extend the shadow
-                                offset: const Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
-                          ),
+                          Expanded(
+                            child: Container(
 
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorTwo,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorThree,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorFour,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.blackColor,)
+                            ),
+                          ),
+                        ],),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only( top: 20),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            // height: 280,
+                            decoration: BoxDecoration(
+                              color: AppColor.redShadeColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.shade300,
+                                  blurRadius: 3.0, // soften the shadow
+                                  spreadRadius: 3.0, //extend the shadow
+                                  offset: const Offset(
+                                    1.0, // Move to right 5  horizontally
+                                    1.0, // Move to bottom 5 Vertically
+                                  ),
+                                )
+                              ],
+                            ),
+                            height: 100,
+                            child:  Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'brandText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ": ${profileDetail.make}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
+                                 Text(
+                                  profileDetail.company!,
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColor.whiteColor,
+                                    fontSize: 26,
+                                  ),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'modelText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ": ${profileDetail.model}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'seriesText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ": ${profileDetail.serie}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'typeText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text:
-                                              ": ${profileDetail.electric == 0 ? "nonElectricText".tr : "electricText".tr}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'registrationNumberText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ": ${profileDetail.regNo}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'registrationDateText'.tr,
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.whiteColor,
-                                        fontSize: 22,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ": ${profileDetail.regDate}",
-                                          style: const TextStyle(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.whiteColor,
-                                              fontSize: 22),
-                                        )
-                                      ]),
-                                ),
+                                Text(
+                                  profileDetail.warehouse,
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.whiteColor,
+                                    fontSize: 24,
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 20,),
+                        Row(children: [
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.blackColor,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorFour,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorThree,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.containerColorTwo,)
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.redShadeColor,)
+                            ),
+                          ),
+                        ],),
+                        Padding(padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            // height: 280,
+                            decoration: BoxDecoration(
+                              color: AppColor.dashboardContainerColr,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.shade300,
+                                  blurRadius: 3.0, // soften the shadow
+                                  spreadRadius: 3.0, //extend the shadow
+                                  offset: const Offset(
+                                    1.0, // Move to right 5  horizontally
+                                    1.0, // Move to bottom 5 Vertically
+                                  ),
+                                )
+                              ],
+                            ),
+
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'brandText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ": ${profileDetail.make}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'modelText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ": ${profileDetail.model}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'seriesText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ": ${profileDetail.serie}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'typeText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text:
+                                                ": ${profileDetail.electric == 0 ? "nonElectricText".tr : "electricText".tr}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'registrationNumberText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ": ${profileDetail.regNo}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'registrationDateText'.tr,
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ": ${profileDetail.regDate}",
+                                            style: const TextStyle(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColor.whiteColor,
+                                                fontSize: 22),
+                                          )
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
