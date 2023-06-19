@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geoliftec/main.dart';
+import 'package:geoliftec/view_mode/controller/review/review_view_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -13,6 +15,7 @@ import '../signin/signin_view_model.dart';
 class CustomInspectionDetailViewModel extends GetxController {
 
   final signInVM = Get.put(SignInViewModel());
+  final reviewVM = Get.put(ReviewViewModel());
 
   final String baseurl = 'http://$baseUrl/api';
   final Rx<CustomInspectionDetailModel> apiResponse =
@@ -53,85 +56,6 @@ class CustomInspectionDetailViewModel extends GetxController {
     }
   }
 
-  /// =====================  Trying With Model ====================== ///
-//   Future<void> updateInspectionDetail(int id, String condition, String remark) async {
-//     apiResponse.value = CustomInspectionSendingDetailModel(statusCode: 0, message: '', error: '', data: []) as CustomInspectionDetailModel;
-//     try {
-//       // final response = await http.post(
-//       //   Uri.parse('$baseUrl/store/custom/inspection/details'),
-//       //   headers: {
-//       //     'Content-Type': 'application/json',
-//       //     'Authorization': 'Bearer ${signInVM.bearerToken}'
-//       //   },
-//       //   body: json.encode({
-//       //     'id': id,
-//       //     'condition': condition,
-//       //     'remark': remark
-//       //   }),
-//       // );
-//       final dynamicData = {'id': id, 'condition': condition, 'remark': remark};
-//       final Map<String, dynamic> jsonData = Map<String, dynamic>.from(dynamicData);
-//       final response = await http.post(
-//         Uri.parse('$baseUrl/store/custom/inspection/details'),
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': 'Bearer ${signInVM.bearerToken}'
-//         },
-//         body: json.encode(jsonData),
-//       );
-//       if (response.statusCode == 200) {
-//         final jsonData = jsonDecode(response.body);
-//         dynamic data = jsonData['data'];
-//         if (data is List) {
-//           final List<CustomInspectionDetailData> questions = data.map((item) => CustomInspectionDetailData.fromJson(item)).toList();
-//           apiResponse.value = CustomInspectionSendingDetailModel(
-//             statusCode: 200,
-//             message: 'Success',
-//             data: questions,
-//             error: '',
-//           ) as CustomInspectionDetailModel;
-//         } else if (data is Map) {
-//           final CustomInspectionSendingDetailModel question = CustomInspectionSendingDetailModel.fromJson(data);
-//           apiResponse.value = CustomInspectionSendingDetailModel(
-//             statusCode: 200,
-//             message: 'Success',
-//             data: [question],
-//             error: '',
-//           ) as CustomInspectionDetailModel;
-//         }
-//         Utils.snackBar("Data Uploaded Successfully ", "Congratulations");
-//         await Future.delayed(const Duration(milliseconds: 500)); // add a delay before showing the dialog
-//         Get.defaultDialog(
-//           title: "Status",
-//           middleText: "Successfully Data Uploaded",
-//           barrierDismissible: false,
-//           confirm: ElevatedButton(
-//             onPressed: () => Get.back(),
-//             child: const Text("OK"),
-//           ),
-//         );
-//       } else if (response.statusCode == 401) {
-//         Utils.snackBar("UnAuthorized ", "Logout");
-//         Get.toNamed(RouteName.signInView);
-//       } else {
-//         Utils.snackBar("Data Unauthenticated ", "Try Again");
-//       }
-//     } catch (e) {
-//       if (kDebugMode) {
-//         print(e.toString());
-//       }
-//       Utils.snackBar("Exception ", e.toString());
-//       print("Exception ${e.toString()}");
-//       apiResponse.value = CustomInspectionSendingDetailModel(
-//         statusCode: 500,
-//         message: 'Error: $e',
-//         data: [],
-//         error: '',
-//       ) as CustomInspectionDetailModel;
-//     }
-//   }
-
-  /// =====================  Trying With Model ====================== ///
 
   ///======================= Sending Data without Model ================== ///
   Future<void> updateInspectionDetail(
@@ -139,6 +63,14 @@ class CustomInspectionDetailViewModel extends GetxController {
     final String? getTooken = await signInVM.getBearerToken();
 
     try {
+      Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: true,
+      );
       final response = await post(
           Uri.parse('http://$baseUrl/api/store/custom/inspection/details'),
           headers: {
@@ -151,28 +83,82 @@ class CustomInspectionDetailViewModel extends GetxController {
         Utils.snackBar("dataUploadSuccess".tr, "congoText".tr);
         await Future.delayed(const Duration(
             milliseconds: 500)); // add a delay before showing the dialog
+
         Get.defaultDialog(
           title: "statusText".tr,
           middleText: "dataUploadSuccess".tr,
           barrierDismissible: false,
           confirm: ElevatedButton(
             onPressed: () {
-              Get.back();
-              Get.back();
+             Get.close(3);
             },
             child: const Text("OK"),
           ),
         );
+        reviewVM.groupValue = null;
       } else if (response.statusCode == 401) {
+        reviewVM.groupValue = null;
         Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
-        Get.toNamed(RouteName.signInView);
+        Get.dialog(
+          WillPopScope(
+              child: const Center(child: CupertinoActivityIndicator()),
+              onWillPop: () async {
+                return false;
+              }),
+          barrierDismissible: false,
+        );
+
+        Future.delayed(const Duration(seconds: 5), () {
+          if (Get.isDialogOpen ?? false) { // if dialog is currently open
+            Get.back(); // it will close the dialog
+            signInVM.logoutApi();
+            //  Get.offAllNamed(RouteName.signInView); // navigate after closing the dialog
+          }
+
+        });
       } else {
+        reviewVM.groupValue = null;
         Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);
+        Get.dialog(
+          WillPopScope(
+              child: const Center(child: CupertinoActivityIndicator()),
+              onWillPop: () async {
+                return false;
+              }),
+          barrierDismissible: false,
+        );
+
+        Future.delayed(const Duration(seconds: 5), () {
+          if (Get.isDialogOpen ?? false) { // if dialog is currently open
+            Get.back(); // it will close the dialog
+            signInVM.logoutApi();
+            //  Get.offAllNamed(RouteName.signInView); // navigate after closing the dialog
+          }
+
+        });
       }
     } catch (e) {
+      reviewVM.groupValue = null;
       // Handle the unexpected response format here
       Utils.snackBar(
           "Error", "Unexpected response format. Please try again later.");
+      Get.dialog(
+        WillPopScope(
+            child: const Center(child: CupertinoActivityIndicator()),
+            onWillPop: () async {
+              return false;
+            }),
+        barrierDismissible: false,
+      );
+
+      Future.delayed(const Duration(seconds: 5), () {
+        if (Get.isDialogOpen ?? false) { // if dialog is currently open
+          Get.back(); // it will close the dialog
+          signInVM.logoutApi();
+          //  Get.offAllNamed(RouteName.signInView); // navigate after closing the dialog
+        }
+
+      });
     }
   }
 

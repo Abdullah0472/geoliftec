@@ -18,8 +18,33 @@ class ReviewView extends StatelessWidget {
   final dashboardVM = Get.put(DashboardViewModel());
   final reviewVM = Get.put(ReviewViewModel());
 
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    List<TextEditingController> radioControllers = [
+      reviewVM.radiatorDropDownController.value,
+      reviewVM.engineDropDownController.value,
+      reviewVM.hydraulicOilDropDownController.value,
+      reviewVM.brakeDropDownController.value,
+      reviewVM.batteryElectrolyteDropDownController.value,
+      reviewVM.fuelDropDownController.value,
+      reviewVM.leaksDropDownController.value,
+      reviewVM.mastChainDropDownController.value,
+      reviewVM.hydraulicDriveDropDownController.value,
+      reviewVM.hydraulicHosesDropDownController.value,
+      reviewVM.mirrorsDropDownController.value,
+      reviewVM.pedalsDropDownController.value,
+      reviewVM.tiresDropDownController.value,
+      reviewVM.forksDropDownController.value,
+      reviewVM.retroHornDropDownController.value,
+      reviewVM.flasherBeaconDropDownController.value,
+
+
+      // add all your radioControllers here...
+    ];
     return FutureBuilder<List<DataDashBoard>>(
         future: dashboardVM.fetchDashboardData(),
         builder: (BuildContext context,
@@ -98,7 +123,7 @@ class ReviewView extends StatelessWidget {
                             title: 'hydraulicOilText'.tr,
                             title1: 'hydraulic_Oil',
                             icons: MdiIcons.hydraulicOilLevel,
-                            controller: reviewVM.hydraulicDriveController.value,
+                            controller: reviewVM.hydraulicOilController.value,
                             radioController:
                                 reviewVM.hydraulicOilDropDownController.value,
                           ),
@@ -159,9 +184,10 @@ class ReviewView extends StatelessWidget {
                                 reviewVM.hydraulicDriveDropDownController.value,
                           ),
                           CardDesign(
-                            title: 'fuelText'.tr,
-                            title1: 'fuel',
-                            icons: MdiIcons.fuel,
+                            radioSize: reviewVM.radioSize.value,
+                            title: 'hydraulicHosesText'.tr,
+                            title1: 'hydraulic_hoses',
+                            icons: MdiIcons.pipe,
                             controller: reviewVM.hydraulicHosesController.value,
                             radioController:
                                 reviewVM.hydraulicHosesDropDownController.value,
@@ -209,7 +235,6 @@ class ReviewView extends StatelessWidget {
                                 reviewVM.retroHornDropDownController.value,
                           ),
                           CardDesign(
-
                             title: 'flasherBeaconText'.tr,
                             title1: 'flasher_beacon',
                             icons: MdiIcons.alarmLight,
@@ -220,12 +245,20 @@ class ReviewView extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
+
                           RoundButton(
                             buttonColor: AppColor.appBarColor,
                             width: Get.width,
                             height: Get.height * 0.07,
                             onPress: () async {
                               if (reviewVM.groupValue != null) {
+
+                                for (var controller in radioControllers) {
+                                  if (controller.text.isEmpty) {
+                                    Utils.snackBar("selectOptionText".tr, "tryAgainText".tr);
+                                    return;
+                                  }
+                                }
                                 int code = await reviewVM.inspection();
 
                                 /// ----------------- Use to Clear Text Form Field ---------- ///
@@ -284,6 +317,7 @@ class ReviewView extends StatelessWidget {
                                       .clear();
                                   reviewVM.flasherBeaconController.value
                                       .clear();
+                                  reviewVM.groupValue = null;
                                 }
 
                                 /// ---------------The End -------------------- ///

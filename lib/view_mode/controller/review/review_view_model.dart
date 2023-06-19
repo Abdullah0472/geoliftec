@@ -83,6 +83,7 @@ class ReviewViewModel extends GetxController {
 
   String? groupValue;
   RxDouble radioSize = 150.0.obs;
+
   Future<int> inspection() async {
     try {
 
@@ -170,7 +171,10 @@ class ReviewViewModel extends GetxController {
           middleText: "dataUploadSuccess".tr,
           barrierDismissible: false,
           confirm: ElevatedButton(
-            onPressed: () => Get.close(2),
+            onPressed: ()  {
+              groupValue = null;
+              Get.close(2);
+              },
             child:  Text("okText".tr),
           ),
         );
@@ -180,7 +184,9 @@ class ReviewViewModel extends GetxController {
 
         print("After Sending data successfully the data is ${response.body}");
       }
+
       else if (response.statusCode == 401) {
+        groupValue = null;
         Utils.snackBar("dataUnauthenticatedText".tr, "logoutText".tr);
         Get.dialog(
           WillPopScope(
@@ -202,6 +208,7 @@ class ReviewViewModel extends GetxController {
       }
 
       else {
+        groupValue = null;
         print("The Status Code before sending data: ${response.statusCode}");
         print("The Response Body before sending data: ${response.body}");
         Utils.snackBar("dataUnauthenticatedText".tr, "tryAgainText".tr);

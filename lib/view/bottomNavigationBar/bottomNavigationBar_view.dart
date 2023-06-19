@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:geoliftec/res/colors/colors.dart';
 import 'package:geoliftec/view/custom_inspection/custom_inspection_view.dart';
 import 'package:geoliftec/view/dashboard/dashboard_view.dart';
+import 'package:geoliftec/view_mode/controller/review/review_view_model.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,7 +23,6 @@ class BottomNavigationBarView extends StatefulWidget {
 
 class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
   int _selectedIndex = 0;
-
   final List _widgetOptions = [
     ///------------ Name of The Screens/View ------------------- ///
 
@@ -37,6 +37,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
     ReviewView(),
     ///Will Be Moving To Custom Inspection View Screen
+
     CustomInspectionView(),
     ProfileView(),
   ];
@@ -68,6 +69,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
             onItemSelected: _onItemTapped,
             type: BottomNavigationBarType.fixed,
             onTap: () {
+
               _onItemTapped(_selectedIndex);
             },
             items: <BottomNavyBarItem>[
@@ -85,6 +87,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                 textAlign: TextAlign.center,
               ),
               BottomNavyBarItem(
+
                 icon: const Icon(
                   MdiIcons.forklift,
                   size: 34,
@@ -96,7 +99,9 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
                 activeColor: AppColor.appBarColor,
                 inactiveColor: AppColor.iconBottomNavBarColor,
                 textAlign: TextAlign.center,
+
               ),
+
               BottomNavyBarItem(
                 icon: const Icon(
                   MdiIcons.faceAgent,

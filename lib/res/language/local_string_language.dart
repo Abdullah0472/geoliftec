@@ -73,7 +73,8 @@ class LocaleString extends Translations {
           'registrationNumberText': 'Registration Number',
           'registrationDateText': 'Registration Date',
           'typeText': 'Type',
-          'seriesText': 'Series'
+          'seriesText': 'Series',
+  'selectOptionText': 'Please Select All Options',
         },
         'es_SP': {
           'signin': 'Iniciar sesión',
@@ -146,7 +147,8 @@ class LocaleString extends Translations {
           'registrationNumberText': 'Número de registro',
           'registrationDateText': 'Fecha de Registro',
           'typeText': 'Tipo',
-          'seriesText': 'Serie'
+          'seriesText': 'Serie',
+          'selectOptionText': 'Seleccione todas las opciones',
         },
       };
 }

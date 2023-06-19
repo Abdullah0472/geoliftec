@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geoliftec/view_mode/controller/review/review_view_model.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,9 +22,11 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   final signInVM = Get.put(SignInViewModel());
+  final reviewVM = Get.put(ReviewViewModel());
   @override
   void initState()  {
     super.initState();
+    reviewVM.groupValue = null;
     checkLoginStatus(); // Check login status when the view is initialized
 
     // 1. This method call when app in terminated state and you get a notification
@@ -115,6 +118,7 @@ class _SplashViewState extends State<SplashView> {
       // Timer(const Duration(seconds: 3),
       //     () => Get.toNamed(RouteName.bottomNavBarView));
       Timer(const Duration(seconds: 3),
+
               () => Get.offAllNamed(RouteName.bottomNavBarView));
     } else {
       // User is not logged in or bearer token is not valid

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geoliftec/res/components/widgets/buttons/radio_button/radio_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../colors/colors.dart';
 import '../dropdown/dropDown.dart';
@@ -9,20 +10,18 @@ class CardDesignDueInspection extends StatelessWidget {
   final String title;
   String title1;
   final IconData icons;
-  final double dropDownSize;
-  final double hintFontSize;
   TextEditingController controller;
-  TextEditingController dropDownController;
+  TextEditingController radioController;
 
   CardDesignDueInspection({
     Key? key,
     required this.title,
     required this.title1,
     required this.icons,
-    this.dropDownSize = 180,
+
     required this.controller,
-    this.hintFontSize = 18,
-    required this.dropDownController,
+
+    required this.radioController,
   }) : super(key: key);
 
   @override
@@ -77,15 +76,13 @@ class CardDesignDueInspection extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: DropDown(
-                      hintSize: hintFontSize,
-                      onSelected: (String? selectedValue) {
-                        title1 = selectedValue!;
-                        dropDownController.text = selectedValue;
-                      },
-                      dropDownController: dropDownController,
-                    ),
+
+                  MyRadioButtons(
+                    onSelected: (String? selectedValue) {
+                      title1 = selectedValue!;
+                      radioController.text = selectedValue;
+                    },
+                    radioController: radioController,
                   ),
                 ],
               ),
